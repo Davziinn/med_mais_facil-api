@@ -1,0 +1,44 @@
+package com.Unifor.MedMaisFacil.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.*;
+
+import java.time.*;
+
+@Entity
+@Table(name = "TB_MED")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class MedicoEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_MED")
+    private Long id;
+
+    @Column(name = "NM_MED", nullable = false)
+    private String nome;
+
+    @Column(name = "CRM_MED", nullable = false, unique = true)
+    private String crm;
+
+    @Column(name = "ESPC_MED", nullable = false)
+    private String especialidade;
+
+    @Column(name = "SX_MED", nullable = false, length = 10)
+    private String sexo;
+
+    @Column(name = "DT_NASC_MED", nullable = false)
+    private LocalDate dataNascimento;
+
+    @Column(name = "DT_CRI_MED")
+    @CreationTimestamp
+    private LocalDateTime criadoEm;
+
+    @Column(name = "DT_ATZ_MED")
+    @UpdateTimestamp
+    private LocalDateTime atualizadoEm;
+}
