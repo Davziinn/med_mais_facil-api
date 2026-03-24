@@ -2,9 +2,9 @@ package com.Unifor.MedMaisFacil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.*;
 
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Entity
 @Table(name = "TB_ATEND")

@@ -1,0 +1,38 @@
+package com.Unifor.MedMaisFacil.entity;
+
+import com.Unifor.MedMaisFacil.enums.StatusGuiaMedica;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "TB_GUIA_MED")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
+public class GuiaMedicaEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_GUIA_MED")
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ST_GUIA_MED", nullable = false)
+    private StatusGuiaMedica statusGuiaMedica;
+
+    @CreationTimestamp
+    @Column(name = "DT_SOLIC_GUIA_MED", nullable = false, updatable = false)
+    private LocalDateTime dataSolicitacao;
+
+    @Column(name = "OBS_GUIA_MED", length = 300)
+    private String observacoes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atendimento_id", nullable = false)
+    private AtendimentoEntity atendimento;
+}
