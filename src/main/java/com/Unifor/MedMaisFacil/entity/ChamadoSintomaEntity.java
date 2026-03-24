@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -20,19 +21,20 @@ public class ChamadoSintomaEntity {
     private Long id;
 
     @Column(name = "INT_SINT", nullable = false)
-    private Integer intecidade;
+    private Integer intensidade;
 
     @Column(name = "DESC_SINT")
-    private String descricao;
+    private String descricaoLivre;
 
+    @CreationTimestamp
     @Column(name = "DT_REG_SINT")
     private LocalDateTime dataRegistro;
 
     @ManyToOne
-    @JoinColumn(name = "chamado_id")
+    @JoinColumn(name = "chamado_id", nullable = false)
     private ChamadoEntity chamado;
 
     @ManyToOne
-    @JoinColumn(name = "sintoma_id")
+    @JoinColumn(name = "sintoma_id", nullable = false)
     private SintomaEntity sintoma;
 }
