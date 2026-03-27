@@ -14,6 +14,7 @@ public class GuiaExameEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_GUIA_EXAM")
     private Long id;
 
     @ManyToOne

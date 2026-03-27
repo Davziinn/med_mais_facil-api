@@ -23,18 +23,18 @@ public class ChamadoSintomaEntity {
     @Column(name = "INT_SINT", nullable = false)
     private Integer intensidade;
 
-    @Column(name = "DESC_SINT")
+    @Column(name = "DESC_SINT_LVR")
     private String descricaoLivre;
 
     @CreationTimestamp
     @Column(name = "DT_REG_SINT")
     private LocalDateTime dataRegistro;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chamado_id", nullable = false)
     private ChamadoEntity chamado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sintoma_id", nullable = false)
     private SintomaEntity sintoma;
 }

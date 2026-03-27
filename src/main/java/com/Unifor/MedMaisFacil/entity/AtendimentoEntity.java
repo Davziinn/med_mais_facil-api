@@ -2,7 +2,6 @@ package com.Unifor.MedMaisFacil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.*;
 
 import java.time.*;
 
@@ -23,7 +22,6 @@ public class AtendimentoEntity {
     @Column(name = "OBS_ATEND")
     private String observacoes;
 
-    @CreationTimestamp
     @Column(name = "DT_INI", nullable = false)
     private LocalDateTime dataInicio;
 
@@ -35,6 +33,6 @@ public class AtendimentoEntity {
     private ChamadoEntity chamado;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medico_id", nullable = false, unique = true)
+    @JoinColumn(name = "medico_id", nullable = false)
     private MedicoEntity medico;
 }

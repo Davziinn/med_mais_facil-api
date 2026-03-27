@@ -12,6 +12,7 @@ import java.time.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class MedicoEntity {
 
     @Id
