@@ -25,6 +25,9 @@ public class GuiaMedicaEntity {
     @Column(name = "ST_GUIA_MED", nullable = false)
     private StatusGuiaMedica statusGuiaMedica;
 
+    @Column(name = "NMR_GUIA",nullable = false,unique = true)
+    private String numeroGuia;
+
     @CreationTimestamp
     @Column(name = "DT_SOLIC_GUIA_MED", nullable = false, updatable = false)
     private LocalDateTime dataSolicitacao;
