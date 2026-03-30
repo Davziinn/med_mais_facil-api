@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.entity;
 
+import com.Unifor.MedMaisFacil.enums.Convenio;
 import com.Unifor.MedMaisFacil.enums.StatusGuiaMedica;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,6 +32,10 @@ public class GuiaMedicaEntity {
     @CreationTimestamp
     @Column(name = "DT_SOLIC_GUIA_MED", nullable = false, updatable = false)
     private LocalDateTime dataSolicitacao;
+
+    @Column(name = "guiaMedica_convenio",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Convenio convenio;
 
     @Column(name = "OBS_GUIA_MED", length = 300)
     private String observacoes;
