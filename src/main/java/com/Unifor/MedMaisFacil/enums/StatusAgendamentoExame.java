@@ -1,7 +1,9 @@
 package com.Unifor.MedMaisFacil.enums;
 
 public enum StatusAgendamentoExame {
-    ATIVO,
-    AGUARDANDO,
-    FINALIZADO
+    AGUARDANDO_CONFIRMACAO,
+    AGENDADO,
+    REAGENDAR,
+    CANCELADO,
+    CONCLUIDO
 }
