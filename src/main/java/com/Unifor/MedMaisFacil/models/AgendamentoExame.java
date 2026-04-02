@@ -1,14 +1,12 @@
 package com.Unifor.MedMaisFacil.models;
 
 import com.Unifor.MedMaisFacil.enums.StatusAgendamentoExame;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
