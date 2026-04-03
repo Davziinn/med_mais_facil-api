@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder(toBuilder = true)
 public class Hospital {
 
+    private Long id;
     private String nome;
     private String endereco;
     private String cnpj;

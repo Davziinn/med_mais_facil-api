@@ -4,17 +4,18 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder(toBuilder = true)
-public class ChamadoSintoma {
+public class Prontuario {
 
     private Long id;
-    private Integer intensidade;
-    private String descricaoLivre;
+    private String diagnostico;
+    private String observacoes;
+    private String prescricao;
     private LocalDateTime dataRegistro;
-    private Long chamadoId;
-    private Sintoma sintoma;
+    private LocalDateTime atualizadoEm;
+    private Atendimento atendimento;
 }
