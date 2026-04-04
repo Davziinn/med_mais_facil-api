@@ -27,9 +27,10 @@ public class Chamado {
         this.id = id;
         this.descricaoRelato = descricaoRelato;
         this.statusChamado =  StatusChamado.EM_ESPERA;
-        this.prioridadeChamado = PrioridadeChamado.MEIDIA; // Default -> Padrão
+        this.prioridadeChamado = PrioridadeChamado.MEDIA; // Default -> Padrão
         this.dataHoraChamado = dataHoraChamado;
         this.paciente = paciente;
+        this.hospital = hospital;
     }
 
     public void definirPrioridade (PrioridadeChamado prioridadeChamado) {
