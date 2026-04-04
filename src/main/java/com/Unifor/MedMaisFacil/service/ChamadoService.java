@@ -43,9 +43,9 @@ public class ChamadoService {
         // 4. Salvar os sintomas
         chamadoSintomaService.salvarSintomas(chamadoCriado, sintomas);
         // 5. Classificar prioridade
-        triagemService.calcularPrioridade(chamado);
+        triagemService.calcularPrioridade(chamadoCriado);
         // 6. Gerar senha / Fila
-        filaService.gerarSenha(chamado);
+        filaService.gerarSenha(chamadoCriado);
 
         return chamadoCriado;
     }
