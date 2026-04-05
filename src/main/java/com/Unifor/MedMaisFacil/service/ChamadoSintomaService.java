@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
 import com.Unifor.MedMaisFacil.exceptions.SintomaNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.ChamadoSintomaMapper;
 import com.Unifor.MedMaisFacil.mapper.SintomaMapper;
@@ -30,10 +31,8 @@ public class ChamadoSintomaService {
     @Autowired
     private SintomaMapper sintomaMapper;
 
-    public void salvarSintomas (Chamado chamado, List<Sintoma> sintomas) {
-        if (sintomas == null || sintomas.isEmpty()) {
-            return;
-        }
+    public List<ChamadoSintoma> salvarSintomas(Chamado chamado, List<Sintoma> sintomas) {
+        if (sintomas == null || sintomas.isEmpty()) return null;
 
         List<ChamadoSintoma> chamadoSintomas = new ArrayList<>();
 
@@ -51,7 +50,8 @@ public class ChamadoSintomaService {
             chamadoSintomas.add(chamadoSintoma);
         }
 
-        chamadoSintomaRepository.saveAll(chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList());
+        List<ChamadoSintomaEntity> entity = chamadoSintomaRepository.saveAll(chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList());
+        return chamadoSintomaMapper.toModelList(entity);
 
     }
 

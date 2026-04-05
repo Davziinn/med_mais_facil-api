@@ -32,7 +32,7 @@ public class ChamadoService {
     @Autowired
     private FilaService filaService;
 
-    public Chamado abrirChamado (Chamado chamado, List<Sintoma> sintomas) {
+    public ChamadoAberto abrirChamado (Chamado chamado, List<Sintoma> sintomas) {
 
         // 1. Buscar um paciente
         Paciente pacienteEncontrato = pacienteService.buscarPacienteById(chamado.getPaciente().getId());
@@ -41,13 +41,13 @@ public class ChamadoService {
         // 3. Criar um chamado
         Chamado chamadoCriado = registrarChamado(chamado, pacienteEncontrato, hospitalEncontrado);
         // 4. Salvar os sintomas
-        chamadoSintomaService.salvarSintomas(chamadoCriado, sintomas);
+        List<ChamadoSintoma> listaSintomas = chamadoSintomaService.salvarSintomas(chamadoCriado, sintomas);
         // 5. Classificar prioridade
         triagemService.calcularPrioridade(chamadoCriado);
         // 6. Gerar senha / Fila
         filaService.gerarSenha(chamadoCriado);
 
-        return chamadoCriado;
+        return new ChamadoAberto(chamadoCriado, listaSintomas);
     }
 
     public Chamado registrarChamado(Chamado chamado, Paciente paciente, Hospital hospital) {

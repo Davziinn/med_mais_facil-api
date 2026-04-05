@@ -28,7 +28,7 @@ public class Chamado {
         this.descricaoRelato = descricaoRelato;
         this.statusChamado =  StatusChamado.EM_ESPERA;
         this.prioridadeChamado = PrioridadeChamado.MEDIA; // Default -> Padrão
-        this.dataHoraChamado = dataHoraChamado;
+        this.dataHoraChamado = LocalDateTime.now();
         this.paciente = paciente;
         this.hospital = hospital;
     }

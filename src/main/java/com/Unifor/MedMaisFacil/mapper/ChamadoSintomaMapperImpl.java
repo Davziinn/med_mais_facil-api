@@ -6,14 +6,7 @@ import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/*
-*   private Long id;
-    private Integer intensidade;
-    private String descricaoLivre;
-    private LocalDateTime dataRegistro;
-    private Long chamado;
-    private Sintoma sintoma;
-* */
+import java.util.List;
 
 @Component
 public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
@@ -52,5 +45,12 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                         : null
                 )
                 .build();
+    }
+
+    @Override
+    public List<ChamadoSintoma> toModelList(List<ChamadoSintomaEntity> entities) {
+        return entities.stream()
+                .map(this::toModel)
+                .toList();
     }
 }

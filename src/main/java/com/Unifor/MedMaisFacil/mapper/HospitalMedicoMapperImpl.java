@@ -5,14 +5,6 @@ import com.Unifor.MedMaisFacil.models.HospitalMedico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/*
-
-*  private Long id;
-    private Hospital hospital;
-    private Medico medico;
-    private LocalDateTime criadoEm;
- */
-
 @Component
 public class HospitalMedicoMapperImpl implements HospitalMedicoMapper {
 

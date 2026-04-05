@@ -1,9 +1,15 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
-import com.Unifor.MedMaisFacil.models.Chamado;
+import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ChamadoMapperImpl implements ChamadoMapper {
@@ -50,5 +56,48 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         ? hospitalMapper.toEntity(model.getHospital())
                         : null
         );
+    }
+
+    @Override
+    public Chamado toModel(ChamadoRequestDTO dto) {
+        return Chamado.builder()
+                .descricaoRelato(dto.descricaoRelato())
+                .paciente(Paciente.builder().id(dto.pacienteId()).build())
+                .hospital(Hospital.builder().id(dto.hospitalId()).build())
+                .build();
+    }
+
+    @Override
+    public ChamadoResponseDTO toDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas) {
+        return new ChamadoResponseDTO(
+                model.getId(),
+                model.getDescricaoRelato(),
+                model.getStatusChamado(),
+                model.getPrioridadeChamado(),
+                model.getDataHoraChamado(),
+                model.getCriadoEm(),
+                model.getAtualizadoEm(),
+                model.getPaciente().getId(),
+                model.getPaciente().getNome(),
+                model.getHospital().getId(),
+                model.getHospital().getNome(),
+                chamadoSintomas.stream()
+                        .map(sintoma -> new SintomaResponseDTO(
+                                sintoma.getSintoma().getId(),
+                                sintoma.getSintoma().getDescricao(),
+                                sintoma.getIntensidade(),
+                                sintoma.getDescricaoLivre()
+                        ))
+                        .toList()
+        );
+    }
+
+    @Override
+    public List<Sintoma> toSintomas(ChamadoRequestDTO dto) {
+        return dto.sintomas().stream()
+                .map(sintoma -> Sintoma.builder()
+                        .id(sintoma.getId())
+                        .build())
+                .toList();
     }
 }
