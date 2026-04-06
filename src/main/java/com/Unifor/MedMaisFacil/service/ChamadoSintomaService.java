@@ -7,6 +7,7 @@ import com.Unifor.MedMaisFacil.mapper.SintomaMapper;
 import com.Unifor.MedMaisFacil.models.Chamado;
 import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
 import com.Unifor.MedMaisFacil.models.Sintoma;
+import com.Unifor.MedMaisFacil.models.SintomaDoChamado;
 import com.Unifor.MedMaisFacil.repository.ChamadoSintomaRepository;
 import com.Unifor.MedMaisFacil.repository.SintomaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,28 +32,36 @@ public class ChamadoSintomaService {
     @Autowired
     private SintomaMapper sintomaMapper;
 
-    public List<ChamadoSintoma> salvarSintomas(Chamado chamado, List<Sintoma> sintomas) {
-        if (sintomas == null || sintomas.isEmpty()) return null;
+    public List<ChamadoSintoma> salvarSintomas(Chamado chamado, List<SintomaDoChamado> sintomas) {
+        if (sintomas == null || sintomas.isEmpty()) {
+            return List.of();
+        }
 
         List<ChamadoSintoma> chamadoSintomas = new ArrayList<>();
 
-        for (Sintoma sintoma : sintomas) {
-            Sintoma sintomaBuscado = sintomaMapper.toModel(sintomaRepository.findById(sintoma.getId()).orElseThrow(
-                    () -> new SintomaNotFoundException("Sintoma não encontrado")
-            ));
+        for (SintomaDoChamado sintomaDochamado : sintomas) {
+            Sintoma sintomaBuscado = sintomaMapper.toModel(
+                    sintomaRepository.findById(sintomaDochamado.sintomaId()).orElseThrow(
+                            () -> new SintomaNotFoundException("Sintoma não encontrado")
+                    )
+            );
 
             ChamadoSintoma chamadoSintoma = ChamadoSintoma.builder()
                     .chamadoId(chamado.getId())
                     .sintoma(sintomaBuscado)
+                    .intensidade(sintomaDochamado.intensidade())
+                    .descricaoLivre(sintomaDochamado.descricaoLivre())
                     .dataRegistro(LocalDateTime.now())
                     .build();
 
             chamadoSintomas.add(chamadoSintoma);
         }
 
-        List<ChamadoSintomaEntity> entity = chamadoSintomaRepository.saveAll(chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList());
-        return chamadoSintomaMapper.toModelList(entity);
+        List<ChamadoSintomaEntity> salvas = chamadoSintomaRepository.saveAll(
+                chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList()
+        );
 
+        return salvas.stream().map(chamadoSintomaMapper::toModel).toList();
     }
 
 }

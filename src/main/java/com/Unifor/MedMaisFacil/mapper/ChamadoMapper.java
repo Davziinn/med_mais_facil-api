@@ -6,6 +6,7 @@ import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.models.Chamado;
 import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
 import com.Unifor.MedMaisFacil.models.Sintoma;
+import com.Unifor.MedMaisFacil.models.SintomaDoChamado;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface ChamadoMapper {
 
     ChamadoResponseDTO toDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas);
 
-    List<Sintoma> toSintomas(ChamadoRequestDTO dto);
+    List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto);
 }

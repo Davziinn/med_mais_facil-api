@@ -2,7 +2,6 @@ package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.models.*;
@@ -93,11 +92,12 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
-    public List<Sintoma> toSintomas(ChamadoRequestDTO dto) {
+    public List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto) {
         return dto.sintomas().stream()
-                .map(sintoma -> Sintoma.builder()
-                        .id(sintoma.getId())
-                        .build())
-                .toList();
+                .map(sintoma -> new SintomaDoChamado(
+                        sintoma.getId(),
+                        sintoma.getIntensidade(),
+                        sintoma.getDescricaoLivre()
+                )).toList();
     }
 }

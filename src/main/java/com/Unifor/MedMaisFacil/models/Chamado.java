@@ -33,12 +33,12 @@ public class Chamado {
         this.hospital = hospital;
     }
 
-    public void definirPrioridade (PrioridadeChamado prioridadeChamado) {
+    public PrioridadeChamado definirPrioridade (PrioridadeChamado prioridadeChamado) {
         if (prioridadeChamado == null) {
             throw new IllegalArgumentException("Prioridade inválida");
         }
 
-        this.prioridadeChamado = prioridadeChamado;
+        return this.prioridadeChamado = prioridadeChamado;
     }
 
     public void iniciarChamado (StatusChamado statusChamado) {
