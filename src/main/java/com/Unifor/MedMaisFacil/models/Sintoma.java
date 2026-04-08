@@ -11,4 +11,5 @@ public class Sintoma {
 
     private Long id;
     private String descricao;
+    private Integer intensidade;
 }

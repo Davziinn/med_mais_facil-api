@@ -1,6 +1,6 @@
 package com.Unifor.MedMaisFacil.dtos.chamado;
 
-import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
@@ -20,6 +20,6 @@ public record ChamadoRequestDTO(
 
         @NotEmpty(message = "Informe ao menos um sintoma")
         @Valid
-        List<SintomaRequestDTO> sintomas
+        List<ChamadoSintomaRequestDTO> sintomas
 ) {
 }

@@ -2,7 +2,7 @@ package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +81,10 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 model.getHospital().getId(),
                 model.getHospital().getNome(),
                 chamadoSintomas.stream()
-                        .map(sintoma -> new SintomaResponseDTO(
+                        .map(sintoma -> new ChamadoSintomaResponseDTO(
                                 sintoma.getSintoma().getId(),
                                 sintoma.getSintoma().getDescricao(),
-                                sintoma.getIntensidade(),
-                                sintoma.getDescricaoLivre()
+                                sintoma.getIntensidade()
                         ))
                         .toList()
         );
