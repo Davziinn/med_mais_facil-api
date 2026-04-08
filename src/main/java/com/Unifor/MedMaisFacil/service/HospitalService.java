@@ -24,6 +24,11 @@ public class HospitalService {
     @Autowired
     private ChamadoMapper chamadoMapper;
 
+    public Hospital salvarHospital (Hospital hospital) {
+        if (hospital == null) return null;
+        return hospitalMapper.toModel(hospitalRepository.save(hospitalMapper.toEntity(hospital)));
+    }
+
     public Hospital buscarHospitalById(Long id) {
         HospitalEntity hospital = hospitalRepository.findById(id).orElseThrow(
                 () -> new HospitalNotFoundException("Hospital não encontrado")
