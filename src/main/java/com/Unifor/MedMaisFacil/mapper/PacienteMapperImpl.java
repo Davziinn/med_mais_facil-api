@@ -1,6 +1,8 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 
+import com.Unifor.MedMaisFacil.dtos.paciente.PacienteRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.paciente.PacienteResponseDTO;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.models.Paciente;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,29 @@ public class PacienteMapperImpl implements PacienteMapper {
     @Override
     public PacienteEntity toEntity(Paciente model) {
         return new PacienteEntity(
+                model.getId(),
+                model.getNome(),
+                model.getCpf(),
+                model.getDataNascimento(),
+                model.getSexo(),
+                model.getCriadoEm(),
+                model.getAtualizadoEm()
+        );
+    }
+
+    @Override
+    public Paciente toModel(PacienteRequestDTO dto) {
+        return Paciente.builder()
+                .nome(dto.nome())
+                .cpf(dto.cpf())
+                .dataNascimento(dto.dataNascimento())
+                .sexo(dto.sexo())
+                .build();
+    }
+
+    @Override
+    public PacienteResponseDTO toDTO(Paciente model) {
+        return new PacienteResponseDTO(
                 model.getId(),
                 model.getNome(),
                 model.getCpf(),

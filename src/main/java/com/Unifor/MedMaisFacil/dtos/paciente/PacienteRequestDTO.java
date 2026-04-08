@@ -1,0 +1,19 @@
+package com.Unifor.MedMaisFacil.dtos.paciente;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+
+import java.time.LocalDate;
+
+public record PacienteRequestDTO (
+        @NotNull(message = "O campo [NOME] não pode ser null")
+        String nome,
+
+        @NotBlank(message = "O campo [CPF] é obrigatório")
+        @Length(message = "O campo [CPF] deve conter 14 caracteres")
+        String cpf,
+        @NotNull(message = "O campo [DATA DE NASCIMENTO] é obrigatório")
+        LocalDate dataNascimento,
+        String sexo
+){}

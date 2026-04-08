@@ -18,6 +18,11 @@ public class PacienteService {
     @Autowired
     private PacienteMapper pacienteMapper;
 
+    public Paciente salvarPaciente (Paciente paciente) {
+        if (paciente == null) return null;
+        return pacienteMapper.toModel(pacienteRepository.save(pacienteMapper.toEntity(paciente)));
+    }
+
     public Paciente buscarPacienteById(Long id) {
         PacienteEntity paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado"));
