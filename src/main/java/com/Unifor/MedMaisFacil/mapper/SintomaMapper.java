@@ -14,4 +14,6 @@ public interface SintomaMapper {
     Sintoma toModel (SintomaRequestDTO sintomaRequestDTO);
 
     SintomaResponseDTO toDTO (Sintoma model);
+
+    Sintoma toModel(SintomaResponseDTO sintomaResponseDTO);
 }

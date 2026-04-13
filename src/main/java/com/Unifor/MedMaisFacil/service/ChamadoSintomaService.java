@@ -47,7 +47,7 @@ public class ChamadoSintomaService {
             );
 
             ChamadoSintoma chamadoSintoma = ChamadoSintoma.builder()
-                    .chamadoId(chamado.getId())
+                    .chamado(chamado)
                     .sintoma(sintomaBuscado)
                     .intensidade(sintomaDochamado.intensidade())
                     .descricaoLivre(sintomaDochamado.descricaoLivre())
@@ -62,6 +62,16 @@ public class ChamadoSintomaService {
         );
 
         return salvas.stream().map(chamadoSintomaMapper::toModel).toList();
+    }
+
+    public ChamadoSintoma buscarDetalhesSintomaById (Long id) {
+        if (id == null) return null;
+
+        ChamadoSintomaEntity chamadoBuscado = chamadoSintomaRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Chamado não encontrado")
+        );
+
+        return chamadoSintomaMapper.toModel(chamadoBuscado);
     }
 
 }

@@ -5,6 +5,7 @@ import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +23,8 @@ public class Chamado {
     private LocalDateTime atualizadoEm;
     private Paciente paciente;
     private Hospital hospital;
+
+    private List<ChamadoSintoma> sintomas;
 
     public Chamado (Long id, String descricaoRelato, LocalDateTime dataHoraChamado, Paciente paciente, Hospital hospital) {
         this.id = id;

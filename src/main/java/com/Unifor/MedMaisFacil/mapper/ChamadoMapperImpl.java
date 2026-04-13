@@ -2,7 +2,7 @@ package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         : null,
                 entity.getHospital() != null
                         ? hospitalMapper.toModel(entity.getHospital())
-                        : null
+                        : null,
+        null
         );
     }
 
@@ -67,6 +68,27 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
+    public Chamado toModel(ChamadoResponseDTO dto) {
+        return Chamado.builder()
+                .id(dto.id())
+                .descricaoRelato(dto.descricaoRelato())
+                .statusChamado(dto.statusChamado())
+                .prioridadeChamado(dto.prioridadeChamado())
+                .dataHoraChamado(dto.dataHoraChamado())
+                .criadoEm(dto.criadoEm())
+                .atualizadoEm(dto.atualizadoEm())
+                .paciente(Paciente.builder()
+                        .id(dto.pacienteId())
+                        .nome(dto.nomePaciente())
+                        .build())
+                .hospital(Hospital.builder()
+                        .id(dto.hospitalId())
+                        .nome(dto.nomeHospital())
+                        .build())
+                .build();
+    }
+
+    @Override
     public ChamadoResponseDTO toDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas) {
         return new ChamadoResponseDTO(
                 model.getId(),
@@ -78,10 +100,13 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 model.getAtualizadoEm(),
                 model.getPaciente().getId(),
                 model.getPaciente().getNome(),
+                model.getPaciente().getCpf(),
+                model.getPaciente().getDataNascimento(),
+                model.getPaciente().getSexo(),
                 model.getHospital().getId(),
                 model.getHospital().getNome(),
                 chamadoSintomas.stream()
-                        .map(sintoma -> new ChamadoSintomaResponseDTO(
+                        .map(sintoma -> new SintomaChamadoResponseDTO(
                                 sintoma.getSintoma().getId(),
                                 sintoma.getSintoma().getDescricao(),
                                 sintoma.getIntensidade()

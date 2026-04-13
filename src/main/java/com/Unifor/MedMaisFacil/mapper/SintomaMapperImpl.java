@@ -40,4 +40,12 @@ public class SintomaMapperImpl implements SintomaMapper{
                 model.getDescricao()
                 );
     }
+
+    @Override
+    public Sintoma toModel(SintomaResponseDTO dto) {
+        return Sintoma.builder()
+                .id(dto.id())
+                .descricao(dto.descricao())
+                .build();
+    }
 }

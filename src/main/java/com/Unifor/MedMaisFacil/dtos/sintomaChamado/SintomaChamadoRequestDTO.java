@@ -1,4 +1,4 @@
-package com.Unifor.MedMaisFacil.dtos.chamadoSintoma;
+package com.Unifor.MedMaisFacil.dtos.sintomaChamado;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChamadoSintomaRequestDTO {
+public class SintomaChamadoRequestDTO {
 
     @NotNull
     private Long id;

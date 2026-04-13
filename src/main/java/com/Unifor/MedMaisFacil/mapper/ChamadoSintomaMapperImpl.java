@@ -1,5 +1,8 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
 import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
@@ -14,6 +17,9 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
     @Autowired
     private SintomaMapper sintomaMapper;
 
+    @Autowired
+    private ChamadoMapper chamadoMapper;
+
     @Override
     public ChamadoSintoma toModel(ChamadoSintomaEntity entity) {
         return new ChamadoSintoma(
@@ -21,7 +27,9 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                 entity.getIntensidade(),
                 entity.getDescricaoLivre(),
                 entity.getDataRegistro(),
-                entity.getChamado().getId(),
+                entity.getChamado() != null
+                        ? chamadoMapper.toModel(entity.getChamado())
+                        : null,
                 entity.getSintoma() != null
                         ? sintomaMapper.toModel(entity.getSintoma())
                         : null
@@ -31,7 +39,7 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
     @Override
     public ChamadoSintomaEntity toEntity(ChamadoSintoma model) {
         ChamadoEntity referenciaDoChamado = ChamadoEntity.builder()
-                .id(model.getChamadoId())
+                .id(model.getChamado().getId())
                 .build();
 
         return ChamadoSintomaEntity.builder()
@@ -45,6 +53,38 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                         : null
                 )
                 .build();
+    }
+
+    @Override
+    public ChamadoSintoma toModel(ChamadoSintomaResponseDTO dto) {
+        return new ChamadoSintoma(
+                dto.id(),
+                dto.intensidade(),
+                dto.descricaoLivre(),
+                dto.dataRegistro(),
+                dto.chamadoResponseDTO() != null
+                        ? chamadoMapper.toModel(dto.chamadoResponseDTO())
+                        : null,
+                dto.sintomaResponseDTO() != null
+                        ? sintomaMapper.toModel(dto.sintomaResponseDTO())
+                        : null
+        );
+    }
+
+    @Override
+    public ChamadoSintomaResponseDTO toDTO(ChamadoSintoma model) {
+        return new ChamadoSintomaResponseDTO(
+                model.getId(),
+                model.getIntensidade(),
+                model.getDescricaoLivre(),
+                model.getDataRegistro(),
+                model.getChamado() != null
+                        ? chamadoMapper.toDTO(model.getChamado(), List.of())
+                        : null,
+                model.getSintoma() != null
+                        ? sintomaMapper.toDTO(model.getSintoma())
+                        : null
+        );
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface ChamadoMapper {
 
     Chamado toModel (ChamadoRequestDTO dto);
 
+    Chamado toModel(ChamadoResponseDTO dto);
+
     ChamadoResponseDTO toDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas);
 
     List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto);

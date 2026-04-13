@@ -15,6 +15,6 @@ public class ChamadoSintoma {
     private Integer intensidade;
     private String descricaoLivre;
     private LocalDateTime dataRegistro;
-    private Long chamadoId;
+    private Chamado chamado;
     private Sintoma sintoma;
 }
