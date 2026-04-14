@@ -2,20 +2,14 @@ package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
 import com.Unifor.MedMaisFacil.exceptions.SintomaNotFoundException;
-import com.Unifor.MedMaisFacil.mapper.ChamadoSintomaMapper;
-import com.Unifor.MedMaisFacil.mapper.SintomaMapper;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
-import com.Unifor.MedMaisFacil.models.Sintoma;
-import com.Unifor.MedMaisFacil.models.SintomaDoChamado;
-import com.Unifor.MedMaisFacil.repository.ChamadoSintomaRepository;
-import com.Unifor.MedMaisFacil.repository.SintomaRepository;
+import com.Unifor.MedMaisFacil.mapper.*;
+import com.Unifor.MedMaisFacil.models.*;
+import com.Unifor.MedMaisFacil.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ChamadoSintomaService {
