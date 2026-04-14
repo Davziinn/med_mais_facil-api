@@ -1,20 +1,15 @@
 package com.Unifor.MedMaisFacil.service;
 
-import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
-import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
-import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
-import com.Unifor.MedMaisFacil.enums.StatusChamado;
-import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
-import com.Unifor.MedMaisFacil.mapper.ChamadoSintomaMapper;
+import com.Unifor.MedMaisFacil.entity.*;
+import com.Unifor.MedMaisFacil.enums.*;
+import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
-import com.Unifor.MedMaisFacil.repository.ChamadoRepository;
-import com.Unifor.MedMaisFacil.repository.ChamadoSintomaRepository;
+import com.Unifor.MedMaisFacil.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ChamadoService {
@@ -76,6 +71,11 @@ public class ChamadoService {
         return chamadoMapper.toModel(chamadoRepository.save(chamadoMapper.toEntity(vinculaAoChamado)));
     }
 
+    /*
+        Busca os chamados no banco
+        Busca os sintomas no banco
+        Popula manualmente o model do Chamado com o Sintoma vindo do banco
+    */
     public Chamado consultarDetalhesChamado(Long id) {
         ChamadoEntity chamadoEntity = chamadoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
@@ -83,8 +83,22 @@ public class ChamadoService {
         List<ChamadoSintomaEntity> sintomaEntities = chamadoSintomaRepository.findByChamadoId(id);
 
         Chamado model = chamadoMapper.toModel(chamadoEntity);
-        model.setSintomas(chamadoSintomaMapper.toModelList(sintomaEntities));
+        model.setChamadoSintomas(chamadoSintomaMapper.toModelList(sintomaEntities));
 
         return model;
+    }
+
+    /*
+        Busca do banco os Chamados e os Sintomas relacionados
+    */
+    public List<Chamado> listarTodosChamadosAtivos() {
+        List<ChamadoEntity> entidades = chamadoRepository
+                .buscarChamadosAtivosComSintomas(
+                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO)
+                );
+
+        return entidades.stream()
+                .map(chamadoMapper::toModel)
+                .toList();
     }
 }

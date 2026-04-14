@@ -1,7 +1,6 @@
 package com.Unifor.MedMaisFacil.models;
 
-import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
-import com.Unifor.MedMaisFacil.enums.StatusChamado;
+import com.Unifor.MedMaisFacil.enums.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -24,7 +23,7 @@ public class Chamado {
     private Paciente paciente;
     private Hospital hospital;
 
-    private List<ChamadoSintoma> sintomas;
+    private List<ChamadoSintoma> chamadoSintomas;
 
     public Chamado (Long id, String descricaoRelato, LocalDateTime dataHoraChamado, Paciente paciente, Hospital hospital) {
         this.id = id;

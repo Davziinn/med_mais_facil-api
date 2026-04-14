@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.*;
 
 import java.time.*;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_CHAM")
@@ -50,4 +51,7 @@ public class ChamadoEntity {
     @ManyToOne
     @JoinColumn(name = "hospital_id", nullable = false)
     private HospitalEntity hospital;
+
+    @OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY)
+    private List<ChamadoSintomaEntity> chamadoSintomas;
 }

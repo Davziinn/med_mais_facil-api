@@ -1,8 +1,7 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
-import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
-import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
+import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,12 +1,8 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
-import com.Unifor.MedMaisFacil.models.Sintoma;
-import com.Unifor.MedMaisFacil.models.SintomaDoChamado;
+import com.Unifor.MedMaisFacil.models.*;
 
 import java.util.List;
 

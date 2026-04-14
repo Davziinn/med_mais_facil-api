@@ -1,9 +1,8 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
-import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
+import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,13 +34,31 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 entity.getHospital() != null
                         ? hospitalMapper.toModel(entity.getHospital())
                         : null,
-        null
+                entity.getChamadoSintomas() != null
+                        ? entity.getChamadoSintomas().stream()
+                        .map(s -> ChamadoSintoma.builder()
+                                .id(s.getId())
+                                .intensidade(s.getIntensidade())
+                                .descricaoLivre(s.getDescricaoLivre())
+                                .dataRegistro(s.getDataRegistro())
+                                .sintoma(
+                                        s.getSintoma() != null
+                                                ? Sintoma.builder()
+                                                .id(s.getSintoma().getId())
+                                                .descricao(s.getSintoma().getDescricao())
+                                                .build()
+                                                : null
+                                )
+                                .build()
+                        )
+                        .toList()
+                        : List.of()
         );
     }
 
     @Override
     public ChamadoEntity toEntity(Chamado model) {
-        return new ChamadoEntity(
+        ChamadoEntity entity = new ChamadoEntity(
                 model.getId(),
                 model.getDescricaoRelato(),
                 model.getStatusChamado(),
@@ -54,8 +71,37 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         : null,
                 model.getHospital() != null
                         ? hospitalMapper.toEntity(model.getHospital())
-                        : null
+                        : null,
+                null
         );
+
+        if (model.getChamadoSintomas() != null) {
+            List<ChamadoSintomaEntity> sintomas = model.getChamadoSintomas().stream()
+                    .map(s -> {
+                        ChamadoSintomaEntity entitySintoma = new ChamadoSintomaEntity();
+
+                        entitySintoma.setIntensidade(s.getIntensidade());
+                        entitySintoma.setDescricaoLivre(s.getDescricaoLivre());
+
+                        entitySintoma.setChamado(entity);
+
+                        if (s.getSintoma() != null) {
+                            entitySintoma.setSintoma(
+                                    new SintomaEntity(
+                                            s.getSintoma().getId(),
+                                            s.getSintoma().getDescricao()
+                                    )
+                            );
+                        }
+
+                        return entitySintoma;
+                    })
+                    .toList();
+
+            entity.setChamadoSintomas(sintomas);
+        }
+
+        return entity;
     }
 
     @Override

@@ -1,20 +1,13 @@
 package com.Unifor.MedMaisFacil.controllers;
 
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.chamado.ChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
-import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
-import com.Unifor.MedMaisFacil.mapper.ChamadoSintomaMapper;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.ChamadoAberto;
-import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
-import com.Unifor.MedMaisFacil.models.SintomaDoChamado;
-import com.Unifor.MedMaisFacil.service.ChamadoService;
-import com.Unifor.MedMaisFacil.service.ChamadoSintomaService;
+import com.Unifor.MedMaisFacil.mapper.*;
+import com.Unifor.MedMaisFacil.models.*;
+import com.Unifor.MedMaisFacil.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,6 +52,22 @@ public class ChamadoController {
     @GetMapping("/detalhes/{id}")
     public ResponseEntity<ChamadoResponseDTO> consultarDetalhesChamado(@PathVariable Long id) {
         Chamado chamado = chamadoService.consultarDetalhesChamado(id);
-        return ResponseEntity.ok(chamadoMapper.toDTO(chamado, chamado.getSintomas()));
+        return ResponseEntity.ok(chamadoMapper.toDTO(chamado, chamado.getChamadoSintomas()));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ChamadoResponseDTO>> consultarChamados() {
+        List<Chamado> chamados = chamadoService.listarTodosChamadosAtivos();
+
+        List<ChamadoResponseDTO> listaChamadodsDto = chamados.stream()
+                .map(chamado -> chamadoMapper.toDTO(
+                        chamado,
+                        chamado.getChamadoSintomas() != null
+                                ? chamado.getChamadoSintomas()
+                                : List.of()
+                ))
+                .toList();
+
+        return ResponseEntity.ok(listaChamadodsDto);
     }
 }
