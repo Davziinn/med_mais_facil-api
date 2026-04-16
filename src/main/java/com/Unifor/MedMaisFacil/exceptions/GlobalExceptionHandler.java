@@ -37,4 +37,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleHospitalNotFoundException (HospitalNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+
+    @ExceptionHandler(ChamadoNotFoundException.class)
+    public ResponseEntity<Object> handleChamadoNotFoundException (ChamadoNotFoundException ex){
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 }
