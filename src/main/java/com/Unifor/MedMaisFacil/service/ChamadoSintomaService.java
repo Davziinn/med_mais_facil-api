@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.entity.ChamadoSintomaEntity;
+import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
 import com.Unifor.MedMaisFacil.exceptions.SintomaNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
@@ -62,7 +63,7 @@ public class ChamadoSintomaService {
         if (id == null) return null;
 
         ChamadoSintomaEntity chamadoBuscado = chamadoSintomaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Chamado não encontrado")
+                () -> new ChamadoNotFoundException("Chamado não encontrado")
         );
 
         return chamadoSintomaMapper.toModel(chamadoBuscado);

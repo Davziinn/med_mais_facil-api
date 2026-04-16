@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.enums.*;
+import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.repository.*;
@@ -78,7 +79,7 @@ public class ChamadoService {
     */
     public Chamado consultarDetalhesChamado(Long id) {
         ChamadoEntity chamadoEntity = chamadoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Chamado não encontrado"));
+                .orElseThrow(() -> new ChamadoNotFoundException("Chamado não encontrado"));
 
         List<ChamadoSintomaEntity> sintomaEntities = chamadoSintomaRepository.findByChamadoId(id);
 

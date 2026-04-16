@@ -1,12 +1,11 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
 import com.Unifor.MedMaisFacil.models.Chamado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FilaService {
@@ -30,6 +29,6 @@ public class FilaService {
             }
         }
 
-        throw new RuntimeException("Chamado de ID " + chamado.getId() + " não encontrado na fila do hospital");
+        throw new ChamadoNotFoundException("Chamado de ID " + chamado.getId() + " não encontrado na fila do hospital");
     }
 }

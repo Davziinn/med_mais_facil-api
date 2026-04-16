@@ -2,10 +2,8 @@ package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.entity.HospitalEntity;
 import com.Unifor.MedMaisFacil.exceptions.HospitalNotFoundException;
-import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
-import com.Unifor.MedMaisFacil.mapper.HospitalMapper;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.Hospital;
+import com.Unifor.MedMaisFacil.mapper.*;
+import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

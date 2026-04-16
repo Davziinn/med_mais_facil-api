@@ -1,13 +1,11 @@
 package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Period;
+import java.time.*;
 
 @Service
 public class TriagemService {
