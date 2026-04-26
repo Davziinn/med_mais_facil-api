@@ -55,7 +55,7 @@ public class ChamadoService {
         // 5. Salvar os sintomas
         List<ChamadoSintoma> listaSintomas = chamadoSintomaService.salvarSintomas(chamadoCriado, sintomas);
         // 6. Gerar senha / Fila
-        int senhaGerada = filaService.gerarSenha(chamadoCriado);
+        String senhaGerada = filaService.gerarSenha(chamadoCriado);
 
         return new ChamadoAberto(chamadoCriado, listaSintomas, prioridadeChamadoCalculado, senhaGerada);
     }

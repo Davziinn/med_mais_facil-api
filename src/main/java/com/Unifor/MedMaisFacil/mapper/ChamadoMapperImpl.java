@@ -1,12 +1,17 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
+import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -162,6 +167,43 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
+    public DetalheChamadoResponseDTO toDetalheDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas) {
+        return new DetalheChamadoResponseDTO(
+                model.getId(),
+                gerarSenha(model),
+                model.getStatusChamado().name(),
+                model.getPrioridadeChamado().name(),
+                model.getDataHoraChamado(),
+                model.getPaciente() != null
+                        ? pacienteMapper.toDTO(model.getPaciente())
+                        : null,
+                model.getDescricaoRelato(),
+                chamadoSintomas.stream()
+                        .map(sintoma -> new SintomaChamadoResponseDTO(
+                                sintoma.getSintoma().getId(),
+                                sintoma.getSintoma().getDescricao(),
+                                sintoma.getIntensidade()
+                        ))
+                        .toList()
+                );
+    }
+
+    @Override
+    public FilaAtendimentoResponseDTO toFilaAtendimentoDTO(Chamado model) {
+        return new FilaAtendimentoResponseDTO(
+                model.getId(),
+                gerarSenha(model),
+                model.getPaciente() != null
+                        ? pacienteMapper.toDTO(model.getPaciente())
+                        : null,
+                model.getDescricaoRelato(),
+                model.getStatusChamado().name(),
+                model.getPrioridadeChamado().name(),
+                calcularTempoEspera(model.getDataHoraChamado())
+        );
+    }
+
+    @Override
     public List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto) {
         return dto.sintomas().stream()
                 .map(sintoma -> new SintomaDoChamado(
@@ -169,5 +211,14 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         sintoma.getIntensidade(),
                         sintoma.getDescricaoLivre()
                 )).toList();
+    }
+
+    private String gerarSenha(Chamado model) {
+        return "A" + String.format("%03d", model.getId());
+    }
+
+    private Long calcularTempoEspera(LocalDateTime dataHora) {
+        if (dataHora == null) return 0L;
+        return Duration.between(dataHora, LocalDateTime.now()).toMinutes();
     }
 }

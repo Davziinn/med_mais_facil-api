@@ -8,6 +8,6 @@ public record ChamadoAberto (
         Chamado chamado,
         List<ChamadoSintoma> chamadoSintomas,
         PrioridadeChamado prioridadeChamado,
-        Integer senha
+        String senha
 ){
 }

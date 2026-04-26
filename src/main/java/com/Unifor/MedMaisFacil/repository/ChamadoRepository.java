@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
-    List<ChamadoEntity> findByStatusChamadoNotIn (List<StatusChamado> status);
-
     @Query("""
     SELECT DISTINCT c
     FROM ChamadoEntity c

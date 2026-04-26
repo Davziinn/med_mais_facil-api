@@ -2,6 +2,8 @@ package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.service.*;
@@ -50,24 +52,19 @@ public class ChamadoController {
     }
 
     @GetMapping("/detalhes/{id}")
-    public ResponseEntity<ChamadoResponseDTO> consultarDetalhesChamado(@PathVariable Long id) {
+    public ResponseEntity<DetalheChamadoResponseDTO> consultarDetalhesChamado(@PathVariable Long id) {
         Chamado chamado = chamadoService.consultarDetalhesChamado(id);
-        return ResponseEntity.ok(chamadoMapper.toDTO(chamado, chamado.getChamadoSintomas()));
+        return ResponseEntity.ok(chamadoMapper.toDetalheDTO(chamado, chamado.getChamadoSintomas()));
     }
 
     @GetMapping
-    public ResponseEntity<List<ChamadoResponseDTO>> consultarChamados() {
+    public ResponseEntity<List<FilaAtendimentoResponseDTO>> consultarChamados() {
         List<Chamado> chamados = chamadoService.listarTodosChamadosAtivos();
 
-        List<ChamadoResponseDTO> listaChamadodsDto = chamados.stream()
-                .map(chamado -> chamadoMapper.toDTO(
-                        chamado,
-                        chamado.getChamadoSintomas() != null
-                                ? chamado.getChamadoSintomas()
-                                : List.of()
-                ))
+        List<FilaAtendimentoResponseDTO> filaAtendimentoDto = chamados.stream()
+                .map(chamadoMapper::toFilaAtendimentoDTO)
                 .toList();
 
-        return ResponseEntity.ok(listaChamadodsDto);
+        return ResponseEntity.ok(filaAtendimentoDto);
     }
 }
