@@ -3,7 +3,6 @@ package com.Unifor.MedMaisFacil.mapper;
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.sintoma.SintomaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.*;

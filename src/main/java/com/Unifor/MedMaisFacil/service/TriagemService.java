@@ -25,7 +25,7 @@ public class TriagemService {
         }
     }
 
-    private int calcularIdade (Paciente paciente) {
+    public int calcularIdade (Paciente paciente) {
 
         Paciente pacienteEncontrato = pacienteService.buscarPacienteById(paciente.getId());
 

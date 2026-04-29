@@ -5,6 +5,7 @@ import com.Unifor.MedMaisFacil.dtos.paciente.PacienteRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.paciente.PacienteResponseDTO;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -55,7 +56,7 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getId(),
                 model.getNome(),
                 model.getCpf(),
-                model.getDataNascimento(),
+                CalcularIdadeUtils.calcular(model.getDataNascimento()),
                 model.getSexo(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
