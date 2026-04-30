@@ -8,6 +8,8 @@ import com.Unifor.MedMaisFacil.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PacienteService {
 
@@ -28,5 +30,11 @@ public class PacienteService {
                 .orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado"));
 
         return pacienteMapper.toModel(paciente);
+    }
+
+    public List<Paciente> buscarTodosPacientes () {
+        List<PacienteEntity> pacientesBuscados = pacienteRepository.findAll();
+
+        return pacientesBuscados.stream().map(pacienteMapper::toModel).toList();
     }
 }

@@ -10,8 +10,8 @@ public record DetalheChamadoResponseDTO (
         Long id,
         String senha,
 
-        String status,
-        String prioridade,
+        String statusChamado,
+        String prioridadeChamado,
         LocalDateTime dataAbertura,
 
         PacienteResponseDTO paciente,
