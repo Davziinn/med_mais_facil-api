@@ -1,7 +1,6 @@
 package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.paciente.*;
-import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.mapper.PacienteMapper;
 import com.Unifor.MedMaisFacil.models.Paciente;
 import com.Unifor.MedMaisFacil.service.PacienteService;
