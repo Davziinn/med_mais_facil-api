@@ -57,9 +57,7 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getNome(),
                 model.getCpf(),
                 CalcularIdadeUtils.calcular(model.getDataNascimento()),
-                model.getSexo(),
-                model.getCriadoEm(),
-                model.getAtualizadoEm()
+                model.getSexo()
         );
     }
 }

@@ -1,7 +1,10 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.medico.MedicoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.medico.MedicoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.models.Medico;
+import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,6 +35,29 @@ public class MedicoMapperImpl implements MedicoMapper {
                 model.getDataNascimento(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
+        );
+    }
+
+    @Override
+    public Medico toModel(MedicoRequestDTO dto) {
+        return new Medico().toBuilder()
+                .nome(dto.nome())
+                .crm(dto.crm())
+                .especialidade(dto.especialidade())
+                .sexo(dto.sexo())
+                .dataNascimento(dto.dataNascimento())
+                .build();
+    }
+
+    @Override
+    public MedicoResponseDTO toDTO(Medico model) {
+        return new MedicoResponseDTO(
+                model.getId(),
+                model.getNome(),
+                model.getCrm(),
+                model.getEspecialidade(),
+                model.getSexo(),
+                CalcularIdadeUtils.calcular(model.getDataNascimento())
         );
     }
 }

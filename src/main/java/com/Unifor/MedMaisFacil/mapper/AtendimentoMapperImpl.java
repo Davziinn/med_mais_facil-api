@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.models.Atendimento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,13 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
                 model.getMedico() != null
                         ? medicoMapper.toEntity(model.getMedico())
                         : null
+        );
+    }
+
+    @Override
+    public IniciarAtendimentoResponseDTO toDTO(Atendimento model) {
+        return new IniciarAtendimentoResponseDTO(
+                model.getId()
         );
     }
 }
