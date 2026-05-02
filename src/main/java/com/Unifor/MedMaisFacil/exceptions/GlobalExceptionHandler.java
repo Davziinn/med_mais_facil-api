@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ChamadoNotAvailableException.class)
     public ResponseEntity<Object> handleChamadoNotAvailableException (ChamadoNotAvailableException ex){
-        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(AtendimentoNotFoundException.class)
