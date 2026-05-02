@@ -1,21 +1,11 @@
 package com.Unifor.MedMaisFacil.service;
 
-import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.enums.StatusChamado;
-import com.Unifor.MedMaisFacil.exceptions.AtendimentoNotFoundException;
-import com.Unifor.MedMaisFacil.exceptions.ChamadoNotAvailableException;
-import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
-import com.Unifor.MedMaisFacil.exceptions.MedicoNotFoundException;
-import com.Unifor.MedMaisFacil.mapper.AtendimentoMapper;
-import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
-import com.Unifor.MedMaisFacil.mapper.MedicoMapper;
-import com.Unifor.MedMaisFacil.models.Atendimento;
-import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.Medico;
-import com.Unifor.MedMaisFacil.repository.AtendimentoRepository;
-import com.Unifor.MedMaisFacil.repository.ChamadoRepository;
-import com.Unifor.MedMaisFacil.repository.MedicoRepository;
+import com.Unifor.MedMaisFacil.exceptions.*;
+import com.Unifor.MedMaisFacil.mapper.*;
+import com.Unifor.MedMaisFacil.models.*;
+import com.Unifor.MedMaisFacil.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +17,6 @@ public class AtendimentoService {
     @Autowired
     private AtendimentoRepository atendimentoRepository;
 
-    @Autowired
-    private ChamadoRepository chamadoRepository;
-
-    @Autowired
-    private ChamadoMapper chamadoMapper;
     @Autowired
     private MedicoMapper medicoMapper;
 
@@ -72,8 +57,8 @@ public class AtendimentoService {
         Atendimento atendimentoSalvo = atendimentoMapper.toModel(
                 atendimentoRepository.save(atendimentoMapper.toEntity(atendimentoCriado))
         );
-        chamadoEncontrado.setStatusChamado(StatusChamado.EM_ATENDIMENTO);
-        chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado));
+
+        chamadoService.atualizarStatus(chamadoId, StatusChamado.EM_ATENDIMENTO);
 
         return atendimentoSalvo;
     }
@@ -85,10 +70,6 @@ public class AtendimentoService {
             throw new ChamadoNotAvailableException("Chamado que não está em atendimento, não pode ser salvo");
         }
 
-        if (atendimento.getDataFim() != null) {
-            throw new RuntimeException("Atendimento já foi finalizado");
-        }
-
         Atendimento objetoAtendimentoCriado = atendimentoEncontrado.toBuilder()
                 .anamnese(atendimento.getAnamnese())
                 .exameFisico(atendimento.getExameFisico())
@@ -98,6 +79,28 @@ public class AtendimentoService {
                 .build();
 
         return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(objetoAtendimentoCriado)));
+    }
+
+    public Atendimento encerrarAtendimento (Long id) {
+        Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
+
+        if (atendimentoEncontrado.getDataFim() != null) {
+            throw new RuntimeException("Atendimento já foi finalizado");
+        }
+
+        if (atendimentoEncontrado.getChamado().getStatusChamado() != StatusChamado.EM_ATENDIMENTO) {
+            throw new ChamadoNotAvailableException("Chamado que não está em atendimento, não pode ser salvo");
+        }
+
+        Atendimento objetoEncerrarAtendimento = atendimentoEncontrado.toBuilder()
+                .dataFim(LocalDateTime.now())
+                .build();
+
+        Atendimento atendimentoEncerrado = atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(objetoEncerrarAtendimento)));
+
+        chamadoService.atualizarStatus(atendimentoEncontrado.getChamado().getId(), StatusChamado.FINALIZADO);
+
+        return atendimentoEncerrado;
     }
 
     public Atendimento buscarAtendimentoById (Long id) {

@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
@@ -17,4 +18,6 @@ public interface AtendimentoMapper {
     IniciarAtendimentoResponseDTO toIniciarDTO (Atendimento model);
 
     SalvarAtendimentoResponseDTO toSalvarDTO (Atendimento model);
+
+    EncerrarAtendimentoResponseDTO toEncerrarDTO (Atendimento model);
 }

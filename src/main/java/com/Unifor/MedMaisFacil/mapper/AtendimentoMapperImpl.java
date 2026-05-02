@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
@@ -82,6 +83,17 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
                 model.getHipoteseDiagnostica(),
                 model.getCidDoenca(),
                 model.getConduta(),
+                model.getDataInicio(),
+                model.getDataFim(),
+                model.getChamado().getId(),
+                model.getMedico().getId()
+        );
+    }
+
+    @Override
+    public EncerrarAtendimentoResponseDTO toEncerrarDTO(Atendimento model) {
+        return new EncerrarAtendimentoResponseDTO(
+                model.getId(),
                 model.getDataInicio(),
                 model.getDataFim(),
                 model.getChamado().getId(),

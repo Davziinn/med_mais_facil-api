@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.controllers;
 
+import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.*;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
@@ -32,6 +33,13 @@ public class AtendimentoController {
     public ResponseEntity<SalvarAtendimentoResponseDTO> atualizarDadosAtendimento (@PathVariable Long id, @RequestBody SalvarAtendimentoRequestDTO atualizarDadosAtendimento) {
         Atendimento atendimentoAtualizado = atendimentoService.salvar(id, atendimentoMapper.toModel(atualizarDadosAtendimento));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(atendimentoMapper.toSalvarDTO(atendimentoAtualizado));
+        return ResponseEntity.ok(atendimentoMapper.toSalvarDTO(atendimentoAtualizado));
+    }
+
+    @PutMapping("/encerrar/{id}")
+    public ResponseEntity<EncerrarAtendimentoResponseDTO> encerrarAtendimento (@PathVariable Long id) {
+        Atendimento atendimentoEncerrado = atendimentoService.encerrarAtendimento(id);
+
+        return ResponseEntity.ok(atendimentoMapper.toEncerrarDTO(atendimentoEncerrado));
     }
 }

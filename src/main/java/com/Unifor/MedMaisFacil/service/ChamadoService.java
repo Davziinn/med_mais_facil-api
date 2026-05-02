@@ -102,4 +102,12 @@ public class ChamadoService {
                 .map(chamadoMapper::toModel)
                 .toList();
     }
+
+    public void atualizarStatus(Long chamadoId, StatusChamado novoStatus) {
+        ChamadoEntity chamado = chamadoRepository.findById(chamadoId)
+                .orElseThrow(() -> new ChamadoNotFoundException("Chamado não encontrado"));
+
+        chamado.setStatusChamado(novoStatus);
+        chamadoRepository.save(chamado);
+    }
 }
