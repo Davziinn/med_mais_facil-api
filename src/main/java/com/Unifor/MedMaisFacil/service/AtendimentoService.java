@@ -3,6 +3,7 @@ package com.Unifor.MedMaisFacil.service;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.enums.StatusChamado;
+import com.Unifor.MedMaisFacil.exceptions.AtendimentoNotFoundException;
 import com.Unifor.MedMaisFacil.exceptions.ChamadoNotAvailableException;
 import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
 import com.Unifor.MedMaisFacil.exceptions.MedicoNotFoundException;
@@ -35,6 +36,9 @@ public class AtendimentoService {
     private MedicoMapper medicoMapper;
 
     @Autowired
+    private ChamadoService chamadoService;
+
+    @Autowired
     private MedicoRepository medicoRepository;
 
     @Autowired
@@ -42,8 +46,7 @@ public class AtendimentoService {
 
     public Atendimento iniciar(Long chamadoId, Long medicoId) {
 
-        ChamadoEntity chamadoEncontrado = chamadoRepository.findById(chamadoId)
-                .orElseThrow(() -> new ChamadoNotFoundException("Chamado não encontrado"));
+        Chamado chamadoEncontrado =  chamadoService.consultarDetalhesChamado(chamadoId);
 
         MedicoEntity medicoEncontrado = medicoRepository.findById(medicoId)
                 .orElseThrow(() -> new MedicoNotFoundException("Médico não encontrado"));
@@ -56,23 +59,51 @@ public class AtendimentoService {
             throw new RuntimeException("Já existe um atendimento para esse chamado");
         }
 
-        Chamado chamado = chamadoMapper.toModel(chamadoEncontrado);
+
         Medico medico = medicoMapper.toModel(medicoEncontrado);
 
         Atendimento atendimentoCriado = Atendimento.builder()
-                .chamado(chamado)
+                .chamado(chamadoEncontrado)
                 .medico(medico)
                 .dataInicio(LocalDateTime.now())
-                .observacoes(null)
+                .anamnese(null)
                 .build();
 
         Atendimento atendimentoSalvo = atendimentoMapper.toModel(
                 atendimentoRepository.save(atendimentoMapper.toEntity(atendimentoCriado))
         );
         chamadoEncontrado.setStatusChamado(StatusChamado.EM_ATENDIMENTO);
-        chamadoRepository.save(chamadoEncontrado);
+        chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado));
 
         return atendimentoSalvo;
+    }
+
+    public Atendimento salvar (Long id, Atendimento atendimento) {
+        Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
+
+        if (!atendimentoEncontrado.getChamado().getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO)) {
+            throw new ChamadoNotAvailableException("Chamado que não está em atendimento, não pode ser salvo");
+        }
+
+        if (atendimento.getDataFim() != null) {
+            throw new RuntimeException("Atendimento já foi finalizado");
+        }
+
+        Atendimento objetoAtendimentoCriado = atendimentoEncontrado.toBuilder()
+                .anamnese(atendimento.getAnamnese())
+                .exameFisico(atendimento.getExameFisico())
+                .hipoteseDiagnostica(atendimento.getHipoteseDiagnostica())
+                .cidDoenca(atendimento.getCidDoenca())
+                .conduta(atendimento.getConduta())
+                .build();
+
+        return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(objetoAtendimentoCriado)));
+    }
+
+    public Atendimento buscarAtendimentoById (Long id) {
+        return atendimentoMapper.toModel(atendimentoRepository.findById(id).orElseThrow(
+                () -> new AtendimentoNotFoundException("Atendimento não encontrado")
+        ));
     }
 
     public boolean existePorChamadoId (Long chamadoId) {

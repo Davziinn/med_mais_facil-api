@@ -12,7 +12,11 @@ import java.time.LocalDateTime;
 public class Atendimento {
 
     private Long id;
-    private String observacoes;
+    private String anamnese;
+    private String exameFisico;
+    private String hipoteseDiagnostica;
+    private String cidDoenca;
+    private String conduta;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private Chamado chamado;

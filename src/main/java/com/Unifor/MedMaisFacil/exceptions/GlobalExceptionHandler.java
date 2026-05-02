@@ -52,4 +52,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleChamadoNotAvailableException (ChamadoNotAvailableException ex){
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+
+    @ExceptionHandler(AtendimentoNotFoundException.class)
+    public ResponseEntity<Object> handleAtendimentoNotFoundException (AtendimentoNotFoundException ex){
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
 }

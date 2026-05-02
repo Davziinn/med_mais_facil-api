@@ -19,8 +19,20 @@ public class AtendimentoEntity {
     @Column(name = "ID_ATEND")
     private Long id;
 
-    @Column(name = "OBS_ATEND")
-    private String observacoes;
+    @Column(name = "ANM_ATEND", columnDefinition = "TEXT")
+    private String anamnese;
+
+    @Column(name = "EXM_FIS_ATEND", columnDefinition = "TEXT")
+    private String exameFisico;
+
+    @Column(name = "HPTS_DGNT", columnDefinition = "TEXT")
+    private String hipoteseDiagnostica;
+
+    @Column(name = "CID_DNC")
+    private String cidDoenca;
+
+    @Column(name = "CNDT_ATEND", columnDefinition = "TEXT")
+    private String conduta;
 
     @Column(name = "DT_INI", nullable = false)
     private LocalDateTime dataInicio;

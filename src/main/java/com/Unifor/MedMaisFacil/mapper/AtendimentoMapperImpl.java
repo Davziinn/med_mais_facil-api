@@ -1,6 +1,8 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.models.Atendimento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,11 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
         Atendimento atendimentoModel = new Atendimento();
 
         atendimentoModel.setId(entity.getId());
-        atendimentoModel.setObservacoes(entity.getObservacoes());
+        atendimentoModel.setAnamnese(entity.getAnamnese());
+        atendimentoModel.setExameFisico(entity.getExameFisico());
+        atendimentoModel.setHipoteseDiagnostica(entity.getHipoteseDiagnostica());
+        atendimentoModel.setCidDoenca(entity.getCidDoenca());
+        atendimentoModel.setConduta(entity.getConduta());
         atendimentoModel.setDataInicio(entity.getDataInicio());
         atendimentoModel.setDataFim(entity.getDataFim());
         atendimentoModel.setChamado(entity.getChamado() != null
@@ -37,10 +43,25 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
     }
 
     @Override
+    public Atendimento toModel(SalvarAtendimentoRequestDTO dto) {
+        return Atendimento.builder()
+                .anamnese(dto.anamnese())
+                .exameFisico(dto.exameFisico())
+                .hipoteseDiagnostica(dto.hipoteseDiagnostica())
+                .cidDoenca(dto.cidDoenca())
+                .conduta(dto.conduta())
+                .build();
+    }
+
+    @Override
     public AtendimentoEntity toEntity(Atendimento model) {
         return new AtendimentoEntity(
                 model.getId(),
-                model.getObservacoes(),
+                model.getAnamnese(),
+                model.getExameFisico(),
+                model.getHipoteseDiagnostica(),
+                model.getCidDoenca(),
+                model.getConduta(),
                 model.getDataInicio(),
                 model.getDataFim(),
                 model.getChamado() != null
@@ -53,7 +74,23 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
     }
 
     @Override
-    public IniciarAtendimentoResponseDTO toDTO(Atendimento model) {
+    public SalvarAtendimentoResponseDTO toSalvarDTO(Atendimento model) {
+        return new SalvarAtendimentoResponseDTO(
+                model.getId(),
+                model.getAnamnese(),
+                model.getExameFisico(),
+                model.getHipoteseDiagnostica(),
+                model.getCidDoenca(),
+                model.getConduta(),
+                model.getDataInicio(),
+                model.getDataFim(),
+                model.getChamado().getId(),
+                model.getMedico().getId()
+        );
+    }
+
+    @Override
+    public IniciarAtendimentoResponseDTO toIniciarDTO(Atendimento model) {
         return new IniciarAtendimentoResponseDTO(
                 model.getId()
         );
