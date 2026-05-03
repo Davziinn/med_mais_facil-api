@@ -1,5 +1,7 @@
-package com.Unifor.MedMaisFacil.exceptions;
+package com.Unifor.MedMaisFacil.exceptions.globalException;
 
+import com.Unifor.MedMaisFacil.exceptions.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -56,5 +58,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AtendimentoNotFoundException.class)
     public ResponseEntity<Object> handleAtendimentoNotFoundException (AtendimentoNotFoundException ex){
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException (Exception ex){
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException (DataIntegrityViolationException ex){
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }
