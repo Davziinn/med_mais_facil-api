@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
+import com.Unifor.MedMaisFacil.dtos.chamadoEventoClinico.ChamadoEventoClinicoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
@@ -30,6 +31,9 @@ public class ChamadoController {
 
     @Autowired
     private ChamadoSintomaMapper chamadoSintomaMapper;
+
+    @Autowired
+    private ChamadoEventoClinicoService chamadoEventoClinicoService;
 
     @PostMapping
     public ResponseEntity<ChamadoResponseDTO> abrirChamado (@Valid @RequestBody ChamadoRequestDTO chamadoRequestDTO) {
@@ -67,5 +71,11 @@ public class ChamadoController {
                 .toList();
 
         return ResponseEntity.ok(filaAtendimentoDto);
+    }
+
+    @PostMapping("/{chamadoId}/evento")
+    public ResponseEntity<Void> salvarEventosClinicos (@PathVariable Long chamadoId, ChamadoEventoClinicoRequestDTO chamadoEventoClinico) {
+        chamadoEventoClinicoService.salvarEventosClinicosByChamado(chamadoId, chamadoEventoClinico.eventosIds());
+        return ResponseEntity.noContent().build();
     }
 }
