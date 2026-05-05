@@ -24,8 +24,10 @@ public class Chamado {
     private Hospital hospital;
 
     private List<ChamadoSintoma> chamadoSintomas;
+    private List<ChamadoEventoClinico> chamadoEventoClinicos;
+    private List<SinaisAlerta> sinaisAlertas;
 
-    public Chamado (Long id, String descricaoRelato, LocalDateTime dataHoraChamado, Paciente paciente, Hospital hospital) {
+    public Chamado (Long id, String descricaoRelato, Paciente paciente, Hospital hospital) {
         this.id = id;
         this.descricaoRelato = descricaoRelato;
         this.statusChamado =  StatusChamado.EM_ESPERA;

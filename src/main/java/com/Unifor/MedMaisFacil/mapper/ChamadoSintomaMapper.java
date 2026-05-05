@@ -6,7 +6,7 @@ import com.Unifor.MedMaisFacil.models.ChamadoSintoma;
 
 import java.util.List;
 
-public interface    ChamadoSintomaMapper {
+public interface ChamadoSintomaMapper {
 
     ChamadoSintoma toModel (ChamadoSintomaEntity entity);
 

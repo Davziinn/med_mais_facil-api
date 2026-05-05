@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChamadoEventoClinicoRepository extends JpaRepository<ChamadoEventoClinicoEntity, Long> {
     List<ChamadoEventoClinicoEntity> deleteByChamadoId(Long chamadoId);
+    List<ChamadoEventoClinicoEntity> findByChamadoId(Long chamadoId);
 }

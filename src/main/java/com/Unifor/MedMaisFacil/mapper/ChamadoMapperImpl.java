@@ -2,7 +2,9 @@ package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.eventoClinico.EventoClinicoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.sinaisAlerta.SinaisAlertaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.*;
@@ -24,40 +26,29 @@ public class ChamadoMapperImpl implements ChamadoMapper {
 
     @Override
     public Chamado toModel(ChamadoEntity entity) {
-        return new Chamado(
-                entity.getId(),
-                entity.getDescricaoRelato(),
-                entity.getStatusChamado(),
-                entity.getPrioridadeChamado(),
-                entity.getDataHoraChamado(),
-                entity.getCriadoEm(),
-                entity.getAtualizadoEm(),
-                entity.getPaciente() != null
-                        ? pacienteMapper.toModel(entity.getPaciente())
-                        : null,
-                entity.getHospital() != null
-                        ? hospitalMapper.toModel(entity.getHospital())
-                        : null,
-                entity.getChamadoSintomas() != null
-                        ? entity.getChamadoSintomas().stream()
-                        .map(s -> ChamadoSintoma.builder()
-                                .id(s.getId())
-                                .intensidade(s.getIntensidade())
-                                .descricaoLivre(s.getDescricaoLivre())
-                                .dataRegistro(s.getDataRegistro())
-                                .sintoma(
-                                        s.getSintoma() != null
-                                                ? Sintoma.builder()
-                                                .id(s.getSintoma().getId())
-                                                .descricao(s.getSintoma().getDescricao())
-                                                .build()
-                                                : null
-                                )
-                                .build()
-                        )
-                        .toList()
-                        : List.of()
-        );
+        return Chamado.builder()
+                .id(entity.getId())
+                .descricaoRelato(entity.getDescricaoRelato())
+                .statusChamado(entity.getStatusChamado())
+                .prioridadeChamado(entity.getPrioridadeChamado())
+                .dataHoraChamado(entity.getDataHoraChamado())
+                .criadoEm(entity.getCriadoEm())
+                .atualizadoEm(entity.getAtualizadoEm())
+                .paciente(entity.getPaciente() != null ? pacienteMapper.toModel(entity.getPaciente()) : null)
+                .hospital(entity.getHospital() != null ? hospitalMapper.toModel(entity.getHospital()) : null)
+                .chamadoSintomas(entity.getChamadoSintomas() != null ? entity.getChamadoSintomas().stream().map(chamadoSintoma -> {
+                    return ChamadoSintoma.builder()
+                            .id(chamadoSintoma.getId())
+                            .intensidade(chamadoSintoma.getIntensidade())
+                            .descricaoLivre(chamadoSintoma.getDescricaoLivre())
+                            .dataRegistro(chamadoSintoma.getDataRegistro())
+                            .sintoma(chamadoSintoma.getSintoma() != null ? Sintoma.builder()
+                                    .id(chamadoSintoma.getSintoma().getId())
+                                    .descricao(chamadoSintoma.getSintoma().getDescricao())
+                                    .build() : null)
+                            .build();
+                }).toList() : null)
+                .build();
     }
 
     @Override
@@ -166,7 +157,7 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
-    public DetalheChamadoResponseDTO toDetalheDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas) {
+    public DetalheChamadoResponseDTO toDetalheDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> eventosClinicosChamado, List<SinaisAlerta> sinaisAlertas) {
         return new DetalheChamadoResponseDTO(
                 model.getId(),
                 gerarSenha(model),
@@ -182,6 +173,17 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                                 sintoma.getSintoma().getId(),
                                 sintoma.getSintoma().getDescricao(),
                                 sintoma.getIntensidade()
+                        ))
+                        .toList(),
+                eventosClinicosChamado.stream()
+                        .map(chamadoEventoClinico -> new EventoClinicoResponseDTO(
+                                chamadoEventoClinico.getEventoClinico().getId(),
+                                chamadoEventoClinico.getEventoClinico().getDescricao()
+                        ))
+                        .toList(),
+                sinaisAlertas.stream()
+                        .map(sinalAlerta -> new SinaisAlertaResponseDTO(
+                                sinalAlerta.getDescricao()
                         ))
                         .toList()
                 );

@@ -59,7 +59,7 @@ public class ChamadoController {
     @GetMapping("/detalhes/{id}")
     public ResponseEntity<DetalheChamadoResponseDTO> consultarDetalhesChamado(@PathVariable Long id) {
         Chamado chamado = chamadoService.consultarDetalhesChamado(id);
-        return ResponseEntity.ok(chamadoMapper.toDetalheDTO(chamado, chamado.getChamadoSintomas()));
+        return ResponseEntity.ok(chamadoMapper.toDetalheDTO(chamado, chamado.getChamadoSintomas(), chamado.getChamadoEventoClinicos(), chamado.getSinaisAlertas()));
     }
 
     @GetMapping
@@ -74,7 +74,7 @@ public class ChamadoController {
     }
 
     @PostMapping("/{chamadoId}/evento")
-    public ResponseEntity<Void> salvarEventosClinicos (@PathVariable Long chamadoId, ChamadoEventoClinicoRequestDTO chamadoEventoClinico) {
+    public ResponseEntity<Void> salvarEventosClinicos (@PathVariable Long chamadoId, @RequestBody ChamadoEventoClinicoRequestDTO chamadoEventoClinico) {
         chamadoEventoClinicoService.salvarEventosClinicosByChamado(chamadoId, chamadoEventoClinico.eventosIds());
         return ResponseEntity.noContent().build();
     }

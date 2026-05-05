@@ -1,9 +1,13 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.entity.ChamadoEventoClinicoEntity;
+import com.Unifor.MedMaisFacil.entity.EventoClinicoEntity;
 import com.Unifor.MedMaisFacil.models.ChamadoEventoClinico;
+import com.Unifor.MedMaisFacil.models.EventoClinico;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -38,5 +42,12 @@ public class ChamadoEventoClinicoMapperImpl implements ChamadoEventoClinicoMappe
                         : null,
                 model.getDataRegistro()
         );
+    }
+
+    @Override
+    public List<ChamadoEventoClinico> toModelList(List<ChamadoEventoClinicoEntity> entities) {
+        return entities.stream()
+                .map(this::toModel)
+                .toList();
     }
 }

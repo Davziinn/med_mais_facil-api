@@ -6,41 +6,32 @@ import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ChamadoService {
 
-    @Autowired
-    private ChamadoRepository chamadoRepository;
+    private final ChamadoRepository chamadoRepository;
+    private final ChamadoMapper chamadoMapper;
+    private final ChamadoSintomaRepository chamadoSintomaRepository;
 
-    @Autowired
-    private ChamadoMapper chamadoMapper;
+    private final ChamadoEventoClinicoRepository chamadoEventoClinicoRepository;
+    private final ChamadoEventoClinicoMapper chamadoEventoClinicoMapper;
 
-    @Autowired
-    private ChamadoSintomaRepository chamadoSintomaRepository;
+    private final ChamadoSintomaMapper chamadoSintomaMapper;
 
-    @Autowired
-    private ChamadoSintomaMapper chamadoSintomaMapper;
+    private final PacienteService pacienteService;
+    private final HospitalService hospitalService;
+    private final ChamadoSintomaService chamadoSintomaService;
+    private final TriagemService triagemService;
+    private final FilaService filaService;
 
-    @Autowired
-    private PacienteService pacienteService;
-
-    @Autowired
-    private HospitalService hospitalService;
-
-    @Autowired
-    private ChamadoSintomaService chamadoSintomaService;
-
-    @Autowired
-    private TriagemService triagemService;
-
-    @Autowired
-    private FilaService filaService;
+    private final SinaisAlertaService sinaisAlertaService;
 
     public ChamadoAberto abrirChamado (Chamado chamado, List<SintomaDoChamado> sintomas) {
 
@@ -82,9 +73,12 @@ public class ChamadoService {
                 .orElseThrow(() -> new ChamadoNotFoundException("Chamado não encontrado"));
 
         List<ChamadoSintomaEntity> sintomaEntities = chamadoSintomaRepository.findByChamadoId(id);
+        List<ChamadoEventoClinicoEntity> eventosEncontradosParaEsseChamado = chamadoEventoClinicoRepository.findByChamadoId(id);
 
         Chamado model = chamadoMapper.toModel(chamadoEntity);
         model.setChamadoSintomas(chamadoSintomaMapper.toModelList(sintomaEntities));
+        model.setChamadoEventoClinicos(chamadoEventoClinicoMapper.toModelList(eventosEncontradosParaEsseChamado));
+        model.setSinaisAlertas(sinaisAlertaService.gerarSinaisAlerta(chamadoEventoClinicoMapper.toModelList(eventosEncontradosParaEsseChamado), chamadoSintomaMapper.toModelList(sintomaEntities)));
 
         return model;
     }

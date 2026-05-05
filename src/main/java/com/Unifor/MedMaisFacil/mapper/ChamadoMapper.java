@@ -22,7 +22,7 @@ public interface ChamadoMapper {
 
     FilaAtendimentoResponseDTO toFilaAtendimentoDTO (Chamado model);
 
-    DetalheChamadoResponseDTO toDetalheDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas);
+    DetalheChamadoResponseDTO toDetalheDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> chamadoEventoClinicos, List<SinaisAlerta> sinaisAlertas);
 
     List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto);
 }
