@@ -1,11 +1,14 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.historicoAtendimento.HistoricoAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.models.Atendimento;
+
+import java.util.List;
 
 public interface AtendimentoMapper {
 
@@ -20,4 +23,6 @@ public interface AtendimentoMapper {
     SalvarAtendimentoResponseDTO toSalvarDTO (Atendimento model);
 
     EncerrarAtendimentoResponseDTO toEncerrarDTO (Atendimento model);
+
+    List<HistoricoAtendimentoResponseDTO> toHistoricoDTO (List<Atendimento> models);
 }

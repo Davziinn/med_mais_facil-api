@@ -1,4 +1,4 @@
-package com.Unifor.MedMaisFacil.dtos.iniciarAtendimento;
+package com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento;
 
 public record IniciarAtendimentoRequestDTO(
         Long chamadoId,

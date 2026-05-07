@@ -1,7 +1,7 @@
 package com.Unifor.MedMaisFacil.dtos.prescricao;
 
 import com.Unifor.MedMaisFacil.dtos.prescricaoMedicamento.PrescricaoMedicamentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoResponseDTO;
 
 import java.util.List;
 

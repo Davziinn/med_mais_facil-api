@@ -183,7 +183,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         .toList(),
                 sinaisAlertas.stream()
                         .map(sinalAlerta -> new SinaisAlertaResponseDTO(
-                                sinalAlerta.getDescricao()
+                                sinalAlerta.getDescricao(),
+                                sinalAlerta.getSeveridade()
                         ))
                         .toList()
                 );

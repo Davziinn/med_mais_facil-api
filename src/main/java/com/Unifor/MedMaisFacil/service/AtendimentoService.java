@@ -10,12 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AtendimentoService {
 
     @Autowired
     private AtendimentoRepository atendimentoRepository;
+
+    @Autowired
+    private AtendimentoMapper atendimentoMapper;
 
     @Autowired
     private MedicoMapper medicoMapper;
@@ -25,9 +29,6 @@ public class AtendimentoService {
 
     @Autowired
     private MedicoRepository medicoRepository;
-
-    @Autowired
-    private AtendimentoMapper atendimentoMapper;
 
     public Atendimento iniciar(Long chamadoId, Long medicoId) {
 
@@ -101,6 +102,14 @@ public class AtendimentoService {
         chamadoService.atualizarStatus(atendimentoEncontrado.getChamado().getId(), StatusChamado.FINALIZADO);
 
         return atendimentoEncerrado;
+    }
+
+    public List<Atendimento> buscarHistoricoAtendimentos() {
+        List<Atendimento> historicosEncontrados = atendimentoRepository.findByHistoricoAtendimento().stream()
+                .map(atendimentoMapper::toModel)
+                .toList();
+
+        return historicosEncontrados;
     }
 
     public Atendimento buscarAtendimentoById (Long id) {

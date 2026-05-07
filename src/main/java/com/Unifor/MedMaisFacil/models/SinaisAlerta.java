@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.models;
 
+import com.Unifor.MedMaisFacil.enums.Severidade;
 import lombok.*;
 
 @Data
@@ -9,4 +10,5 @@ import lombok.*;
 public class SinaisAlerta {
 
     private String descricao;
+    private Severidade severidade;
 }

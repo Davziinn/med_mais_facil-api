@@ -1,4 +1,4 @@
-package com.Unifor.MedMaisFacil.dtos.encerrarAtendimento;
+package com.Unifor.MedMaisFacil.dtos.atendimento.encerrarAtendimento;
 
 import java.time.LocalDateTime;
 

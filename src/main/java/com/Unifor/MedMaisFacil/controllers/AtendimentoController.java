@@ -1,16 +1,19 @@
 package com.Unifor.MedMaisFacil.controllers;
 
-import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.*;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.historicoAtendimento.HistoricoAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.AtendimentoMapper;
 import com.Unifor.MedMaisFacil.models.Atendimento;
 import com.Unifor.MedMaisFacil.service.AtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -42,5 +45,14 @@ public class AtendimentoController {
         Atendimento atendimentoEncerrado = atendimentoService.encerrarAtendimento(id);
 
         return ResponseEntity.ok(atendimentoMapper.toEncerrarDTO(atendimentoEncerrado));
+    }
+
+    @GetMapping("/historico")
+    public ResponseEntity<List<HistoricoAtendimentoResponseDTO>> listarHistoricoAtendimentos () {
+        List<Atendimento> historicos = atendimentoService.buscarHistoricoAtendimentos();
+
+        List<HistoricoAtendimentoResponseDTO> dtos = atendimentoMapper.toHistoricoDTO(historicos);
+
+        return ResponseEntity.ok(dtos);
     }
 }

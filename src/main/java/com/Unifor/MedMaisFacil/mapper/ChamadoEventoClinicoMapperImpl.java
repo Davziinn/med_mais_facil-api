@@ -18,16 +18,12 @@ public class ChamadoEventoClinicoMapperImpl implements ChamadoEventoClinicoMappe
 
     @Override
     public ChamadoEventoClinico toModel(ChamadoEventoClinicoEntity entity) {
-        return new ChamadoEventoClinico(
-                entity.getId(),
-                entity.getChamado() != null
-                        ? chamadoMapper.toModel(entity.getChamado())
-                        : null,
-                entity.getEventoClinico() != null
-                        ? eventoClinicoMapper.toModel(entity.getEventoClinico())
-                        : null,
-                entity.getDataRegistro()
-        );
+        return ChamadoEventoClinico.builder()
+                .id(entity.getId())
+                .chamado(entity.getChamado() != null ? chamadoMapper.toModel(entity.getChamado()) : null)
+                .eventoClinico(entity.getEventoClinico() != null ? eventoClinicoMapper.toModel(entity.getEventoClinico()) : null)
+                .dataRegistro(entity.getDataRegistro())
+                .build();
     }
 
     @Override

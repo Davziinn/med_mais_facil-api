@@ -1,13 +1,17 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.iniciarAtendimento.IniciarAtendimentoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoRequestDTO;
-import com.Unifor.MedMaisFacil.dtos.salvarAtendimento.SalvarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.historicoAtendimento.HistoricoAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.models.Atendimento;
+import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class AtendimentoMapperImpl implements AtendimentoMapper {
@@ -99,6 +103,25 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
                 model.getChamado().getId(),
                 model.getMedico().getId()
         );
+    }
+
+    @Override
+    public List<HistoricoAtendimentoResponseDTO> toHistoricoDTO(List<Atendimento> models) {
+        return models.stream()
+                .map(atendimento -> new HistoricoAtendimentoResponseDTO(
+                        atendimento.getId(),
+//                        atendimento.getChamado().getSenha(),
+                        atendimento.getChamado().getPaciente().getNome(),
+                        CalcularIdadeUtils.calcular(atendimento.getChamado().getPaciente().getDataNascimento()),
+                        atendimento.getChamado().getPaciente().getSexo(),
+                        atendimento.getHipoteseDiagnostica(),
+                        atendimento.getMedico().getNome(),
+                        atendimento.getChamado().getPrioridadeChamado().name(),
+                        atendimento.getChamado().getStatusChamado().name(),
+                        atendimento.getDataInicio(),
+                        atendimento.getDataFim()
+                ))
+                .toList();
     }
 
     @Override

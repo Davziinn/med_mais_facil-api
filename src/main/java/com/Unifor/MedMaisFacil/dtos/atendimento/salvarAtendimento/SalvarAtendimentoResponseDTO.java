@@ -1,4 +1,4 @@
-package com.Unifor.MedMaisFacil.dtos.salvarAtendimento;
+package com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento;
 
 import java.time.LocalDateTime;
 

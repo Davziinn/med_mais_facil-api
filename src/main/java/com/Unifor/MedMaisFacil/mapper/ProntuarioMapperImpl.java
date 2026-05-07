@@ -1,9 +1,20 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.prontuario.ProntuarioItemResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.prontuario.ProntuarioPacienteResponseDTO;
+import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
+import com.Unifor.MedMaisFacil.entity.PacienteEntity;
+import com.Unifor.MedMaisFacil.entity.PrescricaoEntity;
 import com.Unifor.MedMaisFacil.entity.ProntuarioEntity;
 import com.Unifor.MedMaisFacil.models.Prontuario;
+import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class ProntuarioMapperImpl implements ProntuarioMapper {
@@ -44,5 +55,62 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
         );
 
         return prontuarioEntity;
+    }
+
+    public ProntuarioPacienteResponseDTO toDTO(
+            PacienteEntity paciente,
+            List<AtendimentoEntity> atendimentos,
+            Map<Long, Optional<PrescricaoEntity>> prescricoesPorAtendimento,
+            Map<Long, Optional<ProntuarioEntity>> prontuariosPorAtendimento
+    ) {
+        List<ProntuarioItemResponseDTO> historico = atendimentos.stream()
+                .map(atendimento -> toItemDTO(
+                        atendimento,
+                        prescricoesPorAtendimento.get(atendimento.getId()),
+                        prontuariosPorAtendimento.get(atendimento.getId())
+                ))
+                .toList();
+
+        return new ProntuarioPacienteResponseDTO(
+                paciente.getId(),
+                paciente.getNome(),
+                paciente.getCpf(),
+                CalcularIdadeUtils.calcular(paciente.getDataNascimento()),
+                paciente.getSexo(),
+                List.of(),
+                historico
+        );
+    }
+
+    private ProntuarioItemResponseDTO toItemDTO(
+            AtendimentoEntity atendimento,
+            Optional<PrescricaoEntity> prescricao,
+            Optional<ProntuarioEntity> prontuario
+    ) {
+        List<String> medicamentos = prescricao
+                .map(p -> p.getMedicamentos().stream()
+                        .map(m -> m.getNome() + " " + m.getDose() + " - " + m.getFrequencia())
+                        .toList()
+                )
+                .orElse(List.of());
+
+        List<String> exames = prescricao.filter(p -> p.getExames() != null).map(p -> Arrays.stream(p.getExames().split(","))
+                .map(String::trim)
+                .filter(s -> !s.isBlank())
+                .toList()).orElse(List.of());
+
+        return new ProntuarioItemResponseDTO(
+                atendimento.getId(),
+                atendimento.getDataInicio(),
+                atendimento.getDataFim(),
+                atendimento.getHipoteseDiagnostica(),
+                atendimento.getConduta(),
+                atendimento.getAnamnese(),
+                atendimento.getMedico().getNome(),
+                prontuario.map(ProntuarioEntity::getDiagnostico).orElse(null),
+                prontuario.map(ProntuarioEntity::getObservacoes).orElse(null),
+                medicamentos,
+                exames
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.paciente.*;
+import com.Unifor.MedMaisFacil.dtos.prontuario.ProntuarioResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.PacienteMapper;
 import com.Unifor.MedMaisFacil.models.Paciente;
 import com.Unifor.MedMaisFacil.service.PacienteService;
@@ -34,5 +35,10 @@ public class PacienteController {
         List<Paciente> pacientesBuscado = pacienteService.buscarTodosPacientes();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(pacientesBuscado.stream().map(pacienteMapper::toDTO).toList());
+    }
+
+    @GetMapping("/{pacienteId}/prontuario")
+    public ResponseEntity<ProntuarioResponseDTO> consultarProntuarioPaciente (@PathVariable Long pacienteId) {
+
     }
 }

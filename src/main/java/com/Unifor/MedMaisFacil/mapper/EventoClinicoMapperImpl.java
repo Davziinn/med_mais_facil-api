@@ -11,10 +11,10 @@ public class EventoClinicoMapperImpl implements EventoClinicoMapper{
 
     @Override
     public EventoClinico toModel(EventoClinicoEntity entity) {
-        return new EventoClinico(
-                entity.getId(),
-                entity.getDescricao()
-        );
+        return EventoClinico.builder()
+                .id(entity.getId())
+                .descricao(entity.getDescricao())
+                .build();
     }
 
     @Override
