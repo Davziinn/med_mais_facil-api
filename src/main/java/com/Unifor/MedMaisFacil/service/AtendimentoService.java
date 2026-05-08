@@ -112,6 +112,14 @@ public class AtendimentoService {
         return historicosEncontrados;
     }
 
+    public List<Atendimento> buscarAtendimentosByPacienteId(Long pacienteId) {
+        List<Atendimento> atendimentosEncontrados = atendimentoRepository.findByPacienteId(pacienteId).stream()
+                .map(atendimentoMapper::toModel)
+                .toList();
+
+        return atendimentosEncontrados;
+    }
+
     public Atendimento buscarAtendimentoById (Long id) {
         return atendimentoMapper.toModel(atendimentoRepository.findById(id).orElseThrow(
                 () -> new AtendimentoNotFoundException("Atendimento não encontrado")

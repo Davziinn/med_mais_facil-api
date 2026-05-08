@@ -8,7 +8,10 @@ import com.Unifor.MedMaisFacil.repository.PrescricaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PrescricaoService {
@@ -47,5 +50,16 @@ public class PrescricaoService {
         }
 
         return prescricaoMapper.toModel(prescricaoRepository.save(prescricaoMapper.toEntity(prescricaoParaSalvar)));
+    }
+
+    public Map<Long, Optional<Prescricao>> buscarPrescricoesIndexAtendimento (List<Long> atendimentoIds) {
+
+        return prescricaoRepository
+                .findByAtendimentoIdIn(atendimentoIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        p -> p.getAtendimento().getId(),
+                        p -> Optional.of(prescricaoMapper.toModel(p))
+                ));
     }
 }

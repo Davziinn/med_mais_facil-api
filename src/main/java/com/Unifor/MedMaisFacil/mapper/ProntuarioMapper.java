@@ -5,6 +5,9 @@ import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.entity.PrescricaoEntity;
 import com.Unifor.MedMaisFacil.entity.ProntuarioEntity;
+import com.Unifor.MedMaisFacil.models.Atendimento;
+import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.models.Prescricao;
 import com.Unifor.MedMaisFacil.models.Prontuario;
 
 import java.util.List;
@@ -18,9 +21,9 @@ public interface ProntuarioMapper {
     ProntuarioEntity toEntity (Prontuario model);
 
     ProntuarioPacienteResponseDTO toDTO(
-            PacienteEntity paciente,
-            List<AtendimentoEntity> atendimentos,
-            Map<Long, Optional<PrescricaoEntity>> prescricoesPorAtendimento,
-            Map<Long, Optional<ProntuarioEntity>> prontuariosPorAtendimento
+            Paciente paciente,
+            List<Atendimento> atendimentos,
+            Map<Long, Optional<Prescricao>> prescricoes,
+            Map<Long, Optional<Prontuario>> prontuarios
     );
 }

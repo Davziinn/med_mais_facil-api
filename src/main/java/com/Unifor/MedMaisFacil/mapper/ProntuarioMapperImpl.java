@@ -6,15 +6,15 @@ import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.entity.PrescricaoEntity;
 import com.Unifor.MedMaisFacil.entity.ProntuarioEntity;
+import com.Unifor.MedMaisFacil.models.Atendimento;
+import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.models.Prescricao;
 import com.Unifor.MedMaisFacil.models.Prontuario;
 import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class ProntuarioMapperImpl implements ProntuarioMapper {
@@ -58,16 +58,16 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
     }
 
     public ProntuarioPacienteResponseDTO toDTO(
-            PacienteEntity paciente,
-            List<AtendimentoEntity> atendimentos,
-            Map<Long, Optional<PrescricaoEntity>> prescricoesPorAtendimento,
-            Map<Long, Optional<ProntuarioEntity>> prontuariosPorAtendimento
+            Paciente paciente,
+            List<Atendimento> atendimentos,
+            Map<Long, Optional<Prescricao>> prescricoes,
+            Map<Long, Optional<Prontuario>> prontuarios
     ) {
         List<ProntuarioItemResponseDTO> historico = atendimentos.stream()
                 .map(atendimento -> toItemDTO(
                         atendimento,
-                        prescricoesPorAtendimento.get(atendimento.getId()),
-                        prontuariosPorAtendimento.get(atendimento.getId())
+                        prescricoes.get(atendimento.getId()),
+                        prontuarios.get(atendimento.getId())
                 ))
                 .toList();
 
@@ -77,15 +77,15 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 paciente.getCpf(),
                 CalcularIdadeUtils.calcular(paciente.getDataNascimento()),
                 paciente.getSexo(),
-                List.of(),
+                List.of(), // condicoesPreexistentes: mock por enquanto
                 historico
         );
     }
 
     private ProntuarioItemResponseDTO toItemDTO(
-            AtendimentoEntity atendimento,
-            Optional<PrescricaoEntity> prescricao,
-            Optional<ProntuarioEntity> prontuario
+            Atendimento atendimento,
+            Optional<Prescricao> prescricao,
+            Optional<Prontuario> prontuario
     ) {
         List<String> medicamentos = prescricao
                 .map(p -> p.getMedicamentos().stream()
@@ -94,10 +94,15 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 )
                 .orElse(List.of());
 
-        List<String> exames = prescricao.filter(p -> p.getExames() != null).map(p -> Arrays.stream(p.getExames().split(","))
-                .map(String::trim)
-                .filter(s -> !s.isBlank())
-                .toList()).orElse(List.of());
+        List<String> exames = prescricao
+                .map(p -> p.getExames() != null
+                        ? Arrays.stream(p.getExames().split(","))
+                        .map(String::trim)
+                        .filter(s -> !s.isBlank())
+                        .toList()
+                        : Collections.<String>emptyList()
+                )
+                .orElse(Collections.emptyList());
 
         return new ProntuarioItemResponseDTO(
                 atendimento.getId(),
@@ -107,8 +112,8 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 atendimento.getConduta(),
                 atendimento.getAnamnese(),
                 atendimento.getMedico().getNome(),
-                prontuario.map(ProntuarioEntity::getDiagnostico).orElse(null),
-                prontuario.map(ProntuarioEntity::getObservacoes).orElse(null),
+                prontuario.map(Prontuario::getDiagnostico).orElse(null),
+                prontuario.map(Prontuario::getObservacoes).orElse(null),
                 medicamentos,
                 exames
         );

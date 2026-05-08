@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public record HistoricoAtendimentoResponseDTO(
 
         Long atendimentoId,
+        Long pacienteId,
 //        String senha,
         String nomePaciente,
         Integer idadePaciente,

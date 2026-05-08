@@ -110,6 +110,7 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
         return models.stream()
                 .map(atendimento -> new HistoricoAtendimentoResponseDTO(
                         atendimento.getId(),
+                        atendimento.getChamado().getPaciente().getId(),
 //                        atendimento.getChamado().getSenha(),
                         atendimento.getChamado().getPaciente().getNome(),
                         CalcularIdadeUtils.calcular(atendimento.getChamado().getPaciente().getDataNascimento()),

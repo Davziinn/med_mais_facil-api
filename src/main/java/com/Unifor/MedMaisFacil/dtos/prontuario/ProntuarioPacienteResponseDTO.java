@@ -1,6 +1,5 @@
 package com.Unifor.MedMaisFacil.dtos.prontuario;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record ProntuarioPacienteResponseDTO(
