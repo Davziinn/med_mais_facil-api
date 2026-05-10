@@ -3,5 +3,6 @@ package com.Unifor.MedMaisFacil.models;
 public record SintomaDoChamado(
         Long sintomaId,
         Integer intensidade,
-        String descricaoLivre
+        String tempoSintoma,
+        String frequencia
 ) {}

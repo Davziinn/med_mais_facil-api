@@ -5,6 +5,7 @@ import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
@@ -15,4 +16,10 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
     WHERE c.statusChamado NOT IN :status
 """)
     List<ChamadoEntity> buscarChamadosAtivosComSintomas(@Param("status") List<StatusChamado> status);
+
+    long countByStatusChamadoAndDataHoraChamadoBetween(StatusChamado status, LocalDateTime inicio, LocalDateTime fim);
+
+    long countByCriadoEmBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    List<ChamadoEntity> findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado status, LocalDateTime inicio, LocalDateTime fim);
 }

@@ -15,6 +15,8 @@ public class ChamadoSintoma {
     private Integer intensidade;
     private String descricaoLivre;
     private LocalDateTime dataRegistro;
+    private String tempoSintoma;
+    private String frequencia;
     private Chamado chamado;
     private Sintoma sintoma;
 }

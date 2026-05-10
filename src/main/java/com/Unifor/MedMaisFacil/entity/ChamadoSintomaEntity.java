@@ -26,6 +26,12 @@ public class ChamadoSintomaEntity {
     @Column(name = "DESC_SINT_LVR")
     private String descricaoLivre;
 
+    @Column(name = "TMP_SINT")
+    private String tempoSintoma;
+
+    @Column(name = "FREQ_SINT")
+    private String frequencia;
+
     @CreationTimestamp
     @Column(name = "DT_REG_SINT")
     private LocalDateTime dataRegistro;

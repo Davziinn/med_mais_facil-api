@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.*;
 
 import java.time.*;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_PAC")
@@ -39,4 +40,12 @@ public class PacienteEntity {
     @Column(name = "DT_ATZ_CLI")
     @UpdateTimestamp
     private LocalDateTime atualizadoEm;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "TB_PAC_COND_PRE",
+            joinColumns = @JoinColumn(name = "paciente_id")
+    )
+    @Column(name = "CONDICAO")
+    private List<String> condicoesPreexistentes;
 }

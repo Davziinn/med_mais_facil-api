@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record PacienteRequestDTO (
         @NotNull(message = "O campo [NOME] não pode ser null")
@@ -15,5 +16,7 @@ public record PacienteRequestDTO (
         String cpf,
         @NotNull(message = "O campo [DATA DE NASCIMENTO] é obrigatório")
         LocalDate dataNascimento,
-        String sexo
+        String sexo,
+
+        List<String> condicoesPreexistentes
 ){}

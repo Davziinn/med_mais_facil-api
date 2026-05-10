@@ -4,7 +4,7 @@ import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.chamadoEventoClinico.ChamadoEventoClinicoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.fila.filaEspera.FilaEsperaResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.service.*;
@@ -63,14 +63,14 @@ public class ChamadoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FilaAtendimentoResponseDTO>> consultarChamados() {
+    public ResponseEntity<List<FilaEsperaResponseDTO>> consultarChamados() {
         List<Chamado> chamados = chamadoService.listarTodosChamadosAtivos();
 
-        List<FilaAtendimentoResponseDTO> filaAtendimentoDto = chamados.stream()
-                .map(chamadoMapper::toFilaAtendimentoDTO)
+        List<FilaEsperaResponseDTO> filaEsperaDto = chamados.stream()
+                .map(chamadoMapper::toFilaEsperaDTO)
                 .toList();
 
-        return ResponseEntity.ok(filaAtendimentoDto);
+        return ResponseEntity.ok(filaEsperaDto);
     }
 
     @PostMapping("/{chamadoId}/evento")

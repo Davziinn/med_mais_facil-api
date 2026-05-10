@@ -45,7 +45,8 @@ public class ChamadoSintomaService {
                     .chamado(chamado)
                     .sintoma(sintomaBuscado)
                     .intensidade(sintomaDochamado.intensidade())
-                    .descricaoLivre(sintomaDochamado.descricaoLivre())
+                    .tempoSintoma(sintomaDochamado.tempoSintoma())
+                    .frequencia(sintomaDochamado.frequencia())
                     .dataRegistro(LocalDateTime.now())
                     .build();
 

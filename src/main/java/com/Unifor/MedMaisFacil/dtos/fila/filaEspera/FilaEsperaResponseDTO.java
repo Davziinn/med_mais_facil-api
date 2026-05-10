@@ -1,9 +1,9 @@
-package com.Unifor.MedMaisFacil.dtos.filaAtendimento;
+package com.Unifor.MedMaisFacil.dtos.fila.filaEspera;
 
 import com.Unifor.MedMaisFacil.dtos.paciente.PacienteResponseDTO;
 
 
-public record FilaAtendimentoResponseDTO(
+public record FilaEsperaResponseDTO(
         Long id,
         String senha,
         PacienteResponseDTO paciente,

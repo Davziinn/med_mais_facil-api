@@ -9,6 +9,8 @@ public record ChamadoSintomaResponseDTO(
         Long id,
         Integer intensidade,
         String descricaoLivre,
+        String tempoSintoma,
+        String frequencia,
         LocalDateTime dataRegistro,
         ChamadoResponseDTO chamadoResponseDTO,
         SintomaResponseDTO sintomaResponseDTO

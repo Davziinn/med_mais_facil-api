@@ -24,6 +24,8 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                 entity.getIntensidade(),
                 entity.getDescricaoLivre(),
                 entity.getDataRegistro(),
+                entity.getTempoSintoma(),
+                entity.getFrequencia(),
                 entity.getChamado() != null
                         ? chamadoMapper.toModel(entity.getChamado())
                         : null,
@@ -43,6 +45,8 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                 .id(model.getId())
                 .intensidade(model.getIntensidade())
                 .descricaoLivre(model.getDescricaoLivre())
+                .tempoSintoma(model.getTempoSintoma())
+                .frequencia(model.getFrequencia())
                 .dataRegistro(model.getDataRegistro())
                 .chamado(referenciaDoChamado)
                 .sintoma(model.getSintoma() != null
@@ -59,6 +63,8 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                 dto.intensidade(),
                 dto.descricaoLivre(),
                 dto.dataRegistro(),
+                dto.tempoSintoma(),
+                dto.frequencia(),
                 dto.chamadoResponseDTO() != null
                         ? chamadoMapper.toModel(dto.chamadoResponseDTO())
                         : null,
@@ -74,6 +80,8 @@ public class ChamadoSintomaMapperImpl implements ChamadoSintomaMapper {
                 model.getId(),
                 model.getIntensidade(),
                 model.getDescricaoLivre(),
+                model.getTempoSintoma(),
+                model.getFrequencia(),
                 model.getDataRegistro(),
                 model.getChamado() != null
                         ? chamadoMapper.toDTO(model.getChamado(), List.of())

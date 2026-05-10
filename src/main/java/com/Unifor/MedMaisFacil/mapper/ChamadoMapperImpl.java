@@ -3,11 +3,13 @@ package com.Unifor.MedMaisFacil.mapper;
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.eventoClinico.EventoClinicoResponseDTO;
-import com.Unifor.MedMaisFacil.dtos.filaAtendimento.FilaAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.fila.filaEmAtendimento.FilaEmAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.fila.filaEspera.FilaEsperaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sinaisAlerta.SinaisAlertaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.models.*;
+import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +43,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                             .id(chamadoSintoma.getId())
                             .intensidade(chamadoSintoma.getIntensidade())
                             .descricaoLivre(chamadoSintoma.getDescricaoLivre())
+                            .tempoSintoma(chamadoSintoma.getTempoSintoma())
+                            .frequencia(chamadoSintoma.getFrequencia())
                             .dataRegistro(chamadoSintoma.getDataRegistro())
                             .sintoma(chamadoSintoma.getSintoma() != null ? Sintoma.builder()
                                     .id(chamadoSintoma.getSintoma().getId())
@@ -77,6 +81,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
 
                         entitySintoma.setIntensidade(s.getIntensidade());
                         entitySintoma.setDescricaoLivre(s.getDescricaoLivre());
+                        entitySintoma.setTempoSintoma(s.getTempoSintoma());
+                        entitySintoma.setFrequencia(s.getFrequencia());
 
                         entitySintoma.setChamado(entity);
 
@@ -150,7 +156,9 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         .map(sintoma -> new SintomaChamadoResponseDTO(
                                 sintoma.getSintoma().getId(),
                                 sintoma.getSintoma().getDescricao(),
-                                sintoma.getIntensidade()
+                                sintoma.getIntensidade(),
+                                sintoma.getTempoSintoma(),
+                                sintoma.getFrequencia()
                         ))
                         .toList()
         );
@@ -172,7 +180,9 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                         .map(sintoma -> new SintomaChamadoResponseDTO(
                                 sintoma.getSintoma().getId(),
                                 sintoma.getSintoma().getDescricao(),
-                                sintoma.getIntensidade()
+                                sintoma.getIntensidade(),
+                                sintoma.getTempoSintoma(),
+                                sintoma.getFrequencia()
                         ))
                         .toList(),
                 eventosClinicosChamado.stream()
@@ -191,8 +201,19 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
-    public FilaAtendimentoResponseDTO toFilaAtendimentoDTO(Chamado model) {
-        return new FilaAtendimentoResponseDTO(
+    public FilaEmAtendimentoResponseDTO toFilaAtendimentoDTO(Chamado model) {
+        return new FilaEmAtendimentoResponseDTO(
+                model.getId(),
+                model.getPaciente().getNome(),
+                model.getDescricaoRelato(),
+                CalcularIdadeUtils.calcular(model.getPaciente().getDataNascimento()),
+                model.getStatusChamado()
+        );
+    }
+
+    @Override
+    public FilaEsperaResponseDTO toFilaEsperaDTO(Chamado model) {
+        return new FilaEsperaResponseDTO(
                 model.getId(),
                 gerarSenha(model),
                 model.getPaciente() != null
@@ -211,7 +232,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 .map(sintoma -> new SintomaDoChamado(
                         sintoma.getId(),
                         sintoma.getIntensidade(),
-                        sintoma.getDescricaoLivre()
+                        sintoma.getTempoSintoma(),
+                        sintoma.getFrequencia()
                 )).toList();
     }
 

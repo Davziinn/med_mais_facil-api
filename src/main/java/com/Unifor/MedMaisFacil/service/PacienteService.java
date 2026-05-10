@@ -36,4 +36,10 @@ public class PacienteService {
 
         return pacientesBuscados.stream().map(pacienteMapper::toModel).toList();
     }
+
+    public List<Paciente> buscarPacienteByNome (String nomePaciente) {
+        return pacienteRepository.findByNomeContaining(nomePaciente).stream()
+                .map(pacienteMapper::toModel)
+                .toList();
+    }
 }

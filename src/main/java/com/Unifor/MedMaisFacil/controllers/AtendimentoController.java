@@ -2,12 +2,15 @@ package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.atendimento.encerrarAtendimento.EncerrarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.atendimento.historicoAtendimento.HistoricoAtendimentoResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.atendimento.historicoMetricas.HistoricoMetricasResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.atendimento.iniciarAtendimento.IniciarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.atendimento.salvarAtendimento.SalvarAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.AtendimentoMapper;
+import com.Unifor.MedMaisFacil.mapper.HistoricoMetricasMapper;
 import com.Unifor.MedMaisFacil.models.Atendimento;
+import com.Unifor.MedMaisFacil.models.HistoricoMetricas;
 import com.Unifor.MedMaisFacil.service.AtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1/atendimento")
 public class AtendimentoController {
@@ -25,6 +28,9 @@ public class AtendimentoController {
 
     @Autowired
     private AtendimentoMapper atendimentoMapper;
+
+    @Autowired
+    private HistoricoMetricasMapper historicoMetricasMapper;
 
     @PostMapping("/iniciar")
     public ResponseEntity<IniciarAtendimentoResponseDTO> iniciarAtendimento (@RequestBody IniciarAtendimentoRequestDTO iniciarAtendimentoRequestDTO) {
@@ -54,5 +60,12 @@ public class AtendimentoController {
         List<HistoricoAtendimentoResponseDTO> dtos = atendimentoMapper.toHistoricoDTO(historicos);
 
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/metricas")
+    public ResponseEntity<HistoricoMetricasResponseDTO> consultarMetricasHistorico () {
+        HistoricoMetricas historicoMetricasModel = atendimentoService.consultarHistoricoMetricasTrimestral();
+
+        return ResponseEntity.ok(historicoMetricasMapper.toDTO(historicoMetricasModel));
     }
 }

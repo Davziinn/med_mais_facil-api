@@ -9,7 +9,9 @@ import com.Unifor.MedMaisFacil.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -103,5 +105,48 @@ public class ChamadoService {
 
         chamado.setStatusChamado(novoStatus);
         chamadoRepository.save(chamado);
+    }
+
+    public long contarQuantidadeChamadosByStatusChamado (StatusChamado statusChamado) {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDoDia = hoje.atStartOfDay();
+        LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.countByStatusChamadoAndDataHoraChamadoBetween(statusChamado, inicioDoDia, fimDoDia);
+    }
+
+    public long contarQuantidadeChamadosByStatusChamado(
+            StatusChamado statusChamado,
+            LocalDateTime inicio,
+            LocalDateTime fim
+    ) {
+
+        return chamadoRepository
+                .countByStatusChamadoAndDataHoraChamadoBetween(
+                        statusChamado,
+                        inicio,
+                        fim
+                );
+    }
+
+    public long contarQuantidadeChamadosByDia () {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDoDia = hoje.atStartOfDay();
+        LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.countByCriadoEmBetween(inicioDoDia, fimDoDia);
+    }
+
+    public List<Chamado> buscarChamadosEmAtendimentoDiaAtual () {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDoDia = hoje.atStartOfDay();
+        LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.EM_ATENDIMENTO, inicioDoDia, fimDoDia).stream()
+                .map(chamadoMapper::toModel)
+                .toList();
     }
 }

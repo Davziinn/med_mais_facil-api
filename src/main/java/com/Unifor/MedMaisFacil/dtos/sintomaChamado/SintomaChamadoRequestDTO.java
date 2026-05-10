@@ -20,6 +20,7 @@ public class SintomaChamadoRequestDTO {
     @Max(value = 10, message = "Intensidade máxima é 10")
     Integer intensidade;
 
-    private String descricaoLivre;
+    private String tempoSintoma;
+    private String frequencia;
 
 }

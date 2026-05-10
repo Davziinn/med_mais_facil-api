@@ -36,5 +36,10 @@ public class PacienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pacientesBuscado.stream().map(pacienteMapper::toDTO).toList());
     }
 
+    @GetMapping("/{nomePaciente}")
+    public ResponseEntity<List<PacienteResponseDTO>> buscarPacienteByNome (@PathVariable String nomePaciente) {
+        List<Paciente> pacientesEncontrados = pacienteService.buscarPacienteByNome(nomePaciente);
 
+        return ResponseEntity.ok(pacientesEncontrados.stream().map(pacienteMapper::toDTO).toList());
+    }
 }

@@ -23,6 +23,7 @@ public class PacienteMapperImpl implements PacienteMapper {
         pacienteModel.setCriadoEm(entity.getCriadoEm());
         pacienteModel.setAtualizadoEm(entity.getAtualizadoEm());
         pacienteModel.setDataNascimento(entity.getDataNascimento());
+        pacienteModel.setCondicoesPreexistentes(entity.getCondicoesPreexistentes());
 
         return pacienteModel;
     }
@@ -36,7 +37,8 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getDataNascimento(),
                 model.getSexo(),
                 model.getCriadoEm(),
-                model.getAtualizadoEm()
+                model.getAtualizadoEm(),
+                model.getCondicoesPreexistentes()
         );
     }
 
@@ -47,6 +49,7 @@ public class PacienteMapperImpl implements PacienteMapper {
                 .cpf(dto.cpf())
                 .dataNascimento(dto.dataNascimento())
                 .sexo(dto.sexo())
+                .condicoesPreexistentes(dto.condicoesPreexistentes())
                 .build();
     }
 
@@ -57,7 +60,8 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getNome(),
                 model.getCpf(),
                 CalcularIdadeUtils.calcular(model.getDataNascimento()),
-                model.getSexo()
+                model.getSexo(),
+                model.getCondicoesPreexistentes()
         );
     }
 }

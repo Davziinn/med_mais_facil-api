@@ -24,4 +24,11 @@ public class HospitalController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(hospitalMapper.toDTO(hospitalCadastrado));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HospitalResponseDTO> consultarHospital (@PathVariable Long id) {
+        Hospital hospitalEncontrado = hospitalService.buscarHospitalById(id);
+
+        return ResponseEntity.ok(hospitalMapper.toDTO(hospitalEncontrado));
+    }
 }

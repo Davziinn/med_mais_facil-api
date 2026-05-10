@@ -3,6 +3,8 @@ package com.Unifor.MedMaisFacil.dtos.sintomaChamado;
 public record SintomaChamadoResponseDTO(
         Long id,
         String descricao,
-        Integer intensidade
+        Integer intensidade,
+        String tempoSintoma,
+        String frequencia
 ) {
 }

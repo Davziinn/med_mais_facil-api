@@ -130,5 +130,51 @@ public class AtendimentoService {
         return atendimentoRepository.existsByChamadoId(chamadoId);
     }
 
+    public HistoricoMetricas consultarHistoricoMetricasTrimestral () {
+        long totalNoPeriodo = contarTotalAtendimentosNoPeriodo();
+        long totalFinalizadosNoPerido = contarAtendimentosFinalizadosNoPeriodo();
+        long totalCanceladosNoPerido = contarTotalAtendimentosCanceladosNoPeriodo();
+        double taxaCancelamento = calcularTaxaCancelamento();
+
+        return new HistoricoMetricas(totalNoPeriodo, totalFinalizadosNoPerido, totalCanceladosNoPerido, taxaCancelamento);
+    }
+
+    private long contarTotalAtendimentosNoPeriodo () {
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime tresMesesAtras = agora.minusMonths(3);
+
+        return atendimentoRepository.countByDataInicioBetween(tresMesesAtras, agora);
+    }
+
+    private long contarAtendimentosFinalizadosNoPeriodo () {
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime tresMesesAtras = agora.minusMonths(3);
+
+        return atendimentoRepository.countByDataFimBetween(tresMesesAtras, agora);
+    }
+
+    private long contarTotalAtendimentosCanceladosNoPeriodo () {
+        LocalDateTime agora = LocalDateTime.now();
+        LocalDateTime tresMesesAtras = agora.minusMonths(3);
+
+        return chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.CANCELADO, tresMesesAtras, agora);
+    }
+
+    private int calcularTaxaCancelamento() {
+
+        long totalNoPeriodo =
+                contarTotalAtendimentosNoPeriodo();
+
+        long cancelamentosNoPeriodo =
+                contarTotalAtendimentosCanceladosNoPeriodo();
+
+        if (totalNoPeriodo == 0) {
+            return 0;
+        }
+
+        double taxa = ((double) cancelamentosNoPeriodo / totalNoPeriodo) * 100;
+
+        return (int) Math.round(taxa);
+    }
 
 }
