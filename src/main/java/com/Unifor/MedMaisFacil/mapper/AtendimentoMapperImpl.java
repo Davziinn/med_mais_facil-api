@@ -128,7 +128,8 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
     @Override
     public IniciarAtendimentoResponseDTO toIniciarDTO(Atendimento model) {
         return new IniciarAtendimentoResponseDTO(
-                model.getId()
+                model.getId(),
+                model.getChamado().getStatusChamado()
         );
     }
 }

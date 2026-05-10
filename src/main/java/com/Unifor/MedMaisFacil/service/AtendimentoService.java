@@ -32,10 +32,10 @@ public class AtendimentoService {
 
     public Atendimento iniciar(Long chamadoId, Long medicoId) {
 
-        Chamado chamadoEncontrado =  chamadoService.consultarDetalhesChamado(chamadoId);
+        Chamado chamadoEncontrado = chamadoService.consultarDetalhesChamado(chamadoId);
 
         MedicoEntity medicoEncontrado = medicoRepository.findById(medicoId)
-                .orElseThrow(() -> new MedicoNotFoundException("Médico não encontrado"));
+                        .orElseThrow(() -> new MedicoNotFoundException("Médico não encontrado"));
 
         if (!chamadoEncontrado.getStatusChamado().equals(StatusChamado.EM_ESPERA)) {
             throw new ChamadoNotAvailableException("Chamado não está disponível para atendimento");
@@ -46,6 +46,10 @@ public class AtendimentoService {
         }
 
 
+        chamadoService.atualizarStatus(chamadoId, StatusChamado.EM_ATENDIMENTO);
+
+        chamadoEncontrado.setStatusChamado(StatusChamado.EM_ATENDIMENTO);
+
         Medico medico = medicoMapper.toModel(medicoEncontrado);
 
         Atendimento atendimentoCriado = Atendimento.builder()
@@ -55,15 +59,8 @@ public class AtendimentoService {
                 .anamnese(null)
                 .build();
 
-        Atendimento atendimentoSalvo = atendimentoMapper.toModel(
-                atendimentoRepository.save(atendimentoMapper.toEntity(atendimentoCriado))
-        );
-
-        chamadoService.atualizarStatus(chamadoId, StatusChamado.EM_ATENDIMENTO);
-
-        return atendimentoSalvo;
+        return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(atendimentoCriado)));
     }
-
     public Atendimento salvar (Long id, Atendimento atendimento) {
         Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
 
