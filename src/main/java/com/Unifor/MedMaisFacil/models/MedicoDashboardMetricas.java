@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class DashboardMetricas {
+public class MedicoDashboardMetricas {
 
     private long chamadosHoje;
     private long aguardando;

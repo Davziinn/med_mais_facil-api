@@ -1,6 +1,6 @@
-package com.Unifor.MedMaisFacil.dtos.dashboard;
+package com.Unifor.MedMaisFacil.dtos.dashboard.medico;
 
-public record DashboardMetricasResponseDTO(
+public record MedicoDashboardMetricasResponseDTO(
         long chamadosHoje,
         long aguardando,
         long emAtendimento,

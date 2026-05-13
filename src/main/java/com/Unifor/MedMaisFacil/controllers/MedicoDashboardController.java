@@ -1,11 +1,11 @@
 package com.Unifor.MedMaisFacil.controllers;
 
-import com.Unifor.MedMaisFacil.dtos.dashboard.DashboardMetricasResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.dashboard.medico.MedicoDashboardMetricasResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEmAtendimento.FilaEmAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
 import com.Unifor.MedMaisFacil.mapper.DashboardMetricasMapper;
 import com.Unifor.MedMaisFacil.models.Chamado;
-import com.Unifor.MedMaisFacil.models.DashboardMetricas;
+import com.Unifor.MedMaisFacil.models.MedicoDashboardMetricas;
 import com.Unifor.MedMaisFacil.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +15,9 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/v1/dashboard")
+@RequestMapping("/v1/medico")
 @RequiredArgsConstructor
-public class DashboardController {
+public class MedicoDashboardController {
 
     private final DashboardService dashboardService;
     private final DashboardMetricasMapper dashboardMetricasMapper;
@@ -25,10 +25,10 @@ public class DashboardController {
     private final ChamadoMapper chamadoMapper;
 
     @GetMapping("/metricas")
-    public ResponseEntity<DashboardMetricasResponseDTO> consultarMetricas () {
-        DashboardMetricas consulta = dashboardService.buscarMetricas();
+    public ResponseEntity<MedicoDashboardMetricasResponseDTO> consultarMetricas () {
+        MedicoDashboardMetricas consulta = dashboardService.buscarMetricasMedico();
 
-        return ResponseEntity.ok(dashboardMetricasMapper.toDTO(consulta));
+        return ResponseEntity.ok(dashboardMetricasMapper.toDTOMedico(consulta));
     }
 
     @GetMapping

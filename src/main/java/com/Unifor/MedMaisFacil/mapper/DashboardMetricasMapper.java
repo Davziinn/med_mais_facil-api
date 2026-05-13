@@ -1,11 +1,15 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.dashboard.DashboardMetricasResponseDTO;
-import com.Unifor.MedMaisFacil.models.DashboardMetricas;
+import com.Unifor.MedMaisFacil.dtos.dashboard.medico.MedicoDashboardMetricasResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.dashboard.recepcao.RecepcaoDashboardMetricasResponseDTO;
+import com.Unifor.MedMaisFacil.models.MedicoDashboardMetricas;
+import com.Unifor.MedMaisFacil.models.RecepcaoDashboardMetricas;
 
 public interface DashboardMetricasMapper {
 
-    DashboardMetricas toModel (DashboardMetricasResponseDTO dto);
+    MedicoDashboardMetricas toModelMedico(MedicoDashboardMetricasResponseDTO dto);
 
-    DashboardMetricasResponseDTO toDTO (DashboardMetricas model);
+    MedicoDashboardMetricasResponseDTO toDTOMedico(MedicoDashboardMetricas model);
+
+    RecepcaoDashboardMetricasResponseDTO toDTORecepcao(RecepcaoDashboardMetricas model);
 }
