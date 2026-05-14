@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.chamado.*;
+import com.Unifor.MedMaisFacil.dtos.dashboard.recepcao.FilaAguardandoCheckinResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.eventoClinico.EventoClinicoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEmAtendimento.FilaEmAtendimentoResponseDTO;
@@ -208,6 +209,19 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 model.getDescricaoRelato(),
                 CalcularIdadeUtils.calcular(model.getPaciente().getDataNascimento()),
                 model.getStatusChamado()
+        );
+    }
+
+    @Override
+    public FilaAguardandoCheckinResponseDTO toFilaCheckinDTO(Chamado model) {
+        return new FilaAguardandoCheckinResponseDTO(
+                model.getId(),
+                gerarSenha(model),
+                model.getPaciente().getNome(),
+                model.getChamadoSintomas().stream().map(
+                        chamadoSintoma -> chamadoSintoma.getSintoma().getDescricao()
+                ).toList().toString(),
+                model.getPrioridadeChamado()
         );
     }
 

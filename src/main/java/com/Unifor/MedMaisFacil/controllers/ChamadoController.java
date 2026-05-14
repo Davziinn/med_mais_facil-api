@@ -64,7 +64,7 @@ public class ChamadoController {
 
     @GetMapping
     public ResponseEntity<List<FilaEsperaResponseDTO>> consultarChamados() {
-        List<Chamado> chamados = chamadoService.listarTodosChamadosAtivos();
+        List<Chamado> chamados = chamadoService.listarTodosChamadosEmEsperaAndEmAtendimento();
 
         List<FilaEsperaResponseDTO> filaEsperaDto = chamados.stream()
                 .map(chamadoMapper::toFilaEsperaDTO)

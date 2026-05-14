@@ -10,7 +10,13 @@ import java.util.List;
 
 public interface HospitalRepository extends JpaRepository<HospitalEntity, Long> {
 
-    @Query("SELECT c FROM ChamadoEntity c WHERE c.hospital.id = :hospitalId " +
-            "AND c.statusChamado = 'EM_ESPERA'")
+    @Query("""
+            SELECT c FROM ChamadoEntity c
+            WHERE c.hospital.id = :hospitalId
+            AND c.statusChamado IN (
+                'EM_ESPERA',
+                'AGUARDANDO_CHECKIN'
+            )
+        """)
     List<ChamadoEntity> findFilaByHospital(@Param("hospitalId") Long hospitalId);
 }

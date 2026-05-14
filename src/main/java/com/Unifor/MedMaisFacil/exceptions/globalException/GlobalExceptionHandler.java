@@ -69,4 +69,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleDataIntegrityViolationException (DataIntegrityViolationException ex){
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
+
+    @ExceptionHandler(RegraNegocioException.class)
+    public ResponseEntity<Object> handleRegraNegocioException (RegraNegocioException ex){
+        return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 }

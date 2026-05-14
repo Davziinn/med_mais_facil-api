@@ -3,6 +3,7 @@ package com.Unifor.MedMaisFacil.service;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.enums.*;
 import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
+import com.Unifor.MedMaisFacil.exceptions.RegraNegocioException;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.repository.*;
@@ -58,7 +59,7 @@ public class ChamadoService {
                 .prioridadeChamado(prioridadeChamado)
                 .paciente(paciente)
                 .hospital(hospital)
-                .statusChamado(StatusChamado.EM_ESPERA)
+                .statusChamado(StatusChamado.AGUARDANDO_CHECKIN)
                 .dataHoraChamado(LocalDateTime.now())
                 .build();
 
@@ -93,6 +94,19 @@ public class ChamadoService {
                 .buscarChamadosAtivosComSintomas(
                         List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO)
                 );
+
+        return entidades.stream()
+                .map(chamadoMapper::toModel)
+                .toList();
+    }
+
+    public List<Chamado> listarTodosChamadosEmEsperaAndEmAtendimento() {
+        List<ChamadoEntity> entidades = chamadoRepository
+                .buscarChamadosAtivosComSintomas(
+                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO)
+                ).stream()
+                .filter(chamado -> chamado.getStatusChamado().equals(StatusChamado.EM_ESPERA) || chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO))
+                .toList();
 
         return entidades.stream()
                 .map(chamadoMapper::toModel)
@@ -148,5 +162,35 @@ public class ChamadoService {
         return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.EM_ATENDIMENTO, inicioDoDia, fimDoDia).stream()
                 .map(chamadoMapper::toModel)
                 .toList();
+    }
+
+    public List<Chamado> buscarPacientesAguardandoCheckin () {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDoDia = hoje.atStartOfDay();
+        LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.AGUARDANDO_CHECKIN, inicioDoDia, fimDoDia).stream()
+                .map(chamadoMapper::toModel)
+                .toList();
+    }
+
+    public void marcarAusente(Long chamadoId) {
+        ChamadoEntity chamado = chamadoRepository.findById(chamadoId)
+                .orElseThrow(() ->
+                        new ChamadoNotFoundException("Chamado não encontrado"));
+
+        validarMarcacaoAusencia(chamado);
+
+        chamado.setStatusChamado(StatusChamado.AUSENTE);
+
+        chamadoRepository.save(chamado);
+    }
+
+    private void validarMarcacaoAusencia(ChamadoEntity chamado) {
+
+        if (chamado.getStatusChamado() == StatusChamado.FINALIZADO) {
+            throw new RegraNegocioException("Não é possível marcar chamado finalizado como ausente");
+        }
     }
 }

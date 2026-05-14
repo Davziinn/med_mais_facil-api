@@ -38,4 +38,8 @@ public class DashboardService {
     public List<Chamado> buscarFilaEmAtendimento () {
         return chamadoService.buscarChamadosEmAtendimentoDiaAtual();
     }
+
+    public List<Chamado> buscarFilaAguardandoCheckin() {
+        return chamadoService.buscarPacientesAguardandoCheckin();
+    }
 }
