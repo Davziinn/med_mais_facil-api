@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Component
@@ -214,13 +215,18 @@ public class ChamadoMapperImpl implements ChamadoMapper {
 
     @Override
     public FilaAguardandoCheckinResponseDTO toFilaCheckinDTO(Chamado model) {
+
+        String sintomaMaiorIntensidade = model.getChamadoSintomas()
+                .stream()
+                .max(Comparator.comparing(ChamadoSintoma::getIntensidade))
+                .map(chamadoSintoma -> chamadoSintoma.getSintoma().getDescricao())
+                .orElse("");
+
         return new FilaAguardandoCheckinResponseDTO(
                 model.getId(),
                 gerarSenha(model),
                 model.getPaciente().getNome(),
-                model.getChamadoSintomas().stream().map(
-                        chamadoSintoma -> chamadoSintoma.getSintoma().getDescricao()
-                ).toList().toString(),
+                sintomaMaiorIntensidade,
                 model.getPrioridadeChamado()
         );
     }
