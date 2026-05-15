@@ -187,6 +187,28 @@ public class ChamadoService {
         chamadoRepository.save(chamado);
     }
 
+    public void confirmarCheckin (Long chamadoId) {
+        Chamado chamadoBuscado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId)
+                .orElseThrow(
+                        () -> new ChamadoNotFoundException("Chamado não encontrado")
+                ));
+
+        chamadoBuscado.setStatusChamado(StatusChamado.EM_ESPERA);
+
+        chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
+    }
+
+    public void cancelarChamado (Long chamadoId) {
+        Chamado chamadoBuscado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId)
+                .orElseThrow(
+                        () -> new ChamadoNotFoundException("Chamado não encontrado")
+                ));
+
+        chamadoBuscado.setStatusChamado(StatusChamado.CANCELADO);
+
+        chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
+    }
+
     private void validarMarcacaoAusencia(ChamadoEntity chamado) {
 
         if (chamado.getStatusChamado() == StatusChamado.FINALIZADO) {
