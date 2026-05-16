@@ -5,6 +5,7 @@ import com.Unifor.MedMaisFacil.dtos.dashboard.recepcao.FilaAguardandoCheckinResp
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEmAtendimento.FilaEmAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEspera.FilaEsperaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.prioridade.AlterarPrioridadeResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.models.*;
 
@@ -29,6 +30,8 @@ public interface ChamadoMapper {
     FilaEmAtendimentoResponseDTO toFilaAtendimentoDTO (Chamado model);
 
     FilaAguardandoCheckinResponseDTO toFilaCheckinDTO (Chamado model);
+
+    AlterarPrioridadeResponseDTO toAlterarPrioridadeDTO (Chamado model);
 
     List<SintomaDoChamado> toSintomas(ChamadoRequestDTO dto);
 }

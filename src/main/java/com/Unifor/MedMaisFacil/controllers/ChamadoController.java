@@ -5,6 +5,9 @@ import com.Unifor.MedMaisFacil.dtos.chamadoEventoClinico.ChamadoEventoClinicoReq
 import com.Unifor.MedMaisFacil.dtos.chamadoSintoma.ChamadoSintomaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEspera.FilaEsperaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.prioridade.AlterarPrioridadeRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.prioridade.AlterarPrioridadeResponseDTO;
+import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
 import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.service.*;
@@ -77,5 +80,12 @@ public class ChamadoController {
     public ResponseEntity<Void> salvarEventosClinicos (@PathVariable Long chamadoId, @RequestBody ChamadoEventoClinicoRequestDTO chamadoEventoClinico) {
         chamadoEventoClinicoService.salvarEventosClinicosByChamado(chamadoId, chamadoEventoClinico.eventosIds());
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{chamadoId}/alterar-prioridade")
+    public ResponseEntity<AlterarPrioridadeResponseDTO> alterarPrioridade (@PathVariable Long chamadoId, @RequestBody AlterarPrioridadeRequestDTO prioridadeChamado) {
+        Chamado prioridadeAlterada = chamadoService.alterarPrioridade(chamadoId, prioridadeChamado.prioridadeChamado());
+
+        return ResponseEntity.ok(chamadoMapper.toAlterarPrioridadeDTO(prioridadeAlterada));
     }
 }

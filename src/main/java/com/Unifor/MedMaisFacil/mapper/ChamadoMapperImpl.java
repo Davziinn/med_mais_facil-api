@@ -6,6 +6,7 @@ import com.Unifor.MedMaisFacil.dtos.detalheChamado.DetalheChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.eventoClinico.EventoClinicoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEmAtendimento.FilaEmAtendimentoResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.fila.filaEspera.FilaEsperaResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.prioridade.AlterarPrioridadeResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sinaisAlerta.SinaisAlertaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.sintomaChamado.SintomaChamadoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.*;
@@ -227,6 +228,14 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 gerarSenha(model),
                 model.getPaciente().getNome(),
                 sintomaMaiorIntensidade,
+                model.getPrioridadeChamado()
+        );
+    }
+
+    @Override
+    public AlterarPrioridadeResponseDTO toAlterarPrioridadeDTO(Chamado model) {
+        return new AlterarPrioridadeResponseDTO(
+                model.getId(),
                 model.getPrioridadeChamado()
         );
     }

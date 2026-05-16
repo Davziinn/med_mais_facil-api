@@ -209,6 +209,18 @@ public class ChamadoService {
         chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
     }
 
+    public Chamado alterarPrioridade (Long chamadoId, PrioridadeChamado novaPrioridade) {
+        Chamado chamadoEncontrado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId).orElseThrow(
+                () -> new ChamadoNotFoundException("Chamado não encontrado!")
+        ));
+
+        chamadoEncontrado = chamadoEncontrado.toBuilder()
+                .prioridadeChamado(novaPrioridade)
+                .build();
+
+        return chamadoMapper.toModel(chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado)));
+    }
+
     private void validarMarcacaoAusencia(ChamadoEntity chamado) {
 
         if (chamado.getStatusChamado() == StatusChamado.FINALIZADO) {
