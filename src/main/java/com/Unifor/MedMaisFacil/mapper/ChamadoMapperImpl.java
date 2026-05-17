@@ -29,6 +29,9 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     @Autowired
     private HospitalMapper hospitalMapper;
 
+    @Autowired
+    private EspecialidadeMapper especialidadeMapper;
+
     @Override
     public Chamado toModel(ChamadoEntity entity) {
         return Chamado.builder()
@@ -55,6 +58,7 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                                     .build() : null)
                             .build();
                 }).toList() : null)
+                .especialidadeDestino(entity.getEspecialidadeDestino() != null ? especialidadeMapper.toModel(entity.getEspecialidadeDestino()) : null)
                 .build();
     }
 
@@ -74,7 +78,10 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 model.getHospital() != null
                         ? hospitalMapper.toEntity(model.getHospital())
                         : null,
-                null
+                null,
+                model.getEspecialidadeDestino() != null
+                        ? especialidadeMapper.toEntity(model.getEspecialidadeDestino())
+                        : null
         );
 
         if (model.getChamadoSintomas() != null) {

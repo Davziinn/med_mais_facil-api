@@ -54,4 +54,8 @@ public class ChamadoEntity {
 
     @OneToMany(mappedBy = "chamado", fetch = FetchType.LAZY)
     private List<ChamadoSintomaEntity> chamadoSintomas;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESP_DEST")
+    private EspecialidadeMedicoEntity especialidadeDestino;
 }

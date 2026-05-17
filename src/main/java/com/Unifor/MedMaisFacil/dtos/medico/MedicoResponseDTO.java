@@ -1,10 +1,12 @@
 package com.Unifor.MedMaisFacil.dtos.medico;
 
+import com.Unifor.MedMaisFacil.dtos.especialidade.EspecialidadeMedicoResponseDTO;
+
 public record MedicoResponseDTO(
         Long id,
         String nome,
         String crm,
-        String especialidade,
+        EspecialidadeMedicoResponseDTO especialidade,
         String sexo,
         int idade
 ) {}

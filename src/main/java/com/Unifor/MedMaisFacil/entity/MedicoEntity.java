@@ -26,8 +26,9 @@ public class MedicoEntity {
     @Column(name = "CRM_MED", nullable = false, unique = true)
     private String crm;
 
-    @Column(name = "ESPC_MED", nullable = false)
-    private String especialidade;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESP")
+    private EspecialidadeMedicoEntity especialidade;
 
     @Column(name = "SX_MED", nullable = false, length = 10)
     private String sexo;

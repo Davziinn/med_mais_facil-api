@@ -23,9 +23,12 @@ public class Chamado {
     private Paciente paciente;
     private Hospital hospital;
 
+
     private List<ChamadoSintoma> chamadoSintomas;
     private List<ChamadoEventoClinico> chamadoEventoClinicos;
     private List<SinaisAlerta> sinaisAlertas;
+
+    private EspecialidadeMedico especialidadeDestino;
 
     public Chamado (Long id, String descricaoRelato, Paciente paciente, Hospital hospital) {
         this.id = id;

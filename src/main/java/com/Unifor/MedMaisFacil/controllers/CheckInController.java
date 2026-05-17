@@ -1,6 +1,5 @@
 package com.Unifor.MedMaisFacil.controllers;
 
-import com.Unifor.MedMaisFacil.dtos.checkin.ConfirmarCheckinResponseDTO;
 import com.Unifor.MedMaisFacil.service.ChamadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

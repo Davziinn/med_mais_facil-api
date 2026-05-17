@@ -1,0 +1,39 @@
+package com.Unifor.MedMaisFacil.service;
+
+import com.Unifor.MedMaisFacil.exceptions.EspecialidadeMedicoNotFoundException;
+import com.Unifor.MedMaisFacil.mapper.EspecialidadeMapper;
+import com.Unifor.MedMaisFacil.models.EspecialidadeMedico;
+import com.Unifor.MedMaisFacil.repository.EspecialidadeMedicoRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
+
+@Service
+@RequiredArgsConstructor
+public class EspecialidadeService {
+
+    private final EspecialidadeMedicoRepository especialidadeMedicoRepository;
+
+    private final EspecialidadeMapper especialidadeMapper;
+
+    public EspecialidadeMedico salvarEspecialidade (EspecialidadeMedico especialidade) {
+        if (Objects.isNull(especialidade)) return null;
+
+        return especialidadeMapper.toModel(especialidadeMedicoRepository.save(especialidadeMapper.toEntity(especialidade)));
+    }
+
+    public EspecialidadeMedico buscarEspecialidadeById (Long id) {
+        return especialidadeMapper.toModel(especialidadeMedicoRepository.findById(id).orElseThrow(
+                () -> new EspecialidadeMedicoNotFoundException("Especialidade não encontrada")
+        ));
+    }
+
+    public List<EspecialidadeMedico> listarEspecialidades () {
+        return especialidadeMedicoRepository.findAll().stream()
+                .map(especialidadeMapper::toModel)
+                .toList();
+    }
+
+}

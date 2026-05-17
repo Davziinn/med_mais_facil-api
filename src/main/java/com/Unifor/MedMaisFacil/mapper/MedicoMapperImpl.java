@@ -5,10 +5,14 @@ import com.Unifor.MedMaisFacil.dtos.medico.MedicoResponseDTO;
 import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.models.Medico;
 import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MedicoMapperImpl implements MedicoMapper {
+
+    @Autowired
+    private EspecialidadeMapper especialidadeMapper;
 
     @Override
     public Medico toModel(MedicoEntity entity) {
@@ -16,7 +20,7 @@ public class MedicoMapperImpl implements MedicoMapper {
                 entity.getId(),
                 entity.getNome(),
                 entity.getCrm(),
-                entity.getEspecialidade(),
+                especialidadeMapper.toModel(entity.getEspecialidade()),
                 entity.getSexo(),
                 entity.getDataNascimento(),
                 entity.getCriadoEm(),
@@ -30,7 +34,7 @@ public class MedicoMapperImpl implements MedicoMapper {
                 model.getId(),
                 model.getNome(),
                 model.getCrm(),
-                model.getEspecialidade(),
+                especialidadeMapper.toEntity(model.getEspecialidade()),
                 model.getSexo(),
                 model.getDataNascimento(),
                 model.getCriadoEm(),
@@ -43,7 +47,7 @@ public class MedicoMapperImpl implements MedicoMapper {
         return new Medico().toBuilder()
                 .nome(dto.nome())
                 .crm(dto.crm())
-                .especialidade(dto.especialidade())
+                .especialidade(especialidadeMapper.toModel(dto.especialidade()))
                 .sexo(dto.sexo())
                 .dataNascimento(dto.dataNascimento())
                 .build();
@@ -55,7 +59,7 @@ public class MedicoMapperImpl implements MedicoMapper {
                 model.getId(),
                 model.getNome(),
                 model.getCrm(),
-                model.getEspecialidade(),
+                especialidadeMapper.toDTO(model.getEspecialidade()),
                 model.getSexo(),
                 CalcularIdadeUtils.calcular(model.getDataNascimento())
         );

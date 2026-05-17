@@ -33,7 +33,7 @@ public class RecepcaoDashboardController {
         return ResponseEntity.ok(dashboardMetricasMapper.toDTORecepcao(model));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<FilaAguardandoCheckinResponseDTO>> consultarFilaCheckin () {
         List<Chamado> filaConsultada = dashboardService.buscarFilaAguardandoCheckin();
 

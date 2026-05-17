@@ -60,6 +60,11 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(EspecialidadeMedicoNotFoundException.class)
+    public ResponseEntity<Object> handleEspecialidadeMedicoNotFoundExceptionException (EspecialidadeMedicoNotFoundException ex){
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleException (Exception ex){
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());

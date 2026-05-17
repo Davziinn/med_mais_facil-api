@@ -36,6 +36,9 @@ public class ChamadoService {
 
     private final SinaisAlertaService sinaisAlertaService;
 
+    private final EspecialidadeService especialidadeService;
+    private final EspecialidadeMedicoRepository especialidadeMedicoRepository;
+
     public ChamadoAberto abrirChamado (Chamado chamado, List<SintomaDoChamado> sintomas) {
 
         // 1. Buscar um paciente
@@ -219,6 +222,27 @@ public class ChamadoService {
                 .build();
 
         return chamadoMapper.toModel(chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado)));
+    }
+
+    public EncaminharChamado encaminharChamado (Long chamadoId, EncaminharChamado encaminharChamado) {
+        Chamado chamadoEncontrado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId).orElseThrow(
+                () -> new ChamadoNotFoundException("Chamado não encontrado!")
+        ));
+
+        EspecialidadeMedico especialidadeMedicoEncontrado = especialidadeService.buscarEspecialidadeById(encaminharChamado.getEspecialidadeMedico().getId());
+
+        chamadoEncontrado = chamadoEncontrado.toBuilder()
+                .statusChamado(StatusChamado.EM_ESPERA)
+                .especialidadeDestino(especialidadeMedicoEncontrado)
+                .build();
+
+        Chamado chamadoAtualizado = chamadoMapper.toModel(chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado)));
+
+        return new EncaminharChamado(
+                chamadoAtualizado.getId(),
+                chamadoAtualizado.getStatusChamado(),
+                chamadoAtualizado.getEspecialidadeDestino()
+        );
     }
 
     private void validarMarcacaoAusencia(ChamadoEntity chamado) {

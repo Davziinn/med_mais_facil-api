@@ -1,11 +1,13 @@
 package com.Unifor.MedMaisFacil.dtos.medico;
 
+import com.Unifor.MedMaisFacil.dtos.especialidade.EspecialidadeMedicoRequestDTO;
+
 import java.time.LocalDate;
 
 public record MedicoRequestDTO(
         String nome,
         String crm,
-        String especialidade,
+        EspecialidadeMedicoRequestDTO especialidade,
         String sexo,
         LocalDate dataNascimento
 ) {}
