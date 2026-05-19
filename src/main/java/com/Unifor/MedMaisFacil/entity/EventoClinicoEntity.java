@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.entity;
 
+import com.Unifor.MedMaisFacil.enums.Severidade;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,14 @@ public class EventoClinicoEntity {
     @Column(name = "ID_EVNT")
     private Long id;
 
-    @Column(name = "DESC_ENVT", nullable = false, unique = true)
+    @Column(name = "NM_EVNT" /*, nullable = false, unique = true*/)
+    private String nomeEvento;
+
+//    @Column(name = "DSC_EVNT", nullable = false)
+    @Column(name = "DESC_ENVT"/*, nullable = false*/)
     private String descricao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "SRV_EVNT")
+    private Severidade severidade;
 }

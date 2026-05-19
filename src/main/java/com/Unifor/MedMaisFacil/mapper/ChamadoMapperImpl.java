@@ -198,7 +198,9 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                 eventosClinicosChamado.stream()
                         .map(chamadoEventoClinico -> new EventoClinicoResponseDTO(
                                 chamadoEventoClinico.getEventoClinico().getId(),
-                                chamadoEventoClinico.getEventoClinico().getDescricao()
+                                chamadoEventoClinico.getEventoClinico().getNomeEvento(),
+                                chamadoEventoClinico.getEventoClinico().getDescricao(),
+                                chamadoEventoClinico.getEventoClinico().getSeveridade()
                         ))
                         .toList(),
                 sinaisAlertas.stream()

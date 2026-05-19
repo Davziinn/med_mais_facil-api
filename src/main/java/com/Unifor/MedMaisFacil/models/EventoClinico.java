@@ -11,6 +11,7 @@ import lombok.*;
 public class EventoClinico {
 
     private Long id;
+    private String nomeEvento;
     private String descricao;
     private Severidade severidade;
 

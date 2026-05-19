@@ -13,7 +13,9 @@ public class EventoClinicoMapperImpl implements EventoClinicoMapper{
     public EventoClinico toModel(EventoClinicoEntity entity) {
         return EventoClinico.builder()
                 .id(entity.getId())
+                .nomeEvento(entity.getNomeEvento())
                 .descricao(entity.getDescricao())
+                .severidade(entity.getSeveridade())
                 .build();
     }
 
@@ -21,14 +23,18 @@ public class EventoClinicoMapperImpl implements EventoClinicoMapper{
     public EventoClinicoEntity toEntity(EventoClinico model) {
         return new EventoClinicoEntity(
                 model.getId(),
-                model.getDescricao()
+                model.getNomeEvento(),
+                model.getDescricao(),
+                model.getSeveridade()
         );
     }
 
     @Override
     public EventoClinico toModel(EventoClinicoRequestDTO dto) {
         return EventoClinico.builder()
+                .nomeEvento(dto.nomeEvento())
                 .descricao(dto.descricao())
+                .severidade(dto.severidade())
                 .build();
     }
 
@@ -36,7 +42,9 @@ public class EventoClinicoMapperImpl implements EventoClinicoMapper{
     public EventoClinicoResponseDTO toDTO(EventoClinico model) {
         return new EventoClinicoResponseDTO(
                 model.getId(),
-                model.getDescricao()
+                model.getNomeEvento(),
+                model.getDescricao(),
+                model.getSeveridade()
         );
     }
 }

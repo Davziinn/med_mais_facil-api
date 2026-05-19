@@ -61,7 +61,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EspecialidadeMedicoNotFoundException.class)
-    public ResponseEntity<Object> handleEspecialidadeMedicoNotFoundExceptionException (EspecialidadeMedicoNotFoundException ex){
+    public ResponseEntity<Object> handleEspecialidadeMedicoNotFoundException (EspecialidadeMedicoNotFoundException ex){
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(EventoClinicoNotFoundException.class)
+    public ResponseEntity<Object> handleEventoClinicoNotFoundException (EventoClinicoNotFoundException ex){
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 

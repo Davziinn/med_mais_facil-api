@@ -36,4 +36,18 @@ public class EventoClinicoController {
 
         return ResponseEntity.ok(eventosClinicosEncontrados.stream().map(eventoClinicoMapper::toDTO).toList());
     }
+
+    @PutMapping("{id}/editar")
+    public ResponseEntity<EventoClinicoResponseDTO> editarEventoClinico (@PathVariable Long id, @RequestBody EventoClinicoRequestDTO dto) {
+        EventoClinico eventoClinicoEditado = eventoClinicoService.atualizarEventoClinico(id, eventoClinicoMapper.toModel(dto));
+
+        return ResponseEntity.ok(eventoClinicoMapper.toDTO(eventoClinicoEditado));
+    }
+
+    @DeleteMapping("/{id}/deletar")
+    public ResponseEntity<Void> deletarEventoClinico (@PathVariable Long id) {
+        eventoClinicoService.deletarEventoClinicoById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
