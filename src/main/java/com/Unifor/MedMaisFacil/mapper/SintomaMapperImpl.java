@@ -14,6 +14,8 @@ public class SintomaMapperImpl implements SintomaMapper{
         return Sintoma.builder()
                 .id(entity.getId())
                 .descricao(entity.getDescricao())
+                .prioridadeSintoma(entity.getPrioridadeSintoma())
+                .ativo(entity.isAtivo())
                 .build();
     }
 
@@ -21,7 +23,9 @@ public class SintomaMapperImpl implements SintomaMapper{
     public SintomaEntity toEntity(Sintoma model) {
         return new SintomaEntity(
                 model.getId(),
-                model.getDescricao()
+                model.getDescricao(),
+                model.getPrioridadeSintoma(),
+                model.isAtivo()
         );
     }
 
@@ -29,6 +33,8 @@ public class SintomaMapperImpl implements SintomaMapper{
     public Sintoma toModel(SintomaRequestDTO dto) {
         return Sintoma.builder()
                 .descricao(dto.descricao())
+                .prioridadeSintoma(dto.prioridadeSintoma())
+                .ativo(dto.ativo())
                 .build();
     }
 
@@ -37,7 +43,9 @@ public class SintomaMapperImpl implements SintomaMapper{
     public SintomaResponseDTO toDTO(Sintoma model) {
         return new SintomaResponseDTO(
                 model.getId(),
-                model.getDescricao()
+                model.getDescricao(),
+                model.getPrioridadeSintoma(),
+                model.isAtivo()
                 );
     }
 
@@ -46,6 +54,8 @@ public class SintomaMapperImpl implements SintomaMapper{
         return Sintoma.builder()
                 .id(dto.id())
                 .descricao(dto.descricao())
+                .prioridadeSintoma(dto.prioridadeSintoma())
+                .ativo(dto.ativo())
                 .build();
     }
 }

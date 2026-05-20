@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.models;
 
+import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
 import lombok.*;
 
 @Getter
@@ -12,4 +13,6 @@ public class Sintoma {
     private Long id;
     private String descricao;
     private Integer intensidade;
+    private PrioridadeChamado prioridadeSintoma;
+    private boolean ativo;
 }

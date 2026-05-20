@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.entity;
 
+import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,4 +20,11 @@ public class SintomaEntity {
 
     @Column(name = "DESC_SINT", nullable = false, unique = true, length = 100)
     private String descricao;
+
+    @Column(name = "PRIO_SINT")
+    @Enumerated(EnumType.STRING)
+    private PrioridadeChamado prioridadeSintoma;
+
+    @Column
+    private boolean ativo;
 }

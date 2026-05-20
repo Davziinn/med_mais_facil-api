@@ -100,7 +100,9 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                             entitySintoma.setSintoma(
                                     new SintomaEntity(
                                             s.getSintoma().getId(),
-                                            s.getSintoma().getDescricao()
+                                            s.getSintoma().getDescricao(),
+                                            s.getSintoma().getPrioridadeSintoma(),
+                                            s.getSintoma().isAtivo()
                                     )
                             );
                         }
