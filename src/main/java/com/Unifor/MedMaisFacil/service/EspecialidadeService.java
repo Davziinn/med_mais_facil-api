@@ -36,4 +36,18 @@ public class EspecialidadeService {
                 .toList();
     }
 
+    public EspecialidadeMedico atualizarDadosEspecialidade(Long id, EspecialidadeMedico especialidadeAtualizado) {
+        EspecialidadeMedico especialidadeEncontrado = buscarEspecialidadeById(id);
+
+        especialidadeEncontrado = especialidadeEncontrado.toBuilder()
+                .nome(especialidadeAtualizado.getNome())
+                .descricao(especialidadeAtualizado.getDescricao())
+                .build();
+
+        return especialidadeMapper.toModel(especialidadeMedicoRepository.save(especialidadeMapper.toEntity(especialidadeEncontrado)));
+    }
+
+    public void deletarEspecialidadeById(Long id) {
+        especialidadeMedicoRepository.deleteById(id);
+    }
 }

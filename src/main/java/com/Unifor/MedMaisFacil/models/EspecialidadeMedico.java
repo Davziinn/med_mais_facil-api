@@ -13,4 +13,5 @@ public class EspecialidadeMedico {
 
     private Long id;
     private String nome;
+    private String descricao;
 }

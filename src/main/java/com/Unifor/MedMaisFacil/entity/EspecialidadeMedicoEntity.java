@@ -19,4 +19,7 @@ public class EspecialidadeMedicoEntity {
 
     @Column(name = "NM_ESP", nullable = false, unique = true)
     private String nome;
+
+    @Column(name = "DESC_ESP")
+    private String descricao;
 }

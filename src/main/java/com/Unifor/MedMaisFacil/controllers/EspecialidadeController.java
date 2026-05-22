@@ -51,4 +51,17 @@ public class EspecialidadeController {
 
         return ResponseEntity.ok(especialidadesMedicosListados.stream().map(especialidadeMapper::toDTO).toList());
     }
+
+    @PutMapping("/{id}/editar")
+    public ResponseEntity<EspecialidadeMedicoResponseDTO> editarEspecialidade (@PathVariable Long id, @RequestBody EspecialidadeMedicoRequestDTO dto) {
+        EspecialidadeMedico especialidadeAtualizada = especialidadeService.atualizarDadosEspecialidade(id, especialidadeMapper.toModel(dto));
+
+        return ResponseEntity.ok(especialidadeMapper.toDTO(especialidadeAtualizada));
+    }
+
+    @DeleteMapping("/{id}/deletar")
+    public ResponseEntity<Void> deletarEspecialidade (@PathVariable Long id) {
+        especialidadeService.deletarEspecialidadeById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

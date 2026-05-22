@@ -12,7 +12,8 @@ public class EspecialidadeMapperImpl implements EspecialidadeMapper{
     public EspecialidadeMedico toModel(EspecialidadeMedicoEntity entity) {
         return new EspecialidadeMedico(
                 entity.getId(),
-                entity.getNome()
+                entity.getNome(),
+                entity.getDescricao()
         );
     }
 
@@ -20,7 +21,8 @@ public class EspecialidadeMapperImpl implements EspecialidadeMapper{
     public EspecialidadeMedicoEntity toEntity(EspecialidadeMedico model) {
         return new EspecialidadeMedicoEntity(
                 model.getId(),
-                model.getNome()
+                model.getNome(),
+                model.getDescricao()
         );
     }
 
@@ -28,6 +30,7 @@ public class EspecialidadeMapperImpl implements EspecialidadeMapper{
     public EspecialidadeMedico toModel(EspecialidadeMedicoRequestDTO dto) {
         return EspecialidadeMedico.builder()
                 .nome(dto.nome())
+                .descricao(dto.descricao())
                 .build();
     }
 
@@ -35,7 +38,8 @@ public class EspecialidadeMapperImpl implements EspecialidadeMapper{
     public EspecialidadeMedicoResponseDTO toDTO(EspecialidadeMedico model) {
         return new EspecialidadeMedicoResponseDTO(
                 model.getId(),
-                model.getNome()
+                model.getNome(),
+                model.getDescricao()
         );
     }
 }
