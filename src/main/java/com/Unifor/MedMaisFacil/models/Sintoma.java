@@ -14,5 +14,5 @@ public class Sintoma {
     private String descricao;
     private Integer intensidade;
     private PrioridadeChamado prioridadeSintoma;
-    private boolean ativo;
+    private Boolean ativo;
 }

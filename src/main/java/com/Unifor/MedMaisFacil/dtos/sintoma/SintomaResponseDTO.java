@@ -6,5 +6,5 @@ public record SintomaResponseDTO (
         Long id,
         String descricao,
         PrioridadeChamado prioridadeSintoma,
-        boolean ativo
+        Boolean ativo
 ){}

@@ -45,7 +45,7 @@ public class SintomaService {
         sintomaEncontrado = sintomaEncontrado.toBuilder()
                 .descricao(sintoma.getDescricao())
                 .prioridadeSintoma(sintoma.getPrioridadeSintoma())
-                .ativo(sintoma.isAtivo())
+                .ativo(sintoma.getAtivo())
                 .build();
 
         return sintomaEncontrado;

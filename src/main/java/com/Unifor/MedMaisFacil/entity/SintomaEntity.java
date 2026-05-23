@@ -26,5 +26,5 @@ public class SintomaEntity {
     private PrioridadeChamado prioridadeSintoma;
 
     @Column
-    private boolean ativo;
+    private Boolean ativo;
 }

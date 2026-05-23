@@ -102,7 +102,7 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                                             s.getSintoma().getId(),
                                             s.getSintoma().getDescricao(),
                                             s.getSintoma().getPrioridadeSintoma(),
-                                            s.getSintoma().isAtivo()
+                                            s.getSintoma().getAtivo()
                                     )
                             );
                         }

@@ -15,7 +15,7 @@ public class SintomaMapperImpl implements SintomaMapper{
                 .id(entity.getId())
                 .descricao(entity.getDescricao())
                 .prioridadeSintoma(entity.getPrioridadeSintoma())
-                .ativo(entity.isAtivo())
+                .ativo(entity.getAtivo())
                 .build();
     }
 
@@ -25,7 +25,7 @@ public class SintomaMapperImpl implements SintomaMapper{
                 model.getId(),
                 model.getDescricao(),
                 model.getPrioridadeSintoma(),
-                model.isAtivo()
+                model.getAtivo()
         );
     }
 
@@ -45,7 +45,7 @@ public class SintomaMapperImpl implements SintomaMapper{
                 model.getId(),
                 model.getDescricao(),
                 model.getPrioridadeSintoma(),
-                model.isAtivo()
+                model.getAtivo()
                 );
     }
 
