@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.entity;
 
+import com.Unifor.MedMaisFacil.enums.StatusHospital;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -28,6 +29,15 @@ public class HospitalEntity {
 
     @Column(name = "CNPJ_HOSP", nullable = false, unique = true, length = 18)
     private String cnpj;
+
+    @Column(name = "CDD_HOSP")
+    private String cidade;
+
+    @Column(name = "EST_HOSP")
+    private String estado;
+
+    @Column(name = "STS_HOPS")
+    private StatusHospital statusHospital;
 
     @Column(name = "DT_CRI_HOSP")
     @CreationTimestamp

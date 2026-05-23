@@ -1,9 +1,11 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.hospital.HospitalMetricaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.hospital.HospitalRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.hospital.HospitalResponseDTO;
 import com.Unifor.MedMaisFacil.entity.HospitalEntity;
 import com.Unifor.MedMaisFacil.models.Hospital;
+import com.Unifor.MedMaisFacil.models.HospitalMetrica;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +18,9 @@ public class HospitalMapperImpl implements HospitalMapper {
                 entity.getNome(),
                 entity.getEndereco(),
                 entity.getCnpj(),
+                entity.getCidade(),
+                entity.getEstado(),
+                entity.getStatusHospital(),
                 entity.getCriadoEm(),
                 entity.getAtualizadoEm()
         );
@@ -28,6 +33,9 @@ public class HospitalMapperImpl implements HospitalMapper {
                 model.getNome(),
                 model.getEndereco(),
                 model.getCnpj(),
+                model.getCidade(),
+                model.getEstado(),
+                model.getStatusHospital(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
         );
@@ -39,6 +47,9 @@ public class HospitalMapperImpl implements HospitalMapper {
                 .nome(dto.nome())
                 .endereco(dto.endereco())
                 .cnpj(dto.cnpj())
+                .cidade(dto.cidade())
+                .estado(dto.estado())
+                .statusHospital(dto.statusHospital())
                 .build();
     }
 
@@ -49,8 +60,21 @@ public class HospitalMapperImpl implements HospitalMapper {
                 model.getNome(),
                 model.getEndereco(),
                 model.getCnpj(),
+                model.getCidade(),
+                model.getEstado(),
+                model.getStatusHospital(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
+        );
+    }
+
+    @Override
+    public HospitalMetricaResponseDTO toMetricasDTO(HospitalMetrica model) {
+        return new HospitalMetricaResponseDTO(
+                model.getTotalHospitais(),
+                model.getAtivoHospitais(),
+                model.getLotadoHospitais(),
+                model.getEmManutencaoHospitais()
         );
     }
 }
