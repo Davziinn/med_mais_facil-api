@@ -18,5 +18,7 @@ public record PacienteRequestDTO (
         LocalDate dataNascimento,
         String sexo,
 
-        List<String> condicoesPreexistentes
+        List<String> condicoesPreexistentes,
+
+        Long usuarioId
 ){}

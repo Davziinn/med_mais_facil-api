@@ -116,7 +116,7 @@ public class AtendimentoMapperImpl implements AtendimentoMapper {
                         CalcularIdadeUtils.calcular(atendimento.getChamado().getPaciente().getDataNascimento()),
                         atendimento.getChamado().getPaciente().getSexo(),
                         atendimento.getHipoteseDiagnostica(),
-                        atendimento.getMedico().getNome(),
+                        atendimento.getMedico().getUsuario().getNome(),
                         atendimento.getChamado().getPrioridadeChamado().name(),
                         atendimento.getChamado().getStatusChamado().name(),
                         atendimento.getDataInicio(),

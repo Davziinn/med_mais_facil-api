@@ -48,4 +48,8 @@ public class PacienteEntity {
     )
     @Column(name = "CONDICAO")
     private List<String> condicoesPreexistentes;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USU", nullable = false, unique = true)
+    private UsuarioEntity usuario;
 }

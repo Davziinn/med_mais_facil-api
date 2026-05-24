@@ -22,4 +22,5 @@ public class Paciente {
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
     private List<String> condicoesPreexistentes;
+    private Usuario usuario;
 }

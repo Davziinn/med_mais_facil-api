@@ -5,9 +5,9 @@ import com.Unifor.MedMaisFacil.dtos.especialidade.EspecialidadeMedicoRequestDTO;
 import java.time.LocalDate;
 
 public record MedicoRequestDTO(
-        String nome,
         String crm,
         EspecialidadeMedicoRequestDTO especialidade,
         String sexo,
-        LocalDate dataNascimento
+        LocalDate dataNascimento,
+        Long usuarioId
 ) {}

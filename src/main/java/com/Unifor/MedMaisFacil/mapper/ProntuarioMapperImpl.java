@@ -111,7 +111,7 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 atendimento.getHipoteseDiagnostica(),
                 atendimento.getConduta(),
                 atendimento.getAnamnese(),
-                atendimento.getMedico().getNome(),
+                atendimento.getMedico().getUsuario().getNome(),
                 prontuario.map(Prontuario::getDiagnostico).orElse(null),
                 prontuario.map(Prontuario::getObservacoes).orElse(null),
                 medicamentos,

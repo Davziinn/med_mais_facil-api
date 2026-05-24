@@ -13,11 +13,11 @@ import java.time.LocalDateTime;
 public class Medico {
 
     private Long id;
-    private String nome;
     private String crm;
     private EspecialidadeMedico especialidade;
     private String sexo;
     private LocalDate dataNascimento;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
+    private Usuario usuario;
 }

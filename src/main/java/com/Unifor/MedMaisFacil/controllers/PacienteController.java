@@ -33,7 +33,7 @@ public class PacienteController {
     public ResponseEntity<List<PacienteResponseDTO>> listarPacientes () {
         List<Paciente> pacientesBuscado = pacienteService.buscarTodosPacientes();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(pacientesBuscado.stream().map(pacienteMapper::toDTO).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(pacientesBuscado.stream().map(pacienteMapper::toDTO).toList());
     }
 
     @GetMapping("/{nomePaciente}")

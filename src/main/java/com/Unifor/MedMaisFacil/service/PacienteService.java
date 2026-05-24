@@ -1,9 +1,11 @@
 package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
+import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import com.Unifor.MedMaisFacil.exceptions.PacienteNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.PacienteMapper;
 import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,22 @@ public class PacienteService {
     @Autowired
     private PacienteMapper pacienteMapper;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     public Paciente salvarPaciente (Paciente paciente) {
         if (paciente == null) return null;
+
+        Usuario usuarioEncontrado = usuarioService.buscarUsuarioById(paciente.getUsuario().getId());
+
+        if (usuarioEncontrado.getTipoUsuario() != TipoUsuario.PACIENTE) {
+            throw new RuntimeException("Usuário não é do tipo PACIENTE");
+        }
+
+        paciente = Paciente.builder()
+                .usuario(usuarioEncontrado)
+                .build();
+
         return pacienteMapper.toModel(pacienteRepository.save(pacienteMapper.toEntity(paciente)));
     }
 

@@ -20,9 +20,6 @@ public class MedicoEntity {
     @Column(name = "ID_MED")
     private Long id;
 
-    @Column(name = "NM_MED", nullable = false)
-    private String nome;
-
     @Column(name = "CRM_MED", nullable = false, unique = true)
     private String crm;
 
@@ -43,4 +40,8 @@ public class MedicoEntity {
     @Column(name = "DT_ATZ_MED")
     @UpdateTimestamp
     private LocalDateTime atualizadoEm;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_USU", nullable = false, unique = true)
+    private UsuarioEntity usuario;
 }

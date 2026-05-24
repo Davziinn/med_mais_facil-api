@@ -5,11 +5,16 @@ import com.Unifor.MedMaisFacil.dtos.paciente.PacienteRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.paciente.PacienteResponseDTO;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.models.Paciente;
+import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PacienteMapperImpl implements PacienteMapper {
+
+    @Autowired
+    private UsuarioMapper usuarioMapper;
 
     @Override
     public Paciente toModel(PacienteEntity entity) {
@@ -24,6 +29,7 @@ public class PacienteMapperImpl implements PacienteMapper {
         pacienteModel.setAtualizadoEm(entity.getAtualizadoEm());
         pacienteModel.setDataNascimento(entity.getDataNascimento());
         pacienteModel.setCondicoesPreexistentes(entity.getCondicoesPreexistentes());
+        pacienteModel.setUsuario(entity.getUsuario() != null ? usuarioMapper.toModel(entity.getUsuario()) : null);
 
         return pacienteModel;
     }
@@ -38,7 +44,8 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getSexo(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm(),
-                model.getCondicoesPreexistentes()
+                model.getCondicoesPreexistentes(),
+                model.getUsuario() != null ? usuarioMapper.toEntity(model.getUsuario()) : null
         );
     }
 
@@ -50,6 +57,9 @@ public class PacienteMapperImpl implements PacienteMapper {
                 .dataNascimento(dto.dataNascimento())
                 .sexo(dto.sexo())
                 .condicoesPreexistentes(dto.condicoesPreexistentes())
+                .usuario(dto.usuarioId() != null
+                        ? Usuario.builder().id(dto.usuarioId()).build() // só o id, o service completa
+                        : null)
                 .build();
     }
 
