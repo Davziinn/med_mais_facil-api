@@ -50,4 +50,12 @@ public class EspecialidadeService {
     public void deletarEspecialidadeById(Long id) {
         especialidadeMedicoRepository.deleteById(id);
     }
+
+    public EspecialidadeMedico buscarEspecialidadeByNome (String nomeEspecialidade) {
+        EspecialidadeMedico nomeEspecialidadeMedicoEncontrado = especialidadeMapper.toModel(especialidadeMedicoRepository.findByNome(nomeEspecialidade).orElseThrow(
+                () -> new EspecialidadeMedicoNotFoundException("Especialidade Medica não encontrada")
+        ));
+
+        return nomeEspecialidadeMedicoEncontrado;
+    }
 }

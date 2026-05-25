@@ -6,6 +6,7 @@ public record PacienteResponseDTO (
         Long id,
         String nome,
         String cpf,
+        String telefone,
         int idade,
         String sexo,
         List<String> condicoesPreexistentes

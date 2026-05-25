@@ -19,6 +19,7 @@ public class Usuario {
     private String email;
     private String senhaHash;
     private String cpf;
+    private String telefone;
     private TipoUsuario tipoUsuario;
     private Boolean ativo;
     private Hospital hospital;

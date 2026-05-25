@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.models;
 
+import jakarta.persistence.Transient;
 import lombok.*;
 
 
@@ -23,4 +24,11 @@ public class Paciente {
     private LocalDateTime atualizadoEm;
     private List<String> condicoesPreexistentes;
     private Usuario usuario;
+
+    @Transient
+    private String email;
+    @Transient
+    private String senha;
+
+    private String telefone;
 }

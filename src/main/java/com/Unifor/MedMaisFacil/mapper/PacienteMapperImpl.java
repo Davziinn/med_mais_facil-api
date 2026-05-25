@@ -5,7 +5,6 @@ import com.Unifor.MedMaisFacil.dtos.paciente.PacienteRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.paciente.PacienteResponseDTO;
 import com.Unifor.MedMaisFacil.entity.PacienteEntity;
 import com.Unifor.MedMaisFacil.models.Paciente;
-import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.utils.CalcularIdadeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,12 +53,12 @@ public class PacienteMapperImpl implements PacienteMapper {
         return Paciente.builder()
                 .nome(dto.nome())
                 .cpf(dto.cpf())
+                .telefone(dto.telefone())
+                .email(dto.email())
+                .senha(dto.senha())
                 .dataNascimento(dto.dataNascimento())
                 .sexo(dto.sexo())
                 .condicoesPreexistentes(dto.condicoesPreexistentes())
-                .usuario(dto.usuarioId() != null
-                        ? Usuario.builder().id(dto.usuarioId()).build() // só o id, o service completa
-                        : null)
                 .build();
     }
 
@@ -69,6 +68,7 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getId(),
                 model.getNome(),
                 model.getCpf(),
+                model.getTelefone(),
                 CalcularIdadeUtils.calcular(model.getDataNascimento()),
                 model.getSexo(),
                 model.getCondicoesPreexistentes()

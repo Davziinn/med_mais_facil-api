@@ -22,6 +22,7 @@ public class UsuarioMapperImpl implements UsuarioMapper{
                 .email(entity.getEmail())
                 .senhaHash(entity.getSenhaHash())
                 .cpf(entity.getCpf())
+                .telefone(entity.getTelefone())
                 .tipoUsuario(entity.getTipoUsuario())
                 .ativo(entity.getAtivo())
                 .hospital(entity.getHospital() != null ? hospitalMapper.toModel(entity.getHospital()) : null)
@@ -38,6 +39,7 @@ public class UsuarioMapperImpl implements UsuarioMapper{
                 .email(model.getEmail())
                 .senhaHash(model.getSenhaHash())
                 .cpf(model.getCpf())
+                .telefone(model.getTelefone())
                 .tipoUsuario(model.getTipoUsuario())
                 .ativo(model.getAtivo())
                 .hospital(model.getHospital() != null ? hospitalMapper.toEntity(model.getHospital()) : null)
@@ -53,6 +55,7 @@ public class UsuarioMapperImpl implements UsuarioMapper{
                 .email(dto.email())
                 .senhaHash(dto.senha())
                 .cpf(dto.cpf())
+                .telefone(dto.telefone())
                 .tipoUsuario(dto.tipoUsuario())
                 .hospital(dto.hospitalId() != null ? Hospital.builder().id(dto.hospitalId()).build() : null)
                 .build();
@@ -65,6 +68,7 @@ public class UsuarioMapperImpl implements UsuarioMapper{
                 model.getNome(),
                 model.getEmail(),
                 model.getCpf(),
+                model.getTelefone(),
                 model.getTipoUsuario(),
                 model.getAtivo(),
                 model.getHospital() != null ? hospitalMapper.toDTO(model.getHospital()) : null

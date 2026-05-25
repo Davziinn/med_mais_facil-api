@@ -30,7 +30,7 @@ public class MedicoService {
 
         Usuario usuarioEncontrado = usuarioService.buscarUsuarioById(medico.getUsuario().getId());
 
-        EspecialidadeMedico especialidadeEncontrada = especialidadeService.buscarEspecialidadeById(medico.getEspecialidade().getId());
+        EspecialidadeMedico especialidadeEncontrada = especialidadeService.buscarEspecialidadeByNome(medico.getEspecialidade().getNome());
 
 
         if (usuarioEncontrado.getTipoUsuario() != TipoUsuario.MEDICO) {

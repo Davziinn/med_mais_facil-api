@@ -33,6 +33,9 @@ public class UsuarioEntity {
     @Column(name = "CPF_USU", nullable = false, unique = true, length = 14)
     private String cpf;
 
+    @Column(name = "TEL_USU")
+    private String telefone;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "TP_USU", nullable = false)
     private TipoUsuario tipoUsuario;

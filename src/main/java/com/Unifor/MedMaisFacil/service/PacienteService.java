@@ -27,14 +27,21 @@ public class PacienteService {
     public Paciente salvarPaciente (Paciente paciente) {
         if (paciente == null) return null;
 
-        Usuario usuarioEncontrado = usuarioService.buscarUsuarioById(paciente.getUsuario().getId());
+        Usuario usuarioSalvo = usuarioService.salvarUsuario(
+                Usuario.builder()
+                        .nome(paciente.getNome())
+                        .cpf(paciente.getCpf())
+                        .telefone(paciente.getTelefone())
+                        .email(paciente.getEmail())
+                        .senhaHash(paciente.getSenha())
+                        .tipoUsuario(TipoUsuario.PACIENTE)
+                        .ativo(true)
+                        .build()
+        );
 
-        if (usuarioEncontrado.getTipoUsuario() != TipoUsuario.PACIENTE) {
-            throw new RuntimeException("Usuário não é do tipo PACIENTE");
-        }
 
-        paciente = Paciente.builder()
-                .usuario(usuarioEncontrado)
+        paciente = paciente.toBuilder()
+                .usuario(usuarioSalvo)
                 .build();
 
         return pacienteMapper.toModel(pacienteRepository.save(pacienteMapper.toEntity(paciente)));

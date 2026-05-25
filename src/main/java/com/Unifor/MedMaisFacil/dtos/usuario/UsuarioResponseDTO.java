@@ -8,6 +8,7 @@ public record UsuarioResponseDTO(
         String nome,
         String email,
         String cpf,
+        String telefone,
         TipoUsuario tipoUsuario,
         Boolean ativo,
         HospitalResponseDTO hospital

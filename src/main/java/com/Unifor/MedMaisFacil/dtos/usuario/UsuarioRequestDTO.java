@@ -7,6 +7,7 @@ public record UsuarioRequestDTO(
         String email,
         String senha,
         String cpf,
+        String telefone,
         TipoUsuario tipoUsuario,
         Long hospitalId
 ) {
