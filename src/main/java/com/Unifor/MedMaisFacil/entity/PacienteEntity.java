@@ -27,6 +27,9 @@ public class PacienteEntity {
     @Column(name = "CPF_CLI", nullable = false, unique = true, length = 14)
     private String cpf;
 
+    @Column(name = "TEL_PAC")
+    private String telefone;
+
     @Column(name = "DT_NASC_CLI", nullable = false)
     private LocalDate dataNascimento;
 

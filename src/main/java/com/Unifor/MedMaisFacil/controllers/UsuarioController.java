@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.controllers;
 
 import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioUpdateRequestDTO;
 import com.Unifor.MedMaisFacil.mapper.UsuarioMapper;
 import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.service.UsuarioService;
@@ -31,21 +32,28 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioMapper.toDTO(usuarioSalvo));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioById (@PathVariable Long id) {
+        Usuario usuarioBuscado = usuarioService.buscarUsuarioById(id);
+
+        return ResponseEntity.ok(usuarioMapper.toDTO(usuarioBuscado));
+    }
+
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> listarTodosUsuarios () {
-        List<Usuario> usuariosListados = usuarioService.listarUsuarios();
+    public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosNotPacientes () {
+        List<Usuario> usuariosListados = usuarioService.listarUsuariosNotPacientes();
 
         return ResponseEntity.ok(usuariosListados.stream().map(usuarioMapper::toDTO).toList());
     }
 
     @PutMapping("/{id}/editar")
-    public ResponseEntity<UsuarioResponseDTO> editarUsuario (@PathVariable Long id, @RequestBody UsuarioRequestDTO dto) {
+    public ResponseEntity<UsuarioResponseDTO> editarUsuario (@PathVariable Long id, @RequestBody UsuarioUpdateRequestDTO dto) {
         Usuario usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioMapper.toModel(dto));
 
         return ResponseEntity.ok(usuarioMapper.toDTO(usuarioAtualizado));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/deletar")
     public ResponseEntity<Void> deletarUsuario (@PathVariable Long id) {
         usuarioService.deletarUsuarioById(id);
 

@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.mapper;
 
 import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioResponseDTO;
+import com.Unifor.MedMaisFacil.dtos.usuario.UsuarioUpdateRequestDTO;
 import com.Unifor.MedMaisFacil.entity.UsuarioEntity;
 import com.Unifor.MedMaisFacil.models.Hospital;
 import com.Unifor.MedMaisFacil.models.Usuario;
@@ -58,6 +59,20 @@ public class UsuarioMapperImpl implements UsuarioMapper{
                 .telefone(dto.telefone())
                 .tipoUsuario(dto.tipoUsuario())
                 .hospital(dto.hospitalId() != null ? Hospital.builder().id(dto.hospitalId()).build() : null)
+                .build();
+    }
+
+    @Override
+    public Usuario toModel(UsuarioUpdateRequestDTO dto) {
+        return Usuario.builder()
+                .nome(dto.nome())
+                .email(dto.email())
+                .senhaHash(dto.senha())
+                .cpf(dto.cpf())
+                .telefone(dto.telefone())
+                .tipoUsuario(dto.tipoUsuario())
+                .hospital(dto.hospitalId() != null ? Hospital.builder().id(dto.hospitalId()).build() : null)
+                .ativo(dto.ativo())
                 .build();
     }
 

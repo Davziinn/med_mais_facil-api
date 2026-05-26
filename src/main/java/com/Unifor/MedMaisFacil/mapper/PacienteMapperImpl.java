@@ -23,6 +23,7 @@ public class PacienteMapperImpl implements PacienteMapper {
         pacienteModel.setId(entity.getId());
         pacienteModel.setNome(entity.getNome());
         pacienteModel.setCpf(entity.getCpf());
+        pacienteModel.setTelefone(entity.getTelefone());
         pacienteModel.setSexo(entity.getSexo());
         pacienteModel.setCriadoEm(entity.getCriadoEm());
         pacienteModel.setAtualizadoEm(entity.getAtualizadoEm());
@@ -39,6 +40,7 @@ public class PacienteMapperImpl implements PacienteMapper {
                 model.getId(),
                 model.getNome(),
                 model.getCpf(),
+                model.getTelefone(),
                 model.getDataNascimento(),
                 model.getSexo(),
                 model.getCriadoEm(),
