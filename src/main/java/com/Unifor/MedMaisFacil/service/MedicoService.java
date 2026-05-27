@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import com.Unifor.MedMaisFacil.exceptions.MedicoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.MedicoMapper;
@@ -25,6 +26,7 @@ public class MedicoService {
     @Autowired
     private EspecialidadeService especialidadeService;
 
+    @Auditable(acao = "Cadastrou um médico", modulo = "Medicos")
     public Medico salvarMedico (Medico medico) {
         if (medico == null) return null;
 

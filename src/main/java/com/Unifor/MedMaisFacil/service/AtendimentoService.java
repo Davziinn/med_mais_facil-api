@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import com.Unifor.MedMaisFacil.exceptions.*;
@@ -30,6 +31,7 @@ public class AtendimentoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
+    @Auditable(acao = "Iniciou um atendimento", modulo = "Atendimentos")
     public Atendimento iniciar(Long chamadoId, Long medicoId) {
 
         Chamado chamadoEncontrado = chamadoService.consultarDetalhesChamado(chamadoId);
@@ -61,6 +63,8 @@ public class AtendimentoService {
 
         return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(atendimentoCriado)));
     }
+
+    @Auditable(acao = "Salvou um atendimento", modulo = "Atendimentos")
     public Atendimento salvar (Long id, Atendimento atendimento) {
         Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
 
@@ -79,6 +83,7 @@ public class AtendimentoService {
         return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(objetoAtendimentoCriado)));
     }
 
+    @Auditable(acao = "Encerrou um atendimento", modulo = "Atendimentos")
     public Atendimento encerrarAtendimento (Long id) {
         Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
 

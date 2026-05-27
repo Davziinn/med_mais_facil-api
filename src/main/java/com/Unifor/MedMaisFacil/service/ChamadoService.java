@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.entity.*;
 import com.Unifor.MedMaisFacil.enums.*;
 import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
@@ -178,6 +179,7 @@ public class ChamadoService {
                 .toList();
     }
 
+    @Auditable(acao = "Marcou como ausente", modulo = "Chamados")
     public void marcarAusente(Long chamadoId) {
         ChamadoEntity chamado = chamadoRepository.findById(chamadoId)
                 .orElseThrow(() ->
@@ -190,6 +192,7 @@ public class ChamadoService {
         chamadoRepository.save(chamado);
     }
 
+    @Auditable(acao = "Confirmou o checkin", modulo = "Chamados")
     public void confirmarCheckin (Long chamadoId) {
         Chamado chamadoBuscado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId)
                 .orElseThrow(
@@ -201,6 +204,7 @@ public class ChamadoService {
         chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
     }
 
+    @Auditable(acao = "Cancelou o chamado", modulo = "Chamados")
     public void cancelarChamado (Long chamadoId) {
         Chamado chamadoBuscado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId)
                 .orElseThrow(
@@ -212,6 +216,7 @@ public class ChamadoService {
         chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
     }
 
+    @Auditable(acao = "Alterou a prioridade", modulo = "Chamados")
     public Chamado alterarPrioridade (Long chamadoId, PrioridadeChamado novaPrioridade) {
         Chamado chamadoEncontrado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId).orElseThrow(
                 () -> new ChamadoNotFoundException("Chamado não encontrado!")
@@ -224,6 +229,7 @@ public class ChamadoService {
         return chamadoMapper.toModel(chamadoRepository.save(chamadoMapper.toEntity(chamadoEncontrado)));
     }
 
+    @Auditable(acao = "Encaminhou um chamado", modulo = "Chamados")
     public EncaminharChamado encaminharChamado (Long chamadoId, EncaminharChamado encaminharChamado) {
         Chamado chamadoEncontrado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId).orElseThrow(
                 () -> new ChamadoNotFoundException("Chamado não encontrado!")

@@ -2,7 +2,7 @@ package com.Unifor.MedMaisFacil.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 

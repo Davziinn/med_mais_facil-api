@@ -3,6 +3,7 @@ package com.Unifor.MedMaisFacil.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.*;
+import jakarta.persistence.Table;
 
 import java.time.*;
 

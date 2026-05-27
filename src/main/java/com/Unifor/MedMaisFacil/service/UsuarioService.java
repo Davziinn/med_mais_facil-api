@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import com.Unifor.MedMaisFacil.exceptions.UsuarioNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.UsuarioMapper;
@@ -25,6 +26,7 @@ public class UsuarioService {
     @Autowired
     private HospitalService hospitalService;
 
+    @Auditable(acao = "Cadastrou um usuário", modulo = "Usuários")
     public Usuario salvarUsuario(Usuario usuario) {
         if (Objects.isNull(usuario)) return null;
 
@@ -58,6 +60,7 @@ public class UsuarioService {
         return usuariosEncontrados;
     }
 
+    @Auditable(acao = "Atualizou um usuário", modulo = "Usuários")
     public Usuario atualizarUsuario(Long id, Usuario novoUsuario) {
         Usuario usuarioEncontrado = buscarUsuarioById(id);
 
@@ -77,6 +80,7 @@ public class UsuarioService {
         return usuarioMapper.toModel(usuarioRepository.save(usuarioMapper.toEntity(usuarioEncontrado)));
     }
 
+    @Auditable(acao = "Deletou um usuário", modulo = "Usuários")
     public void deletarUsuarioById(Long id) {
         usuarioRepository.deleteById(id);
 

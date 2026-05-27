@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.exceptions.EventoClinicoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.EventoClinicoMapper;
 import com.Unifor.MedMaisFacil.models.EventoClinico;
@@ -19,6 +20,7 @@ public class EventoClinicoService {
     @Autowired
     private EventoClinicoMapper eventoClinicoMapper;
 
+    @Auditable(acao = "Cadastrou um evento clínico", modulo = "Eventos Clínicos")
     public EventoClinico salvarEventoClinico(EventoClinico eventoClinico) {
         if (eventoClinico == null) return null;
         return eventoClinicoMapper.toModel(eventoClinicoRepository.save(eventoClinicoMapper.toEntity(eventoClinico)));
@@ -38,6 +40,7 @@ public class EventoClinicoService {
         ));
     }
 
+    @Auditable(acao = "Atualizou um evento clínico", modulo = "Eventos Clínicos")
     public EventoClinico atualizarEventoClinico(Long id, EventoClinico eventoClinico) {
         if (Objects.isNull(eventoClinico)) return null;
 
@@ -52,6 +55,7 @@ public class EventoClinicoService {
         return salvarEventoClinico(eventoClinicoEncontrado);
     }
 
+    @Auditable(acao = "Deletou um evento clínico", modulo = "Eventos Clínicos")
     public void deletarEventoClinicoById (Long id) {
         eventoClinicoRepository.deleteById(id);
     }

@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
 

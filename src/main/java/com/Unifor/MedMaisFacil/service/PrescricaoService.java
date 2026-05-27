@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.entity.PrescricaoEntity;
 import com.Unifor.MedMaisFacil.mapper.PrescricaoMapper;
 import com.Unifor.MedMaisFacil.models.Atendimento;
@@ -25,6 +26,7 @@ public class PrescricaoService {
     @Autowired
     private AtendimentoService atendimentoService;
 
+    @Auditable(acao = "Salvou uma prescrição", modulo = "Prescrições")
     public Prescricao salvar(Prescricao prescricao, Long atendimentoId) {
         Atendimento atendimentoEncontrado = atendimentoService.buscarAtendimentoById(atendimentoId);
 

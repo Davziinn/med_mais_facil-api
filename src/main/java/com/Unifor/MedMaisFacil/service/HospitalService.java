@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.entity.HospitalEntity;
 import com.Unifor.MedMaisFacil.enums.StatusHospital;
 import com.Unifor.MedMaisFacil.exceptions.HospitalNotFoundException;
@@ -23,6 +24,7 @@ public class HospitalService {
     @Autowired
     private ChamadoMapper chamadoMapper;
 
+    @Auditable(acao = "Cadastrou um Hospital", modulo = "Hospitais")
     public Hospital salvarHospital (Hospital hospital) {
         if (hospital == null) return null;
         return hospitalMapper.toModel(hospitalRepository.save(hospitalMapper.toEntity(hospital)));
@@ -48,6 +50,7 @@ public class HospitalService {
                 .toList();
     }
 
+    @Auditable(acao = "Atualizou um Hospital", modulo = "Hospitais")
     public Hospital atualizarHospital(Long id, Hospital novoDadosHospital) {
         Hospital hospitalEncontrado = buscarHospitalById(id);
 
@@ -63,6 +66,7 @@ public class HospitalService {
         return hospitalMapper.toModel(hospitalRepository.save(hospitalMapper.toEntity(hospitalEncontrado)));
     }
 
+    @Auditable(acao = "Deletou um Hospital", modulo = "Hospitais")
     public void deletarHospital(Long id) {
         hospitalRepository.deleteById(id);
     }

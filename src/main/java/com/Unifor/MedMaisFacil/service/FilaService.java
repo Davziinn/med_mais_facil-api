@@ -33,8 +33,4 @@ public class FilaService {
 
         throw new ChamadoNotFoundException("Chamado de ID " + chamado.getId() + " não encontrado na fila do hospital");
     }
-
-    public Long calcularTempoEspera(LocalDateTime dataHora) {
-        return Duration.between(dataHora, LocalDateTime.now()).toMinutes();
-    }
 }

@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.exceptions.RegraNegocioException;
 import com.Unifor.MedMaisFacil.exceptions.SintomaNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.SintomaMapper;
@@ -20,6 +21,7 @@ public class SintomaService {
     @Autowired
     private SintomaMapper sintomaMapper;
 
+    @Auditable(acao = "Cadastrou um sintoma", modulo = "Sintomas")
     public Sintoma salvarSintoma (Sintoma sintoma) {
         if (sintoma == null) return null;
         return sintomaMapper.toModel(sintomaRepository.save(sintomaMapper.toEntity(sintoma)));
@@ -39,6 +41,7 @@ public class SintomaService {
         ));
     }
 
+    @Auditable(acao = "Atualizou um sintoma", modulo = "Sintomas")
     public Sintoma atualizarSintoma(Long id, Sintoma sintoma) {
         Sintoma sintomaEncontrado = buscarSintomaById(id);
 
@@ -51,6 +54,7 @@ public class SintomaService {
         return sintomaEncontrado;
     }
 
+    @Auditable(acao = "Deletou um sintoma", modulo = "Sintomas")
     public void deletarSintoma(Long id) {
         sintomaRepository.deleteById(id);
     }

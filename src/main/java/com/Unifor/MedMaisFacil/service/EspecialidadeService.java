@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.exceptions.EspecialidadeMedicoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.EspecialidadeMapper;
 import com.Unifor.MedMaisFacil.models.EspecialidadeMedico;
@@ -18,6 +19,7 @@ public class EspecialidadeService {
 
     private final EspecialidadeMapper especialidadeMapper;
 
+    @Auditable(acao = "Cadastrou uma especialidade", modulo = "Especialidades")
     public EspecialidadeMedico salvarEspecialidade (EspecialidadeMedico especialidade) {
         if (Objects.isNull(especialidade)) return null;
 
@@ -36,6 +38,7 @@ public class EspecialidadeService {
                 .toList();
     }
 
+    @Auditable(acao = "Atualizou uma especialidade", modulo = "Especialidades")
     public EspecialidadeMedico atualizarDadosEspecialidade(Long id, EspecialidadeMedico especialidadeAtualizado) {
         EspecialidadeMedico especialidadeEncontrado = buscarEspecialidadeById(id);
 
@@ -47,6 +50,7 @@ public class EspecialidadeService {
         return especialidadeMapper.toModel(especialidadeMedicoRepository.save(especialidadeMapper.toEntity(especialidadeEncontrado)));
     }
 
+    @Auditable(acao = "Deletou uma especialidade", modulo = "Especialidades")
     public void deletarEspecialidadeById(Long id) {
         especialidadeMedicoRepository.deleteById(id);
     }

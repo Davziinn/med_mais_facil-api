@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.entity;
 
 import com.Unifor.MedMaisFacil.enums.StatusHospital;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
 
