@@ -10,8 +10,11 @@ import com.Unifor.MedMaisFacil.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AtendimentoService {
@@ -139,6 +142,35 @@ public class AtendimentoService {
         double taxaCancelamento = calcularTaxaCancelamento();
 
         return new HistoricoMetricas(totalNoPeriodo, totalFinalizadosNoPerido, totalCanceladosNoPerido, taxaCancelamento);
+    }
+
+    public List<AdmDashboardAtendimentosPorDia> atendimentosUltimosSeteDias() {
+        LocalDateTime fim = LocalDateTime.now();
+        LocalDateTime inicio = fim.minusDays(6).toLocalDate().atStartOfDay();
+
+        List<Object[]> resultado = atendimentoRepository.contarAtendimentosPorDia(inicio, fim);
+
+        Map<Integer, String> nomeDia = Map.of(
+                0, "Dom", 1, "Seg", 2, "Ter", 3, "Qua",
+                4, "Qui", 5, "Sex", 6, "Sáb"
+        );
+
+        Map<Integer, Long> porDia = new LinkedHashMap<>();
+        for (int i = 6; i >= 0; i--) {
+            LocalDate dia = LocalDate.now().minusDays(i);
+            int numeroDia = dia.getDayOfWeek().getValue() % 7;
+            porDia.put(numeroDia, 0L);
+        }
+
+        for (Object[] row : resultado) {
+            int numeroDia = ((Number) row[0]).intValue();
+            long count = ((Number) row[1]).longValue();
+            porDia.put(numeroDia, count);
+        }
+
+        return porDia.entrySet().stream()
+                .map(e -> new AdmDashboardAtendimentosPorDia(nomeDia.get(e.getKey()), e.getValue()))
+                .toList();
     }
 
     private long contarTotalAtendimentosNoPeriodo () {

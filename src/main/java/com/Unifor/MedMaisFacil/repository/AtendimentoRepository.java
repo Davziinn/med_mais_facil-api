@@ -44,4 +44,19 @@ public interface AtendimentoRepository extends JpaRepository<AtendimentoEntity, 
 
     // Lista de atendimentos finalizados no período
     List<AtendimentoEntity> findByDataFimBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    @Query(
+            value = """
+        SELECT EXTRACT(DOW FROM dt_fim), COUNT(id_atend)
+        FROM tb_atend
+        WHERE dt_fim >= :inicio
+          AND dt_fim <= :fim
+        GROUP BY EXTRACT(DOW FROM dt_fim)
+    """,
+            nativeQuery = true
+    )
+    List<Object[]> contarAtendimentosPorDia(
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
 }

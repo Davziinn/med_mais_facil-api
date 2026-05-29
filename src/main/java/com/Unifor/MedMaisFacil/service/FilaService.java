@@ -1,7 +1,11 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import com.Unifor.MedMaisFacil.exceptions.ChamadoNotFoundException;
+import com.Unifor.MedMaisFacil.mapper.ChamadoMapper;
 import com.Unifor.MedMaisFacil.models.Chamado;
+import com.Unifor.MedMaisFacil.repository.ChamadoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +14,18 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class FilaService {
 
-    @Autowired
-    private HospitalService hospitalService;
+    private final ChamadoRepository chamadoRepository;
+    private final ChamadoMapper chamadoMapper;
 
     public String gerarSenha(Chamado chamado) {
         List<Chamado> fila = new ArrayList<>(
-                hospitalService.buscarFilaPorHospital(chamado.getHospital().getId())
+                chamadoRepository.findFilaByHospital(chamado.getHospital().getId(),
+                                List.of(StatusChamado.EM_ESPERA, StatusChamado.AGUARDANDO_CHECKIN)).stream()
+                        .map(chamadoMapper::toModel)
+                        .toList()
         );
 
         fila.sort(Comparator

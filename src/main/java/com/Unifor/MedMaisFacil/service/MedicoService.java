@@ -54,4 +54,12 @@ public class MedicoService {
 
         return medicoEncontrado;
     }
+
+    public long contarQuantidadeMedicoPorHospital (Long hospitalId) {
+        return medicoRepository.countMedicoByHospital(hospitalId);
+    }
+
+    public long contarQuantidadeMedicosCadastrados () {
+        return medicoRepository.countMedicosAtivos();
+    }
 }

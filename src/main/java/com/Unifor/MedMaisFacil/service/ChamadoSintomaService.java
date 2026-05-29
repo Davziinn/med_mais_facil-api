@@ -53,9 +53,7 @@ public class ChamadoSintomaService {
             chamadoSintomas.add(chamadoSintoma);
         }
 
-        List<ChamadoSintomaEntity> salvas = chamadoSintomaRepository.saveAll(
-                chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList()
-        );
+        List<ChamadoSintomaEntity> salvas = chamadoSintomaRepository.saveAll(chamadoSintomas.stream().map(chamadoSintomaMapper::toEntity).toList());
 
         return salvas.stream().map(chamadoSintomaMapper::toModel).toList();
     }

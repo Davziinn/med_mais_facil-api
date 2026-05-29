@@ -83,6 +83,13 @@ public class UsuarioService {
     @Auditable(acao = "Deletou um usuário", modulo = "Usuários")
     public void deletarUsuarioById(Long id) {
         usuarioRepository.deleteById(id);
+    }
 
+    public long contarQuantidadeUsuariosRecepcaoAtivos () {
+        return usuarioRepository.countRecepcaoAtivos();
+    }
+
+    public long contarQuantidadeUsuariosAdmAtivos () {
+        return usuarioRepository.countAdmAtivos();
     }
 }

@@ -134,6 +134,15 @@ public class ChamadoService {
         return chamadoRepository.countByStatusChamadoAndDataHoraChamadoBetween(statusChamado, inicioDoDia, fimDoDia);
     }
 
+    public long contarQuantidadeChamadosByPrioridadeChamado (PrioridadeChamado nivelPrioridade) {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDoDia = hoje.atStartOfDay();
+        LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.countByPrioridadeChamadoAndDataHoraChamadoBetween(nivelPrioridade, inicioDoDia, fimDoDia);
+    }
+
     public long contarQuantidadeChamadosByStatusChamado(
             StatusChamado statusChamado,
             LocalDateTime inicio,
@@ -257,4 +266,5 @@ public class ChamadoService {
             throw new RegraNegocioException("Não é possível marcar chamado finalizado como ausente");
         }
     }
+
 }

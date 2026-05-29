@@ -65,4 +65,8 @@ public class PacienteService {
                 .map(pacienteMapper::toModel)
                 .toList();
     }
+
+    public long contarQuantidadePacientes () {
+        return pacienteRepository.countPacientes();
+    }
 }
