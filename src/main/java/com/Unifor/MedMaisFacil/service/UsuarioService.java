@@ -7,7 +7,12 @@ import com.Unifor.MedMaisFacil.mapper.UsuarioMapper;
 import com.Unifor.MedMaisFacil.models.Hospital;
 import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,16 +20,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UsuarioService {
+@RequiredArgsConstructor
+public class UsuarioService implements UserDetailsService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioMapper usuarioMapper;
+    private final UsuarioMapper usuarioMapper;
 
-    @Autowired
-    private HospitalService hospitalService;
+    private final HospitalService hospitalService;
 
     @Auditable(acao = "Cadastrou um usuário", modulo = "Usuários")
     public Usuario salvarUsuario(Usuario usuario) {
@@ -91,5 +94,12 @@ public class UsuarioService {
 
     public long contarQuantidadeUsuariosAdmAtivos () {
         return usuarioRepository.countAdmAtivos();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new UsuarioNotFoundException("Usuário não encontrado com o email: " + email)
+        );
     }
 }

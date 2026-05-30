@@ -4,8 +4,10 @@ import com.Unifor.MedMaisFacil.entity.UsuarioEntity;
 import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
@@ -26,4 +28,6 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
         AND r.ativo = true
     """)
     long countAdmAtivos ();
+
+    Optional<UsuarioEntity> findByEmail(String email);
 }

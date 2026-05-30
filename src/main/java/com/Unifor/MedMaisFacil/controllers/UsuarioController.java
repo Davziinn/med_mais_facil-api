@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +26,19 @@ public class UsuarioController {
     @Autowired
     private UsuarioMapper usuarioMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario (@Valid @RequestBody UsuarioRequestDTO dto) {
-        Usuario usuarioSalvo = usuarioService.salvarUsuario(usuarioMapper.toModel(dto));
+        Usuario usuario = usuarioMapper.toModel(dto);
 
+        usuario = usuario.toBuilder()
+                .senhaHash(passwordEncoder.encode(usuario.getSenhaHash()))
+                .build();
+
+        Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioMapper.toDTO(usuarioSalvo));
     }
 

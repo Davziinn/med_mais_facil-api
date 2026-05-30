@@ -4,6 +4,7 @@ import com.Unifor.MedMaisFacil.exceptions.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -88,5 +89,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RegraNegocioException.class)
     public ResponseEntity<Object> handleRegraNegocioException (RegraNegocioException ex){
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDenied(AccessDeniedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of(
+                        "error", "Acesso negado",
+                        "message", "Você não tem permissão para acessar este recurso"
+                ));
     }
 }
