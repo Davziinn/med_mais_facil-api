@@ -14,11 +14,13 @@ import com.Unifor.MedMaisFacil.models.HistoricoMetricas;
 import com.Unifor.MedMaisFacil.service.AtendimentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO')")
 @RestController
 @RequestMapping("/v1/atendimento")
 public class AtendimentoController {

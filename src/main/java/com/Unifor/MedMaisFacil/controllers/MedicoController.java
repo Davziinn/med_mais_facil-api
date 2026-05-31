@@ -8,9 +8,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR')")
 @RestController
 @RequestMapping("/v1/medico")
 public class MedicoController {
@@ -27,4 +29,19 @@ public class MedicoController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(medicoMapper.toDTO(medicoSalvo));
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<MedicoResponseDTO> buscarPorUsuario(@PathVariable Long usuarioId) {
+        Medico medico = medicoService.buscarPorUsuarioId(usuarioId);
+        return ResponseEntity.ok(medicoMapper.toDTO(medico));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MedicoResponseDTO> atualizarMedico(
+            @PathVariable Long id,
+            @Valid @RequestBody MedicoUpdateRequestDTO medicoRequest) {
+        Medico atualizado = medicoService.atualizarMedico(id, medicoRequest);
+        return ResponseEntity.ok(medicoMapper.toDTO(atualizado));
+    }
+
 }

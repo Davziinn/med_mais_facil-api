@@ -6,11 +6,13 @@ import com.Unifor.MedMaisFacil.models.Sintoma;
 import com.Unifor.MedMaisFacil.service.SintomaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'PACIENTE')")
 @RestController
 @RequestMapping("/v1/sintoma")
 public class SintomaController {

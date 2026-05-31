@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.annotation.Auditable;
+import com.Unifor.MedMaisFacil.dtos.medico.MedicoUpdateRequestDTO;
 import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import com.Unifor.MedMaisFacil.exceptions.MedicoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.MedicoMapper;
@@ -61,5 +62,19 @@ public class MedicoService {
 
     public long contarQuantidadeMedicosCadastrados () {
         return medicoRepository.countMedicosAtivos();
+    }
+
+    public Medico buscarPorUsuarioId(Long usuarioId) {
+        return medicoMapper.toModel(medicoRepository.findByUsuarioId(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado")));
+    }
+
+    public Medico atualizarMedico(Long id, MedicoUpdateRequestDTO dto) {
+        Medico medico = medicoMapper.toModel(medicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado")));
+        medico.setCrm(dto.crm());
+        medico.setSexo(dto.sexo());
+        medico.setDataNascimento(dto.dataNascimento());
+        return medicoMapper.toModel(medicoRepository.save(medicoMapper.toEntity(medico)));
     }
 }

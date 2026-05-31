@@ -3,9 +3,11 @@ package com.Unifor.MedMaisFacil.controllers;
 import com.Unifor.MedMaisFacil.service.ChamadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'RECEPCAO')")
 @RestController
 @RequestMapping("/v1/checkin")
 public class CheckInController {

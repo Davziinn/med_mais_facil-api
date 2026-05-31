@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface MedicoRepository extends JpaRepository<MedicoEntity, Long> {
 
     @Query("""
@@ -20,4 +22,6 @@ public interface MedicoRepository extends JpaRepository<MedicoEntity, Long> {
        WHERE m.usuario.ativo = true
        """)
     long countMedicosAtivos();
+
+    Optional<MedicoEntity> findByUsuarioId(Long usuarioId);
 }

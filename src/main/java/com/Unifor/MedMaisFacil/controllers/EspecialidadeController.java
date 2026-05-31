@@ -13,11 +13,13 @@ import com.Unifor.MedMaisFacil.service.EspecialidadeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO')")
 @RestController
 @RequestMapping("/v1/especialidade")
 @RequiredArgsConstructor
@@ -38,6 +40,7 @@ public class EspecialidadeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(especialidadeMapper.toDTO(especialidadeMedicoSalvo));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'RECEPCAO')")
     @PutMapping("/chamado/{chamadoId}/encaminhar")
     public ResponseEntity<EncaminharChamadoResponseDTO> encaminharChamadoParaEspecialidade (@PathVariable Long chamadoId, @RequestBody EncaminharChamadoRequestDTO dto) {
         EncaminharChamado chamadoEncaminhado = chamadoService.encaminharChamado(chamadoId, encaminharChamadoMapper.toModel(dto));

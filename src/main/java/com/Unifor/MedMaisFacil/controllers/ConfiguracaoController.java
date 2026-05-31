@@ -7,9 +7,11 @@ import com.Unifor.MedMaisFacil.models.Configuracao;
 import com.Unifor.MedMaisFacil.service.ConfiguracaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR')")
 @RestController
 @RequestMapping("/v1/configuracao")
 @RequiredArgsConstructor
