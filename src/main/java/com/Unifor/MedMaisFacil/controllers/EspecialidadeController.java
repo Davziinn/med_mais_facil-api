@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO')")
+@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO', 'RECEPCAO')")
 @RestController
 @RequestMapping("/v1/especialidade")
 @RequiredArgsConstructor
