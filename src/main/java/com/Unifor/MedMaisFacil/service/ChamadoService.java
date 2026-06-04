@@ -94,9 +94,14 @@ public class ChamadoService {
         Busca do banco os Chamados e os Sintomas relacionados
     */
     public List<Chamado> listarTodosChamadosAtivos() {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDia = hoje.atStartOfDay();
+        LocalDateTime fimDia = hoje.atTime(LocalTime.MAX);
+
         List<ChamadoEntity> entidades = chamadoRepository
-                .buscarChamadosAtivosComSintomas(
-                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO)
+                .buscarChamadosAtivosComSintomasAndDataHoraChamadoBetween(
+                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO), inicioDia, fimDia
                 );
 
         return entidades.stream()
@@ -105,9 +110,14 @@ public class ChamadoService {
     }
 
     public List<Chamado> listarTodosChamadosEmEsperaAndEmAtendimento() {
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDia = hoje.atStartOfDay();
+        LocalDateTime fimDia = hoje.atTime(LocalTime.MAX);
+
         List<ChamadoEntity> entidades = chamadoRepository
-                .buscarChamadosAtivosComSintomas(
-                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO)
+                .buscarChamadosAtivosComSintomasAndDataHoraChamadoBetween(
+                        List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO), inicioDia, fimDia
                 ).stream()
                 .filter(chamado -> chamado.getStatusChamado().equals(StatusChamado.EM_ESPERA) || chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO))
                 .toList();

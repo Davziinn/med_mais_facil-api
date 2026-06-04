@@ -11,12 +11,14 @@ import java.util.List;
 
 public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
     @Query("""
-    SELECT DISTINCT c
-    FROM ChamadoEntity c
-    LEFT JOIN FETCH c.chamadoSintomas cs
-    WHERE c.statusChamado NOT IN :status
-""")
-    List<ChamadoEntity> buscarChamadosAtivosComSintomas(@Param("status") List<StatusChamado> status);
+            SELECT DISTINCT c
+            FROM ChamadoEntity c
+            LEFT JOIN FETCH c.chamadoSintomas cs
+            WHERE c.statusChamado NOT IN :status
+                AND c.dataHoraChamado BETWEEN :dataInicio AND :dataFim
+        """)
+    List<ChamadoEntity> buscarChamadosAtivosComSintomasAndDataHoraChamadoBetween(@Param("status") List<StatusChamado> status, @Param("dataInicio") LocalDateTime dataInicio, @Param("dataFim") LocalDateTime dataFim);
+
 
     long countByStatusChamadoAndDataHoraChamadoBetween(StatusChamado status, LocalDateTime inicio, LocalDateTime fim);
 
