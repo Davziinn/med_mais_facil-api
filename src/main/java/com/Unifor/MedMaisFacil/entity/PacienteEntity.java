@@ -45,6 +45,9 @@ public class PacienteEntity {
     @UpdateTimestamp
     private LocalDateTime atualizadoEm;
 
+    @Column(name = "CONV_CLI")
+    private String convenio;
+
     @ElementCollection
     @CollectionTable(
             name = "TB_PAC_COND_PRE",

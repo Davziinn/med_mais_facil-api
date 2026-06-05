@@ -9,5 +9,6 @@ public record PacienteResponseDTO (
         String telefone,
         int idade,
         String sexo,
+        String convenio,
         List<String> condicoesPreexistentes
 ) {}

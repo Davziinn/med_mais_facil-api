@@ -177,7 +177,7 @@ public class ChamadoMapperImpl implements ChamadoMapper {
     }
 
     @Override
-    public DetalheChamadoResponseDTO toDetalheDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> eventosClinicosChamado, List<SinaisAlerta> sinaisAlertas) {
+    public DetalheChamadoResponseDTO toDetalheDTO(Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> eventosClinicosChamado, List<SinaisAlerta> sinaisAlertas, Long atendimentoId) {
         return new DetalheChamadoResponseDTO(
                 model.getId(),
                 gerarSenha(model),
@@ -210,7 +210,8 @@ public class ChamadoMapperImpl implements ChamadoMapper {
                                 sinalAlerta.getDescricao(),
                                 sinalAlerta.getSeveridade()
                         ))
-                        .toList()
+                        .toList(),
+                atendimentoId
                 );
     }
 

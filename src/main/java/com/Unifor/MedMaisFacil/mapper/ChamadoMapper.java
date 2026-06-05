@@ -25,7 +25,7 @@ public interface ChamadoMapper {
 
     FilaEsperaResponseDTO toFilaEsperaDTO (Chamado model);
 
-    DetalheChamadoResponseDTO toDetalheDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> chamadoEventoClinicos, List<SinaisAlerta> sinaisAlertas);
+    DetalheChamadoResponseDTO toDetalheDTO (Chamado model, List<ChamadoSintoma> chamadoSintomas, List<ChamadoEventoClinico> chamadoEventoClinicos, List<SinaisAlerta> sinaisAlertas, Long atendimentoId);
 
     FilaEmAtendimentoResponseDTO toFilaAtendimentoDTO (Chamado model);
 

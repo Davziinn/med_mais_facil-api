@@ -68,22 +68,34 @@ public class AtendimentoService {
     }
 
     @Auditable(acao = "Salvou um atendimento", modulo = "Atendimentos")
-    public Atendimento salvar (Long id, Atendimento atendimento) {
-        Atendimento atendimentoEncontrado = buscarAtendimentoById(id);
+    public Atendimento salvar(Long chamadoId, Atendimento atendimento) {
+        Chamado chamado = chamadoService.consultarDetalhesChamado(chamadoId);
+        Atendimento atendimentoEncontrado = buscarAtendimentoPorChamadoId(chamadoId);
 
-        if (!atendimentoEncontrado.getChamado().getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO)) {
+        if (!chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO)) {
             throw new ChamadoNotAvailableException("Chamado que não está em atendimento, não pode ser salvo");
         }
 
-        Atendimento objetoAtendimentoCriado = atendimentoEncontrado.toBuilder()
+        Atendimento objetoAtendimentoCriado = atendimento.toBuilder()
+                .id(atendimentoEncontrado.getId())              
+                .dataInicio(atendimentoEncontrado.getDataInicio())
+                .medico(atendimentoEncontrado.getMedico())
                 .anamnese(atendimento.getAnamnese())
                 .exameFisico(atendimento.getExameFisico())
                 .hipoteseDiagnostica(atendimento.getHipoteseDiagnostica())
                 .cidDoenca(atendimento.getCidDoenca())
                 .conduta(atendimento.getConduta())
+                .chamado(chamado)
                 .build();
 
         return atendimentoMapper.toModel(atendimentoRepository.save(atendimentoMapper.toEntity(objetoAtendimentoCriado)));
+    }
+
+    public Atendimento buscarAtendimentoPorChamadoId(Long chamadoId) {
+        return atendimentoMapper.toModel(
+                atendimentoRepository.findByChamadoId(chamadoId)
+                        .orElseThrow(() -> new RuntimeException("Atendimento não encontrado para o chamado"))
+        );
     }
 
     @Auditable(acao = "Encerrou um atendimento", modulo = "Atendimentos")

@@ -22,6 +22,7 @@ public class Paciente {
     private String sexo;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
+    private String convenio;
     private List<String> condicoesPreexistentes;
     private Usuario usuario;
 

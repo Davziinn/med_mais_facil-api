@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AtendimentoRepository extends JpaRepository<AtendimentoEntity, Long> {
 
@@ -59,4 +60,7 @@ public interface AtendimentoRepository extends JpaRepository<AtendimentoEntity, 
             @Param("inicio") LocalDateTime inicio,
             @Param("fim") LocalDateTime fim
     );
+
+    Optional<AtendimentoEntity> findByChamadoId(Long chamadoId);
+
 }

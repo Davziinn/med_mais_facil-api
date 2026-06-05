@@ -23,6 +23,7 @@ public record DetalheChamadoResponseDTO (
         List<SintomaChamadoResponseDTO> sintomas,
 
         List<EventoClinicoResponseDTO> eventosClinicos,
-        List<SinaisAlertaResponseDTO> sinaisAlertas
+        List<SinaisAlertaResponseDTO> sinaisAlertas,
+        Long atendimentoId
 ){
 }

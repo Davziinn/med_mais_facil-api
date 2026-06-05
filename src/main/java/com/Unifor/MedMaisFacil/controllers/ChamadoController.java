@@ -40,6 +40,9 @@ public class ChamadoController {
     @Autowired
     private ChamadoEventoClinicoService chamadoEventoClinicoService;
 
+    @Autowired
+    private AtendimentoService atendimentoService;
+
     @PostMapping
     public ResponseEntity<ChamadoResponseDTO> abrirChamado (@Valid @RequestBody ChamadoRequestDTO chamadoRequestDTO) {
         Chamado chamado = chamadoMapper.toModel(chamadoRequestDTO);
@@ -65,7 +68,19 @@ public class ChamadoController {
     @GetMapping("/detalhes/{id}")
     public ResponseEntity<DetalheChamadoResponseDTO> consultarDetalhesChamado(@PathVariable Long id) {
         Chamado chamado = chamadoService.consultarDetalhesChamado(id);
-        return ResponseEntity.ok(chamadoMapper.toDetalheDTO(chamado, chamado.getChamadoSintomas(), chamado.getChamadoEventoClinicos(), chamado.getSinaisAlertas()));
+
+        Long atendimentoId = null;
+        try {
+            atendimentoId = atendimentoService.buscarAtendimentoPorChamadoId(id).getId();
+        } catch (Exception ignored) {}
+
+        return ResponseEntity.ok(chamadoMapper.toDetalheDTO(
+                chamado,
+                chamado.getChamadoSintomas(),
+                chamado.getChamadoEventoClinicos(),
+                chamado.getSinaisAlertas(),
+                atendimentoId
+        ));
     }
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO', 'PACIENTE', 'RECEPCAO')")
