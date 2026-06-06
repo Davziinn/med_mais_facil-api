@@ -24,4 +24,7 @@ public interface MedicoRepository extends JpaRepository<MedicoEntity, Long> {
     long countMedicosAtivos();
 
     Optional<MedicoEntity> findByUsuarioId(Long usuarioId);
+
+    Optional<MedicoEntity> findByUsuarioEmail(String email);
+
 }

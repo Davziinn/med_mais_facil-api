@@ -15,11 +15,13 @@ public class Login {
     private String nome;
     private String token;
     private String role;
+    private Long medicoId;
 
-    public Login (String email, String nome, String token, String role) {
+    public Login (String email, String nome, String token, String role, Long medicoId) {
         this.email = email;
         this.nome = nome;
         this.token = token;
         this.role = role;
+        this.medicoId = medicoId;
     }
 }

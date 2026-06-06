@@ -68,16 +68,19 @@ public class AtendimentoService {
     }
 
     @Auditable(acao = "Salvou um atendimento", modulo = "Atendimentos")
-    public Atendimento salvar(Long chamadoId, Atendimento atendimento) {
-        Chamado chamado = chamadoService.consultarDetalhesChamado(chamadoId);
-        Atendimento atendimentoEncontrado = buscarAtendimentoPorChamadoId(chamadoId);
+    public Atendimento salvar(Long atendimentoId, Atendimento atendimento) {
+        Atendimento atendimentoEncontrado = buscarAtendimentoById(atendimentoId);
+
+        Chamado chamado = chamadoService.consultarDetalhesChamado(
+                atendimentoEncontrado.getChamado().getId()
+        );
 
         if (!chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO)) {
             throw new ChamadoNotAvailableException("Chamado que não está em atendimento, não pode ser salvo");
         }
 
         Atendimento objetoAtendimentoCriado = atendimento.toBuilder()
-                .id(atendimentoEncontrado.getId())              
+                .id(atendimentoEncontrado.getId())
                 .dataInicio(atendimentoEncontrado.getDataInicio())
                 .medico(atendimentoEncontrado.getMedico())
                 .anamnese(atendimento.getAnamnese())

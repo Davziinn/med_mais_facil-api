@@ -21,7 +21,8 @@ public class LoginMapperImpl implements LoginMapper {
                 model.getEmail(),
                 model.getNome(),
                 model.getToken(),
-                model.getRole()
+                model.getRole(),
+                model.getMedicoId()
         );
     }
 }

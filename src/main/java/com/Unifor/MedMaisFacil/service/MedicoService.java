@@ -2,6 +2,7 @@ package com.Unifor.MedMaisFacil.service;
 
 import com.Unifor.MedMaisFacil.annotation.Auditable;
 import com.Unifor.MedMaisFacil.dtos.medico.MedicoUpdateRequestDTO;
+import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.enums.TipoUsuario;
 import com.Unifor.MedMaisFacil.exceptions.MedicoNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.MedicoMapper;
@@ -76,5 +77,11 @@ public class MedicoService {
         medico.setSexo(dto.sexo());
         medico.setDataNascimento(dto.dataNascimento());
         return medicoMapper.toModel(medicoRepository.save(medicoMapper.toEntity(medico)));
+    }
+
+    public Long buscarMedicoIdByEmail (String email) {
+        return medicoRepository.findByUsuarioEmail(email)
+                .map(MedicoEntity::getId)
+                .orElse(null);
     }
 }

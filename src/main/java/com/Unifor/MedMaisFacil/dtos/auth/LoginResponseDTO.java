@@ -4,6 +4,7 @@ public record LoginResponseDTO(
         String email,
         String nome,
         String token,
-        String role
+        String role,
+        Long medicoId
 ) {
 }
