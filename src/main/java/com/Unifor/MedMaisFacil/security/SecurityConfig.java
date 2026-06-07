@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/paciente").permitAll()
                         .anyRequest().authenticated()
                 ).addFilterBefore(
                         jwtAuthFilter,

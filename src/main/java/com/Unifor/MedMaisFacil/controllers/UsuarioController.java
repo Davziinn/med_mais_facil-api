@@ -26,17 +26,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioMapper usuarioMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario (@Valid @RequestBody UsuarioRequestDTO dto) {
         Usuario usuario = usuarioMapper.toModel(dto);
-
-        usuario = usuario.toBuilder()
-                .senhaHash(passwordEncoder.encode(usuario.getSenhaHash()))
-                .build();
 
         Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioMapper.toDTO(usuarioSalvo));

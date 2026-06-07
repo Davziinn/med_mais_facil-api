@@ -1,11 +1,7 @@
 package com.Unifor.MedMaisFacil.service;
 
-import com.Unifor.MedMaisFacil.entity.MedicoEntity;
 import com.Unifor.MedMaisFacil.entity.UsuarioEntity;
-import com.Unifor.MedMaisFacil.mapper.LoginMapper;
-import com.Unifor.MedMaisFacil.mapper.UsuarioMapper;
 import com.Unifor.MedMaisFacil.models.Login;
-import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

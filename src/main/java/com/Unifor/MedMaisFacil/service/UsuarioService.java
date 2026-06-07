@@ -29,12 +29,15 @@ public class UsuarioService implements UserDetailsService {
 
     private final HospitalService hospitalService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Auditable(acao = "Cadastrou um usuário", modulo = "Usuários")
     public Usuario salvarUsuario(Usuario usuario) {
         if (Objects.isNull(usuario)) return null;
 
         usuario = usuario.toBuilder()
                 .ativo(true)
+                .senhaHash(passwordEncoder.encode(usuario.getSenhaHash()))
                 .build();
 
         if (Objects.nonNull(usuario.getHospital()) && Objects.nonNull(usuario.getHospital().getId())) {
