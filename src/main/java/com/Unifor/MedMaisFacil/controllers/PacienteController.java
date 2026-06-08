@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'PACIENTE')")
 @RestController
 @RequestMapping("/v1/paciente")
 public class PacienteController {
