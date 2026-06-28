@@ -10,6 +10,7 @@ import com.Unifor.MedMaisFacil.repository.ChamadoEventoClinicoRepository;
 import com.Unifor.MedMaisFacil.repository.EventoClinicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ChamadoEventoClinicoService {
     @Autowired
     private EventoClinicoRepository eventoClinicoRepository;
 
+    @Transactional
     public void salvarEventosClinicosByChamado (Long chamadoId, List<Long> eventosIds) {
         if (eventosIds == null) {
             throw new RuntimeException("Lista de eventos não pode ser nula");

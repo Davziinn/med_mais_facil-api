@@ -4,7 +4,8 @@ import com.Unifor.MedMaisFacil.enums.Convenio;
 import com.Unifor.MedMaisFacil.enums.StatusGuiaMedica;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,12 +17,15 @@ public class GuiaMedica {
     private Long id;
     private StatusGuiaMedica statusGuiaMedica;
     private String numeroGuia;
-    private LocalDateTime dataSolicitacao;
+    private LocalDate dataSolicitacao;
     private Convenio convenio;
+    private String cidExame;
+    private String indicacaoClinica;
     private String observacoes;
     private Atendimento atendimento;
+    private List<Exame> exames;
 
-    public void validarDataSolicitacao (LocalDateTime dataNova) {
+    public void validarDataSolicitacao (LocalDate dataNova) {
         if (this.dataSolicitacao.isBefore(dataNova)) {
             throw new IllegalArgumentException("Data da solicitação é inválida");
         }

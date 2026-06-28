@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "TB_GUIA_MED")
@@ -31,11 +31,17 @@ public class GuiaMedicaEntity {
 
     @CreationTimestamp
     @Column(name = "DT_SOLIC_GUIA_MED", nullable = false, updatable = false)
-    private LocalDateTime dataSolicitacao;
+    private LocalDate dataSolicitacao;
 
     @Column(name = "guiaMedica_convenio",nullable = false)
     @Enumerated(EnumType.STRING)
     private Convenio convenio;
+
+    @Column(name = "CID_GUIA_MED", nullable = false)
+    private String cidExame;
+
+    @Column(name = "IND_CLNC", nullable = false)
+    private String indicacaoClinica;
 
     @Column(name = "OBS_GUIA_MED", length = 300)
     private String observacoes;

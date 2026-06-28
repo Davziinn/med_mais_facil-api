@@ -1,5 +1,7 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.exame.ExameRequestDTO;
+import com.Unifor.MedMaisFacil.dtos.exame.ExameResponseDTO;
 import com.Unifor.MedMaisFacil.entity.ExameEntity;
 import com.Unifor.MedMaisFacil.models.Exame;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,21 @@ public class ExameMapperImpl implements ExameMapper {
                 model.getDescricao(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
+        );
+    }
+
+    @Override
+    public Exame toModel(ExameRequestDTO dto) {
+        return Exame.builder()
+                .nome(dto.nome())
+                .descricao(dto.descricao())
+                .build();
+    }
+
+    @Override
+    public ExameResponseDTO toDTO(Exame model) {
+        return new ExameResponseDTO(
+                model.getNome()
         );
     }
 }

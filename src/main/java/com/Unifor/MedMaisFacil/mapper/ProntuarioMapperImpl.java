@@ -77,7 +77,7 @@ public class ProntuarioMapperImpl implements ProntuarioMapper {
                 paciente.getCpf(),
                 CalcularIdadeUtils.calcular(paciente.getDataNascimento()),
                 paciente.getSexo(),
-                List.of(), // condicoesPreexistentes: mock por enquanto
+                paciente.getCondicoesPreexistentes(),
                 historico
         );
     }
