@@ -1,6 +1,5 @@
 package com.Unifor.MedMaisFacil.mapper;
 
-import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaExameRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.GuiaMedicaEntity;

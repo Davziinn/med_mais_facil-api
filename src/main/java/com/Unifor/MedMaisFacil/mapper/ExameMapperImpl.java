@@ -15,6 +15,7 @@ public class ExameMapperImpl implements ExameMapper {
                 entity.getId(),
                 entity.getNome(),
                 entity.getDescricao(),
+                entity.getAtivo(),
                 entity.getCriadoEm(),
                 entity.getAtualizadoEm()
         );
@@ -26,6 +27,7 @@ public class ExameMapperImpl implements ExameMapper {
                 model.getId(),
                 model.getNome(),
                 model.getDescricao(),
+                model.getAtivo(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm()
         );
@@ -42,7 +44,9 @@ public class ExameMapperImpl implements ExameMapper {
     @Override
     public ExameResponseDTO toDTO(Exame model) {
         return new ExameResponseDTO(
-                model.getNome()
+                model.getNome(),
+                model.getDescricao(),
+                model.getAtivo()
         );
     }
 }

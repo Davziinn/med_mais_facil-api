@@ -1,6 +1,8 @@
 package com.Unifor.MedMaisFacil.dtos.exame;
 
 public record ExameResponseDTO(
-        String nome
+        String nome,
+        String descricao,
+        Boolean ativo
 ) {
 }

@@ -40,7 +40,7 @@ public class ChamadoEventoClinicoService {
 
         Chamado chamadoEncontrado = chamadoService.consultarDetalhesChamado(chamadoId);
 
-        if (!chamadoEncontrado.getStatusChamado().equals(StatusChamado.EM_ESPERA)) {
+        if (!chamadoEncontrado.getStatusChamado().equals(StatusChamado.AGUARDANDO_CHECKIN)) {
             throw new RuntimeException("Não é possível alterar eventos neste estado");
         }
 

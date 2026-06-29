@@ -26,6 +26,7 @@ public class GuiaMedicaService {
                 .dataSolicitacao(LocalDate.now())
                 .statusGuiaMedica(StatusGuiaMedica.PENDENTE)
                 .atendimento(atendimentoEncontrado)
+                //.exames()
                 .build();
         return null;
     }

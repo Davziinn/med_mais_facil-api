@@ -14,6 +14,7 @@ public class Exame {
     private Long id;
     private String nome;
     private String descricao;
+    private Boolean ativo;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
 }

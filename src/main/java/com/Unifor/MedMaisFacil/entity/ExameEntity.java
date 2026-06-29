@@ -27,6 +27,9 @@ public class ExameEntity {
     @Column(name = "DESC_EXAM")
     private String descricao;
 
+    @Column(name = "EXAM_ATV")
+    private Boolean ativo;
+
     @CreationTimestamp
     @Column(name = "DT_CRI_EXAM", updatable = false)
     private LocalDateTime criadoEm;
