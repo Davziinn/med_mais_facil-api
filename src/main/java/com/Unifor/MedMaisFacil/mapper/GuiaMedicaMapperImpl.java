@@ -4,6 +4,7 @@ import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.GuiaMedicaEntity;
 import com.Unifor.MedMaisFacil.models.Atendimento;
+import com.Unifor.MedMaisFacil.models.Exame;
 import com.Unifor.MedMaisFacil.models.GuiaMedica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,7 @@ public class GuiaMedicaMapperImpl implements GuiaMedicaMapper {
                 .id(model.getId())
                 .numeroGuia(model.getNumeroGuia())
                 .dataSolicitacao(model.getDataSolicitacao())
+                .statusGuiaMedica(model.getStatusGuiaMedica())
                 .convenio(model.getConvenio())
                 .cidExame(model.getCidExame())
                 .indicacaoClinica(model.getIndicacaoClinica())
@@ -56,14 +58,12 @@ public class GuiaMedicaMapperImpl implements GuiaMedicaMapper {
     @Override
     public GuiaMedica toModel(GuiaMedicaRequestDTO dto) {
         return GuiaMedica.builder()
-                .statusGuiaMedica(dto.statusGuiaMedica())
-                .numeroGuia(dto.numeroGuia())
                 .convenio(dto.convenio())
                 .cidExame(dto.cidExame())
                 .indicacaoClinica(dto.indicacaoClinica())
                 .observacoes(dto.observacoes())
                 .atendimento(dto.atendimentoId() != null ? Atendimento.builder().id(dto.atendimentoId()).build() : null)
-                .exames(dto.exames() != null ? dto.exames().stream().map(exameMapper::toModel).toList() : List.of())
+                .exames(dto.examesIds() != null ? dto.examesIds().stream().map(exameId -> Exame.builder().id(exameId).build()).toList() : null)
                 .build();
     }
 

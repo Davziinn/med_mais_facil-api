@@ -44,6 +44,7 @@ public class ExameMapperImpl implements ExameMapper {
     @Override
     public ExameResponseDTO toDTO(Exame model) {
         return new ExameResponseDTO(
+                model.getId(),
                 model.getNome(),
                 model.getDescricao(),
                 model.getAtivo()
