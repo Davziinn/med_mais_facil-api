@@ -7,6 +7,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_GUIA_MED")
@@ -49,4 +51,7 @@ public class GuiaMedicaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atendimento_id", nullable = false)
     private AtendimentoEntity atendimento;
+
+    @OneToMany(mappedBy = "guia", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<GuiaExameEntity> exames = new ArrayList<>();
 }

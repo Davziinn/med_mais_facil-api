@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaCanceladaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.GuiaMedicaEntity;
@@ -14,4 +15,6 @@ public interface GuiaMedicaMapper {
     GuiaMedica toModel (GuiaMedicaRequestDTO dto);
 
     GuiaMedicaResponseDTO toDTO (GuiaMedica model);
+
+    GuiaMedicaCanceladaResponseDTO toDTOCancelada (GuiaMedica model);
 }

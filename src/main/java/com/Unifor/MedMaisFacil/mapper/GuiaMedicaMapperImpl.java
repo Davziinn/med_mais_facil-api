@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.mapper;
 
+import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaCanceladaResponseDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaRequestDTO;
 import com.Unifor.MedMaisFacil.dtos.guiaExame.GuiaMedicaResponseDTO;
 import com.Unifor.MedMaisFacil.entity.GuiaMedicaEntity;
@@ -8,8 +9,6 @@ import com.Unifor.MedMaisFacil.models.Exame;
 import com.Unifor.MedMaisFacil.models.GuiaMedica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class GuiaMedicaMapperImpl implements GuiaMedicaMapper {
@@ -29,9 +28,14 @@ public class GuiaMedicaMapperImpl implements GuiaMedicaMapper {
                 .convenio(entity.getConvenio())
                 .cidExame(entity.getCidExame())
                 .indicacaoClinica(entity.getIndicacaoClinica())
+                .statusGuiaMedica(entity.getStatusGuiaMedica())
                 .observacoes(entity.getObservacoes())
                 .atendimento(entity.getAtendimento() != null
                         ? atendimentoMapper.toModel(entity.getAtendimento())
+                        : null
+                )
+                .exames(entity.getExames() != null
+                        ? entity.getExames().stream().map(guiaExame -> exameMapper.toModel(guiaExame.getExame())).toList()
                         : null
                 )
                 .build();
@@ -79,6 +83,13 @@ public class GuiaMedicaMapperImpl implements GuiaMedicaMapper {
                 model.getObservacoes(),
                 model.getAtendimento().getId(),
                 model.getExames() != null ? model.getExames().stream().map(exameMapper::toDTO).toList() : null
+        );
+    }
+
+    @Override
+    public GuiaMedicaCanceladaResponseDTO toDTOCancelada(GuiaMedica model) {
+        return new GuiaMedicaCanceladaResponseDTO(
+                model.getStatusGuiaMedica()
         );
     }
 }

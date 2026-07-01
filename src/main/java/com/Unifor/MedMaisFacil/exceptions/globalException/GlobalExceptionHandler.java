@@ -81,6 +81,11 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(GuiaMedicaNotFoundException.class)
+    public ResponseEntity<Object> handleGuiaMedicaNotFoundException (GuiaMedicaNotFoundException ex){
+        return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleException (Exception ex){
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
@@ -99,6 +104,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ErrorGerarGuiaMedicaException.class)
     public ResponseEntity<Object> handleErrorGerarGuiaMedicaException (ErrorGerarGuiaMedicaException ex){
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(ErrorConsultarGuiaMedica.class)
+    public ResponseEntity<Object> handleErrorConsultarGuiaMedica (ErrorConsultarGuiaMedica ex){
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)
