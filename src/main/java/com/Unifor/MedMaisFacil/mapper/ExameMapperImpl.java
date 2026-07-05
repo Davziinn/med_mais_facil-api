@@ -38,6 +38,7 @@ public class ExameMapperImpl implements ExameMapper {
         return Exame.builder()
                 .nome(dto.nome())
                 .descricao(dto.descricao())
+                .ativo(dto.ativo())
                 .build();
     }
 

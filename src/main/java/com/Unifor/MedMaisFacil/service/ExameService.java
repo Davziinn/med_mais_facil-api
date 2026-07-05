@@ -1,5 +1,6 @@
 package com.Unifor.MedMaisFacil.service;
 
+import com.Unifor.MedMaisFacil.entity.ExameEntity;
 import com.Unifor.MedMaisFacil.exceptions.ExameNotFoundException;
 import com.Unifor.MedMaisFacil.mapper.ExameMapper;
 import com.Unifor.MedMaisFacil.models.Exame;
@@ -59,5 +60,9 @@ public class ExameService {
         }
 
         return true;
+    }
+
+    public List<Exame> buscarTodosExamesAtivosCadastrados() {
+        return exameRepository.findAll().stream().filter(ExameEntity::getAtivo).map(exameMapper::toModel).toList();
     }
 }

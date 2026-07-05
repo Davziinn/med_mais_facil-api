@@ -5,4 +5,5 @@ public enum Convenio {
     KMED,
     GEAP,
     BRADESCO_SAUDE,
+    HAPVIDA
 }

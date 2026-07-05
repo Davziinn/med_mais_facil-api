@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO')")
 @RequestMapping("/v1/guia-medica")

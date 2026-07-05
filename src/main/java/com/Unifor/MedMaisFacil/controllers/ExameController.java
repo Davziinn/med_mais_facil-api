@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO')")
 @RequestMapping("/v1/exame")
@@ -34,6 +34,12 @@ public class ExameController {
     public ResponseEntity<List<ExameResponseDTO>> listarExames () {
         List<Exame> exameSalvo = exameService.buscarTodosExamesCadastrados();
         return ResponseEntity.ok(exameSalvo.stream().map(exameMapper::toDTO).toList());
+    }
+
+    @GetMapping("/ativos")
+    public ResponseEntity<List<ExameResponseDTO>> listarExamesAtivos () {
+        List<Exame> examesAtivos = exameService.buscarTodosExamesAtivosCadastrados();
+        return ResponseEntity.ok(examesAtivos.stream().map(exameMapper::toDTO).toList());
     }
 
     @GetMapping("/{id}")
