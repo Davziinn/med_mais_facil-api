@@ -3,7 +3,7 @@ package com.Unifor.MedMaisFacil.dtos.guiaExame;
 import com.Unifor.MedMaisFacil.dtos.exame.ExameResponseDTO;
 import com.Unifor.MedMaisFacil.enums.Convenio;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record GuiaMedicaResponseDTO(
@@ -11,7 +11,7 @@ public record GuiaMedicaResponseDTO(
         String cidExame,
         String indicacaoClinica,
         String numeroGuia,
-        LocalDate dataSolicitacao,
+        LocalDateTime dataSolicitacao,
         Convenio convenio,
         String observacoes,
         Long atendimentoId,

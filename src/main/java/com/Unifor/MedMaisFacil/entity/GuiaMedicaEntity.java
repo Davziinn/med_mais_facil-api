@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class GuiaMedicaEntity {
 
     @CreationTimestamp
     @Column(name = "DT_SOLIC_GUIA_MED", nullable = false, updatable = false)
-    private LocalDate dataSolicitacao;
+    private LocalDateTime dataSolicitacao;
 
     @Column(name = "guiaMedica_convenio",nullable = false)
     @Enumerated(EnumType.STRING)
