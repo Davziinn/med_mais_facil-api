@@ -37,11 +37,11 @@ public class MedicoMapperImpl implements MedicoMapper {
         return new MedicoEntity(
                 model.getId(),
                 model.getCrm(),
-                especialidadeMapper.toEntity(model.getEspecialidade()),
                 model.getSexo(),
                 model.getDataNascimento(),
                 model.getCriadoEm(),
                 model.getAtualizadoEm(),
+                especialidadeMapper.toEntity(model.getEspecialidade()),
                 model.getUsuario() != null ? usuarioMapper.toEntity(model.getUsuario()) : null
         );
     }

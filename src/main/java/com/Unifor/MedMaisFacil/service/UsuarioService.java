@@ -58,6 +58,14 @@ public class UsuarioService implements UserDetailsService {
         return usuarioEncontrado;
     }
 
+    public Usuario buscarUsuarioByEmail (String email){
+        Usuario usuarioEncontrado = usuarioMapper.toModel(usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new UsuarioNotFoundException("Usuário não encontrado.")
+        ));
+
+        return usuarioEncontrado;
+    }
+
     public List<Usuario> listarUsuariosNotPacientes() {
         List<Usuario> usuariosEncontrados = usuarioRepository.findByTipoUsuarioNot(TipoUsuario.PACIENTE).stream()
                 .map(usuarioMapper::toModel)

@@ -11,6 +11,8 @@ import com.Unifor.MedMaisFacil.models.Medico;
 import com.Unifor.MedMaisFacil.models.Usuario;
 import com.Unifor.MedMaisFacil.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -83,5 +85,14 @@ public class MedicoService {
         return medicoRepository.findByUsuarioEmail(email)
                 .map(MedicoEntity::getId)
                 .orElse(null);
+    }
+
+    public Medico buscarMedicoLogado() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String usernameOuEmail = authentication.getName();
+
+        Usuario usuario = usuarioService.buscarUsuarioByEmail(usernameOuEmail);
+
+        return buscarPorUsuarioId(usuario.getId());
     }
 }

@@ -24,10 +24,6 @@ public class MedicoEntity {
     @Column(name = "CRM_MED", nullable = false, unique = true)
     private String crm;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_ESP")
-    private EspecialidadeMedicoEntity especialidade;
-
     @Column(name = "SX_MED", nullable = false, length = 10)
     private String sexo;
 
@@ -41,6 +37,10 @@ public class MedicoEntity {
     @Column(name = "DT_ATZ_MED")
     @UpdateTimestamp
     private LocalDateTime atualizadoEm;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_ESP")
+    private EspecialidadeMedicoEntity especialidade;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USU", nullable = false, unique = true)

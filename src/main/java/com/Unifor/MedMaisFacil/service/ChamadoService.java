@@ -35,10 +35,11 @@ public class ChamadoService {
     private final TriagemService triagemService;
     private final FilaService filaService;
 
+    private final MedicoService medicoService;
+
     private final SinaisAlertaService sinaisAlertaService;
 
     private final EspecialidadeService especialidadeService;
-    private final EspecialidadeMedicoRepository especialidadeMedicoRepository;
 
     public ChamadoAberto abrirChamado (Chamado chamado, List<SintomaDoChamado> sintomas) {
 
@@ -109,22 +110,28 @@ public class ChamadoService {
                 .toList();
     }
 
-    public List<Chamado> listarTodosChamadosEmEsperaAndEmAtendimento() {
+    private List<Chamado> buscarFilaDoDia(Long especialidadeIdOuNull) {
         LocalDate hoje = LocalDate.now();
-
         LocalDateTime inicioDia = hoje.atStartOfDay();
         LocalDateTime fimDia = hoje.atTime(LocalTime.MAX);
 
-        List<ChamadoEntity> entidades = chamadoRepository
+        return chamadoRepository
                 .buscarChamadosAtivosComSintomasAndDataHoraChamadoBetween(
                         List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO), inicioDia, fimDia
                 ).stream()
                 .filter(chamado -> chamado.getStatusChamado().equals(StatusChamado.EM_ESPERA) || chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO))
-                .toList();
-
-        return entidades.stream()
+                .filter(chamado -> especialidadeIdOuNull == null || (chamado.getEspecialidadeDestino() != null && chamado.getEspecialidadeDestino().getId().equals(especialidadeIdOuNull)))
                 .map(chamadoMapper::toModel)
                 .toList();
+    }
+
+    public List<Chamado> listarTodosChamadosEmEsperaAndEmAtendimento() {
+        return buscarFilaDoDia(null);
+    }
+
+    public List<Chamado> listarChamadosParaMedicoLogado() {
+        Medico medicoLogado = medicoService.buscarMedicoLogado();
+        return buscarFilaDoDia(medicoLogado.getEspecialidade().getId());
     }
 
     public void atualizarStatus(Long chamadoId, StatusChamado novoStatus) {

@@ -85,8 +85,20 @@ public class ChamadoController {
 
     @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO', 'PACIENTE', 'RECEPCAO')")
     @GetMapping
-    public ResponseEntity<List<FilaEsperaResponseDTO>> consultarChamados() {
+    public ResponseEntity<List<FilaEsperaResponseDTO>> consultarTodosChamadosDoDia() {
         List<Chamado> chamados = chamadoService.listarTodosChamadosEmEsperaAndEmAtendimento();
+
+        List<FilaEsperaResponseDTO> filaEsperaDto = chamados.stream()
+                .map(chamadoMapper::toFilaEsperaDTO)
+                .toList();
+
+        return ResponseEntity.ok(filaEsperaDto);
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMINISTRADOR', 'MEDICO', 'PACIENTE', 'RECEPCAO')")
+    @GetMapping("/fila/medico")
+    public ResponseEntity<List<FilaEsperaResponseDTO>> consultarChamadosDoMedicoLogado() {
+        List<Chamado> chamados = chamadoService.listarChamadosParaMedicoLogado();
 
         List<FilaEsperaResponseDTO> filaEsperaDto = chamados.stream()
                 .map(chamadoMapper::toFilaEsperaDTO)
