@@ -12,8 +12,8 @@ public class HistoricoMetricasMapperImpl implements HistoricoMetricasMapper{
         return new HistoricoMetricas(
                 dto.totalPeriodo(),
                 dto.finalizados(),
-                dto.cancelados(),
-                dto.taxaCancelamento()
+                dto.cancelados()
+                /*dto.taxaCancelamento()*/
         );
     }
 
@@ -22,8 +22,8 @@ public class HistoricoMetricasMapperImpl implements HistoricoMetricasMapper{
         return new HistoricoMetricasResponseDTO(
                 model.getTotalPeriodo(),
                 model.getFinalizados(),
-                model.getCancelados(),
-                model.getTaxaCancelamento()
+                model.getCancelados()
+                /*model.getTaxaCancelamento()*/
         );
     }
 }

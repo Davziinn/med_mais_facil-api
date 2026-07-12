@@ -15,5 +15,6 @@ public class RecepcaoDashboardMetricas {
     private long aguardandoCheckin;
     private long aguardando;
     private long ausentes;
+    private long aguardandoEncaminhamento;
     private LocalDateTime tempoMedioEspera;
 }

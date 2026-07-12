@@ -183,6 +183,36 @@ public class ChamadoService {
         return chamadoRepository.countByCriadoEmBetween(inicioDoDia, fimDoDia);
     }
 
+    public List<Chamado> listarAguardandoEncaminhamento() {
+        return chamadoRepository.findByStatusChamado(StatusChamado.AGUARDANDO_ENCAMINHAMENTO).stream()
+                .map(chamadoMapper::toModel)
+                .toList();
+    }
+
+    public long contarQuantidadeChamadosPorEspecialidadeDoMedicoLogado () {
+        Medico medicoLogado = medicoService.buscarMedicoLogado();
+        Long especialidadeId = medicoLogado.getEspecialidade().getId();
+
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDia = hoje.atStartOfDay();
+        LocalDateTime fimDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.countByEspecialidadeDestino_IdAndDataHoraChamadoBetween(especialidadeId, inicioDia, fimDia);
+    }
+
+    public long contarQuantidadeChamadosPorEspecialidadeEPorStatusDoMedicoLogado (StatusChamado statusChamado) {
+        Medico medicoLogado = medicoService.buscarMedicoLogado();
+        Long especialidadeId = medicoLogado.getEspecialidade().getId();
+
+        LocalDate hoje = LocalDate.now();
+
+        LocalDateTime inicioDia = hoje.atStartOfDay();
+        LocalDateTime fimDia = hoje.atTime(LocalTime.MAX);
+
+        return chamadoRepository.countByespecialidadeDestino_IdAndStatusChamadoAndDataHoraChamadoBetween(especialidadeId, statusChamado, inicioDia, fimDia);
+    }
+
     public List<Chamado> buscarChamadosEmAtendimentoDiaAtual () {
         LocalDate hoje = LocalDate.now();
 
@@ -225,7 +255,7 @@ public class ChamadoService {
                         () -> new ChamadoNotFoundException("Chamado não encontrado")
                 ));
 
-        chamadoBuscado.setStatusChamado(StatusChamado.EM_ESPERA);
+        chamadoBuscado.setStatusChamado(StatusChamado.AGUARDANDO_ENCAMINHAMENTO);
 
         chamadoRepository.save(chamadoMapper.toEntity(chamadoBuscado));
     }
@@ -257,9 +287,7 @@ public class ChamadoService {
 
     @Auditable(acao = "Encaminhou um chamado", modulo = "Chamados")
     public EncaminharChamado encaminharChamado (Long chamadoId, EncaminharChamado encaminharChamado) {
-        Chamado chamadoEncontrado = chamadoMapper.toModel(chamadoRepository.findById(chamadoId).orElseThrow(
-                () -> new ChamadoNotFoundException("Chamado não encontrado!")
-        ));
+        Chamado chamadoEncontrado = consultarDetalhesChamado(chamadoId);
 
         EspecialidadeMedico especialidadeMedicoEncontrado = especialidadeService.buscarEspecialidadeById(encaminharChamado.getEspecialidadeMedico().getId());
 

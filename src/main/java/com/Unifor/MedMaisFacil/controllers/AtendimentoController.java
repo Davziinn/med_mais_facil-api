@@ -36,7 +36,7 @@ public class AtendimentoController {
 
     @PostMapping("/iniciar")
     public ResponseEntity<IniciarAtendimentoResponseDTO> iniciarAtendimento (@RequestBody IniciarAtendimentoRequestDTO iniciarAtendimentoRequestDTO) {
-        Atendimento atendimentoIniciado = atendimentoService.iniciar(iniciarAtendimentoRequestDTO.chamadoId(), iniciarAtendimentoRequestDTO.medicoId());
+        Atendimento atendimentoIniciado = atendimentoService.iniciar(iniciarAtendimentoRequestDTO.chamadoId());
 
         return ResponseEntity.ok(atendimentoMapper.toIniciarDTO(atendimentoIniciado));
     }
@@ -56,8 +56,9 @@ public class AtendimentoController {
     }
 
     @GetMapping("/historico")
-    public ResponseEntity<List<HistoricoAtendimentoResponseDTO>> listarHistoricoAtendimentos () {
-        List<Atendimento> historicos = atendimentoService.buscarHistoricoAtendimentos();
+    public ResponseEntity<List<HistoricoAtendimentoResponseDTO>> listarHistoricoAtendimentos(@RequestParam(defaultValue = "3") int meses) {
+
+        List<Atendimento> historicos = atendimentoService.buscarHistoricoDoMedicoLogado(meses);
 
         List<HistoricoAtendimentoResponseDTO> dtos = atendimentoMapper.toHistoricoDTO(historicos);
 
@@ -65,8 +66,9 @@ public class AtendimentoController {
     }
 
     @GetMapping("/metricas")
-    public ResponseEntity<HistoricoMetricasResponseDTO> consultarMetricasHistorico () {
-        HistoricoMetricas historicoMetricasModel = atendimentoService.consultarHistoricoMetricasTrimestral();
+    public ResponseEntity<HistoricoMetricasResponseDTO> consultarMetricasHistorico(@RequestParam(defaultValue = "3") int meses) {
+
+        HistoricoMetricas historicoMetricasModel = atendimentoService.consultarHistoricoMetricasDoMedicoLogado(meses);
 
         return ResponseEntity.ok(historicoMetricasMapper.toDTO(historicoMetricasModel));
     }

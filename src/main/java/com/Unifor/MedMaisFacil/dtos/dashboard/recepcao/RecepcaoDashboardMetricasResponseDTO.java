@@ -6,5 +6,6 @@ public record RecepcaoDashboardMetricasResponseDTO (
         long aguardandoCheckin,
         long aguardando,
         long ausentes,
+        long aguardandoEncaminhamento,
         LocalDateTime tempoMedioEspera
 ) {}

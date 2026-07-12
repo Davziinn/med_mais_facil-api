@@ -26,12 +26,12 @@ public class DashboardService {
 
     private final AtendimentoService atendimentoService;
 
-    public MedicoDashboardMetricas buscarMetricasMedico () {
-        long finalizados = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.FINALIZADO);
-        long emAtendimento = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.EM_ATENDIMENTO);
-        long aguardando = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.EM_ESPERA);
+    public MedicoDashboardMetricas buscarMetricasMedicoLogado () {
+        long finalizados = chamadoService.contarQuantidadeChamadosPorEspecialidadeEPorStatusDoMedicoLogado(StatusChamado.FINALIZADO);
+        long emAtendimento = chamadoService.contarQuantidadeChamadosPorEspecialidadeEPorStatusDoMedicoLogado(StatusChamado.EM_ATENDIMENTO);
+        long aguardando = chamadoService.contarQuantidadeChamadosPorEspecialidadeEPorStatusDoMedicoLogado(StatusChamado.EM_ESPERA);
 
-        long chamadosHoje = chamadoService.contarQuantidadeChamadosByDia();
+        long chamadosHoje = chamadoService.contarQuantidadeChamadosPorEspecialidadeDoMedicoLogado();
 
         return new MedicoDashboardMetricas(chamadosHoje, aguardando, emAtendimento, finalizados);
     }
@@ -40,9 +40,10 @@ public class DashboardService {
         long aguardandoCheckin = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.AGUARDANDO_CHECKIN);
         long aguardando = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.EM_ESPERA);
         long ausentes = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.AUSENTE);
+        long aguardandoEncaminhamento = chamadoService.contarQuantidadeChamadosByStatusChamado(StatusChamado.AGUARDANDO_ENCAMINHAMENTO);
         LocalDateTime tempoMedioEspera = LocalDateTime.now();
 
-        return new RecepcaoDashboardMetricas(aguardandoCheckin, aguardando, ausentes, tempoMedioEspera);
+        return new RecepcaoDashboardMetricas(aguardandoCheckin, aguardando, ausentes, aguardandoEncaminhamento, tempoMedioEspera);
     }
 
 

@@ -14,5 +14,4 @@ public class HistoricoMetricas {
     private long totalPeriodo;
     private long finalizados;
     private long cancelados;
-    private double taxaCancelamento;
 }

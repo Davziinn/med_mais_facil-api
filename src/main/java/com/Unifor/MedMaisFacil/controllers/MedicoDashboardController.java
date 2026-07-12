@@ -28,7 +28,7 @@ public class MedicoDashboardController {
 
     @GetMapping("/metricas")
     public ResponseEntity<MedicoDashboardMetricasResponseDTO> consultarMetricas () {
-        MedicoDashboardMetricas consulta = dashboardService.buscarMetricasMedico();
+        MedicoDashboardMetricas consulta = dashboardService.buscarMetricasMedicoLogado();
 
         return ResponseEntity.ok(dashboardMetricasMapper.toDTOMedico(consulta));
     }

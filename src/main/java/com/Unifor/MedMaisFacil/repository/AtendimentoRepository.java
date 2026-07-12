@@ -1,6 +1,7 @@
 package com.Unifor.MedMaisFacil.repository;
 
 import com.Unifor.MedMaisFacil.entity.AtendimentoEntity;
+import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -42,6 +43,49 @@ public interface AtendimentoRepository extends JpaRepository<AtendimentoEntity, 
 
     // Atendimentos finalizados no período
     long countByDataFimBetween(LocalDateTime inicio, LocalDateTime fim);
+
+    @Query("""
+        SELECT a FROM AtendimentoEntity a
+        JOIN FETCH a.chamado c
+        WHERE a.medico.id = :medicoId
+          AND c.statusChamado IN :status
+          AND a.dataInicio BETWEEN :inicio AND :fim
+        ORDER BY a.dataInicio DESC
+    """)
+    List<AtendimentoEntity> buscarPorMedicoEStatusEPeriodo(
+            @Param("medicoId") Long medicoId,
+            @Param("status") List<StatusChamado> status,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim);
+
+    long countByMedicoIdAndDataInicioBetween(
+            Long medicoId, LocalDateTime inicio, LocalDateTime fim);
+
+    @Query("""
+        SELECT COUNT(a) FROM AtendimentoEntity a
+        JOIN a.chamado c
+        WHERE a.medico.id = :medicoId
+          AND c.statusChamado = :status
+          AND a.dataInicio BETWEEN :inicio AND :fim
+    """)
+    long countByMedicoIdAndChamadoStatusAndDataInicioBetween(
+            @Param("medicoId") Long medicoId,
+            @Param("status") StatusChamado status,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim);
+
+    @Query("""
+    SELECT a FROM AtendimentoEntity a
+    WHERE a.medico.id = :medicoId
+      AND a.chamado.statusChamado IN :status
+      AND a.dataInicio BETWEEN :inicio AND :fim
+    ORDER BY a.dataInicio DESC
+""")
+    List<AtendimentoEntity> findHistoricoDoMedico(
+            @Param("medicoId") Long medicoId,
+            @Param("status") List<StatusChamado> status,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim);
 
     // Lista de atendimentos finalizados no período
     List<AtendimentoEntity> findByDataFimBetween(LocalDateTime inicio, LocalDateTime fim);

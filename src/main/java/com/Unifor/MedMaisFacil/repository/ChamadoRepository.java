@@ -22,7 +22,11 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
 
     long countByStatusChamadoAndDataHoraChamadoBetween(StatusChamado status, LocalDateTime inicio, LocalDateTime fim);
 
+    long countByEspecialidadeDestino_IdAndDataHoraChamadoBetween (Long especialidadeId, LocalDateTime inicio, LocalDateTime fim);
+
     long countByPrioridadeChamadoAndDataHoraChamadoBetween(PrioridadeChamado nivelPrioridade, LocalDateTime inicio, LocalDateTime fim);
+
+    long countByespecialidadeDestino_IdAndStatusChamadoAndDataHoraChamadoBetween (Long especialidadeId, StatusChamado statusChamado, LocalDateTime inicio, LocalDateTime fim);
 
     long countByCriadoEmBetween(LocalDateTime inicio, LocalDateTime fim);
 
@@ -37,4 +41,7 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
             @Param("hospitalId") Long hospitalId,
             @Param("status") List<StatusChamado> status
     );
+
+    List<ChamadoEntity> findByStatusChamado(StatusChamado status);
+
 }

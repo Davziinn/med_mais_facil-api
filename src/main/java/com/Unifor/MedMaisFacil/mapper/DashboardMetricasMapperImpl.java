@@ -39,6 +39,7 @@ public class DashboardMetricasMapperImpl implements DashboardMetricasMapper{
                 model.getAguardandoCheckin(),
                 model.getAguardando(),
                 model.getAusentes(),
+                model.getAguardandoEncaminhamento(),
                 model.getTempoMedioEspera()
         );
     }
