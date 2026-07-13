@@ -119,7 +119,7 @@ public class ChamadoService {
                 .buscarChamadosAtivosComSintomasAndDataHoraChamadoBetween(
                         List.of(StatusChamado.CANCELADO, StatusChamado.FINALIZADO), inicioDia, fimDia
                 ).stream()
-                .filter(chamado -> chamado.getStatusChamado().equals(StatusChamado.EM_ESPERA) || chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO))
+                .filter(chamado -> chamado.getStatusChamado().equals(StatusChamado.EM_ESPERA) || chamado.getStatusChamado().equals(StatusChamado.EM_ATENDIMENTO) || chamado.getStatusChamado().equals(StatusChamado.AGUARDANDO_ENCAMINHAMENTO))
                 .filter(chamado -> especialidadeIdOuNull == null || (chamado.getEspecialidadeDestino() != null && chamado.getEspecialidadeDestino().getId().equals(especialidadeIdOuNull)))
                 .map(chamadoMapper::toModel)
                 .toList();
