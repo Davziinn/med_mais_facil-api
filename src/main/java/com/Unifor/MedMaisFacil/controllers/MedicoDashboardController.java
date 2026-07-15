@@ -8,6 +8,8 @@ import com.Unifor.MedMaisFacil.models.Chamado;
 import com.Unifor.MedMaisFacil.models.MedicoDashboardMetricas;
 import com.Unifor.MedMaisFacil.service.DashboardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +36,13 @@ public class MedicoDashboardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FilaEmAtendimentoResponseDTO>> listarFilaEmAtendimento () {
-        List<Chamado> filaEmAtendimentoModel = dashboardService.buscarFilaEmAtendimento();
+    public ResponseEntity<Page<FilaEmAtendimentoResponseDTO>> listarFilaEmAtendimento (
+            @RequestParam(defaultValue = "0") int numeroPagina,
+            @RequestParam(defaultValue = "5") int quantidadeElementosPorPagina
+    ) {
+        Page<Chamado> filaEmAtendimentoModel = dashboardService.buscarFilaEmAtendimento(PageRequest.of(numeroPagina, quantidadeElementosPorPagina));
 
-        return ResponseEntity.ok(filaEmAtendimentoModel.stream().map(chamadoMapper::toFilaAtendimentoDTO).toList());
+        return ResponseEntity.ok(filaEmAtendimentoModel.map(chamadoMapper::toFilaAtendimentoDTO));
     }
 
 }

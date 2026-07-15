@@ -5,6 +5,8 @@ import com.Unifor.MedMaisFacil.enums.StatusChamado;
 import com.Unifor.MedMaisFacil.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,12 +49,12 @@ public class DashboardService {
     }
 
 
-    public List<Chamado> buscarFilaEmAtendimento () {
-        return chamadoService.buscarChamadosEmAtendimentoDiaAtual();
+    public Page<Chamado> buscarFilaEmAtendimento (Pageable pageable) {
+        return chamadoService.buscarChamadosEmAtendimentoDiaAtual(pageable);
     }
 
-    public List<Chamado> buscarFilaAguardandoCheckin() {
-        return chamadoService.buscarPacientesAguardandoCheckin();
+    public Page<Chamado> buscarFilaAguardandoCheckin(Pageable pageable) {
+        return chamadoService.buscarPacientesAguardandoCheckin(pageable);
     }
 
     public AdmDashboardMetricas buscarMetricasAdm() {

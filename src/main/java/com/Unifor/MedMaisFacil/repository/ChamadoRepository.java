@@ -3,6 +3,8 @@ package com.Unifor.MedMaisFacil.repository;
 import com.Unifor.MedMaisFacil.entity.ChamadoEntity;
 import com.Unifor.MedMaisFacil.enums.PrioridadeChamado;
 import com.Unifor.MedMaisFacil.enums.StatusChamado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -30,7 +32,7 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long> {
 
     long countByCriadoEmBetween(LocalDateTime inicio, LocalDateTime fim);
 
-    List<ChamadoEntity> findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado status, LocalDateTime inicio, LocalDateTime fim);
+    Page<ChamadoEntity> findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado status, LocalDateTime inicio, LocalDateTime fim, Pageable page);
 
     @Query("""
             SELECT c FROM ChamadoEntity c

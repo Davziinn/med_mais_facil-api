@@ -10,6 +10,8 @@ import com.Unifor.MedMaisFacil.models.RecepcaoDashboardMetricas;
 import com.Unifor.MedMaisFacil.service.ChamadoService;
 import com.Unifor.MedMaisFacil.service.DashboardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +38,14 @@ public class RecepcaoDashboardController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FilaAguardandoCheckinResponseDTO>> consultarFilaCheckin () {
-        List<Chamado> filaConsultada = dashboardService.buscarFilaAguardandoCheckin();
+    public ResponseEntity<Page<FilaAguardandoCheckinResponseDTO>> consultarFilaCheckin (
+            @RequestParam(defaultValue = "0") int numeroPagina,
+            @RequestParam(defaultValue = "5") int quantidadeElementosPorPagina
+    ) {
+        Page<Chamado> filaConsultada = dashboardService.buscarFilaAguardandoCheckin(PageRequest.of(numeroPagina, quantidadeElementosPorPagina));
 
-        return ResponseEntity.ok(filaConsultada.stream()
-                .map(chamadoMapper::toFilaCheckinDTO)
-                .toList());
+        return ResponseEntity.ok(filaConsultada
+                .map(chamadoMapper::toFilaCheckinDTO));
     }
 
     @PatchMapping("/{chamadoId}/ausencia")

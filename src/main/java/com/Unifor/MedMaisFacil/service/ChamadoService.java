@@ -9,6 +9,8 @@ import com.Unifor.MedMaisFacil.mapper.*;
 import com.Unifor.MedMaisFacil.models.*;
 import com.Unifor.MedMaisFacil.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -213,26 +215,24 @@ public class ChamadoService {
         return chamadoRepository.countByespecialidadeDestino_IdAndStatusChamadoAndDataHoraChamadoBetween(especialidadeId, statusChamado, inicioDia, fimDia);
     }
 
-    public List<Chamado> buscarChamadosEmAtendimentoDiaAtual () {
+    public Page<Chamado> buscarChamadosEmAtendimentoDiaAtual (Pageable pageable) {
         LocalDate hoje = LocalDate.now();
 
         LocalDateTime inicioDoDia = hoje.atStartOfDay();
         LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
 
-        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.EM_ATENDIMENTO, inicioDoDia, fimDoDia).stream()
-                .map(chamadoMapper::toModel)
-                .toList();
+        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.EM_ATENDIMENTO, inicioDoDia, fimDoDia, pageable)
+                .map(chamadoMapper::toModel);
     }
 
-    public List<Chamado> buscarPacientesAguardandoCheckin () {
+    public Page<Chamado> buscarPacientesAguardandoCheckin (Pageable pageable) {
         LocalDate hoje = LocalDate.now();
 
         LocalDateTime inicioDoDia = hoje.atStartOfDay();
         LocalDateTime fimDoDia = hoje.atTime(LocalTime.MAX);
 
-        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.AGUARDANDO_CHECKIN, inicioDoDia, fimDoDia).stream()
-                .map(chamadoMapper::toModel)
-                .toList();
+        return chamadoRepository.findByStatusChamadoAndDataHoraChamadoBetweenOrderByDataHoraChamadoAsc(StatusChamado.AGUARDANDO_CHECKIN, inicioDoDia, fimDoDia, pageable)
+                .map(chamadoMapper::toModel);
     }
 
     @Auditable(acao = "Marcou como ausente", modulo = "Chamados")
